@@ -1,3 +1,4 @@
+from Minigame import Minigame
 import random
 import time
 import Buttons
