@@ -1,8 +1,6 @@
 from Minigame import Minigame
 import random
 import time
-import Buttons
-import WiFi
 
 class Reaction_Game:
     def __init__(self, parent):
@@ -34,6 +32,6 @@ class Reaction_Game:
         if self.can_press_button == True:
             buttons = self.parent.buttons.getPressedButtons()
             if buttons[0] == 1:
-                WiFi.send_request(self, "Reaction_Game Complete")
+                self.parent.wifi.send_request(self, "Reaction_Game Complete")
                 self.parent.currentMiniGame = IdleGame()
 
