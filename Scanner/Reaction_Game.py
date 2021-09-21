@@ -12,10 +12,6 @@ class Reaction_Game:
     def update():
         pass
 
-    def alertFromServer(self, alert):
-        if alert == 'GameStarted':
-            self.parent.currentMiniGame = Reaction_Game()
-
     def reaction_game(self.parent.rfid):
         self.can_press_button = False
         time_to_change = Random.randint(5,16)
