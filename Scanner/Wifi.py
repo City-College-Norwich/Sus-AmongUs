@@ -1,10 +1,12 @@
 import network
 import time
+import requests
 
 class Wifi:
     wlan = None
     SSID = "woodnet"
     PASSWORD = "CCNRules"
+    URL = "https://localhost/"
     def __init__(self):
         # Initilize wlan object
         if(self.wlan == None):
@@ -18,3 +20,8 @@ class Wifi:
                 return
             else:
                 time.sleep_ms(500)
+
+    def send_request(self, message):
+        response = requests.get(URL+message)
+        response.close()
+        return(response.text)
