@@ -19,5 +19,4 @@ class ID_Badge(Minigame):
             self.parent.wifi.send_request('TaskComplete')
 
     def alertFromServer(self, alert):
-        if alert=='Start_IdBadge':
-            self.parent.currentMiniGame = ID_Badge()
+        pass
