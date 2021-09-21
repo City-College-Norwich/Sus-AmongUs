@@ -32,8 +32,8 @@ class Reaction_Game:
 
         
         if self.can_press_button == True:
-            Buttons.getPressedButton(self)
-            if self.__button0.value() == 1:
+            buttons = self.parent.buttons.getPressedButtons()
+            if buttons[0] == 1:
                 WiFi.send_request(self, "Reaction_Game Complete")
                 self.parent.currentMiniGame = IdleGame()
 
