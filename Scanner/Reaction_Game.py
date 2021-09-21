@@ -8,7 +8,7 @@ class Reaction_Game:
         Minigame.__init__(self, parent)
         self.parent = parent
         self.can_press_button = False
-        time_to_change = Random.randint(5,16)
+        time_to_change = random.randint(5,16)
         self.endpoint = (time.ticks_ms()/1000) + time_to_change
 
         self.state = "Black"
@@ -26,7 +26,7 @@ class Reaction_Game:
                 self.state = "Black"
                 self.can_press_button = False
                 self.parent.screen.fill(0)
-                time_to_change = Random.randint(5,16)
+                time_to_change = random.randint(5,16)
                 self.endpoint = (time.ticks_ms()/1000) + time_to_change
 
         
