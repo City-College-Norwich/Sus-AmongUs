@@ -21,15 +21,13 @@ class App:
         # mainloop
         while self.isRunning:
             # update modules
-            self.rfid.__update__()
+            self.rfid.update()
 
             # Send keepAlive to the server for updates
             self.keepAlive()    
 
             # draw screen
-            self.screen.draw_Screen()
-
-            pass
+            self.screen.draw_screen()
 
 
     def keepAlive(self):
