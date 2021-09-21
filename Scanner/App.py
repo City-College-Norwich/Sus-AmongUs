@@ -11,7 +11,7 @@ class App:
         self.currentMiniGame = None
 
         self.id = 1
-        self.isRunning = False
+        self.isRunning = True
 
     def run(self):
         # mainloop
