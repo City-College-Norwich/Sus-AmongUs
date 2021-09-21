@@ -1,4 +1,5 @@
 from Minigame import Minigame
+from IdleGame import IdleGame
 
 class Startupgame(Minigame):
     def __init__(self, parent):
