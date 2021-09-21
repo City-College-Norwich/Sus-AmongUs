@@ -6,7 +6,7 @@ class Rfid:
     def __init__(self):
         self.rdr = mfrc522.MFRC522(0, 1, 2, 3, 4)#Update Pins**
         
-    def __update__(self):
+    def update(self):
         pass
 
     def do_read(self):
