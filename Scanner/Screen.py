@@ -16,3 +16,6 @@ class Screen:
         
     def draw_screen(self):
         self.display.show()
+
+    def update(self):
+        pass
