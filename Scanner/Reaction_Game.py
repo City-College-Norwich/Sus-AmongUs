@@ -8,29 +8,32 @@ class Reaction_Game:
     def __init__(self, parent):
         Minigame.__init__(self, parent)
         self.parent = parent
-
-    def update():
-        pass
-
-    def reaction_game(self.parent.rfid):
         self.can_press_button = False
         time_to_change = Random.randint(5,16)
-        self.time_passed = time.ticks_ms()/1000
+        self.endpoint = (time.ticks_ms()/1000) + time_to_change
 
-        if self.time_passed == time_to_change:
-            display.fill(1)
-            self.can_press_button = True
+        self.state = "Black"
 
-    def Reaction_Button_Pressed(self):
-        time_to_change = 2
-        self.time_passed = time.ticks_ms()/1000
+    def update():
+        if time.ticks_ms()/1000 >= self.endpoint:
+            if self.state == "Black":
+                self.parent.screen.fill(1)
+                self.can_press_button = True
+                self.state = "White"
+                time_to_change = 2
+                self.endpoint = (time.ticks_ms()/1000) + time_to_change
+                
+            elif self.state == "White":
+                self.state = "Black"
+                self.can_press_button = False
+                self.parent.screen.fill(0)
+                time_to_change = Random.randint(5,16)
+                self.endpoint = (time.ticks_ms()/1000) + time_to_change
 
-        if self.time_passed == time_to_change:
-            display.fill(0)
-            self.can_press_button = False
-            #Game starts over
-
-        elif self.can_press_button == True:
+        
+        if self.can_press_button == True:
             Buttons.getPressedButton(self)
             if self.__button0.value() == 1:
                 WiFi.send_request(self, "Reaction_Game Complete")
+                self.parent.currentMiniGame = IdleGame()
+

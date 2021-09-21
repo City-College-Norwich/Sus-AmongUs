@@ -19,3 +19,9 @@ class Screen:
 
     def update(self):
         pass
+
+    def fill(self, value):
+        if value == 1:
+            self.display.fill(1)
+        elif value == 0:
+            self.display.fill(0)
