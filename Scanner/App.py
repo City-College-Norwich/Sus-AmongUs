@@ -1,14 +1,14 @@
 """ Among Us Clone Scanner App
 """
 from StartupGame import Startupgame
-
+import Rfid, Wifi, Screen, Buttons
 
 class App:
     def __init__(self):
         self.rfid = Rfid()
-        self.wifi = None
-        self.screen = None
-        self.buttons = None
+        self.wifi = Wifi()
+        self.screen = Screen()
+        self.buttons = Buttons()
 
         self.currentMiniGame = Startupgame(self)
 
@@ -21,13 +21,13 @@ class App:
         # mainloop
         while self.isRunning:
             # update modules
-            
+            self.rfid.__update__()
 
             # Send keepAlive to the server for updates
             self.keepAlive()    
 
             # draw screen
-
+            self.screen.draw_Screen()
 
             pass
 
