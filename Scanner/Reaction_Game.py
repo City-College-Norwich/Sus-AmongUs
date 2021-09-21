@@ -1,4 +1,5 @@
 from Minigame import Minigame
+from IdleGame import IdleGame
 import random
 import time
 
