@@ -6,7 +6,7 @@ class Wifi:
     wlan = None
     SSID = "woodnet"
     PASSWORD = "CCNRules"
-    URL = "https://localhost/"
+    URL = "http://localhost/"
     def __init__(self):
         # Initilize wlan object
         if(self.wlan == None):
