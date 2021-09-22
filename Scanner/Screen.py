@@ -1,11 +1,18 @@
 #Among Us Screen
 
 from machine import Pin, I2C
-import ssd1306
+import ssd1306, time
 
 class Screen:
     def __init__(self):
-        i2c = I2C(sda=Pin(0), scl=Pin(1)) #Fix Pins
+        resetPin = Pin(16, Pin.OUT)
+        resetPin.value(0)
+        time.sleep_ms(5)
+        resetPin.value(1)
+        
+        scl = Pin(15, Pin.OUT, Pin.PULL_UP)
+        sda = Pin(4, Pin.OUT, Pin.PULL_UP)
+        i2c = I2C(scl=scl, sda=sda)
         self.display = ssd1306.SSD1306_I2C(128, 64, i2c)
 
     def display_text(self, text, x_coordinate, y_coordinate):

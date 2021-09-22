@@ -1,4 +1,4 @@
-from machine import Pin, SPI
+from machine import Pin, SoftSPI
 from os import uname
 
 
@@ -27,10 +27,10 @@ class MFRC522:
 		board = uname()[0]
 
 		if board == 'WiPy' or board == 'LoPy' or board == 'FiPy':
-			self.spi = SPI(0)
-			self.spi.init(SPI.MASTER, baudrate=1000000, pins=(self.sck, self.mosi, self.miso))
-		elif board == 'esp8266':
-			self.spi = SPI(baudrate=100000, polarity=0, phase=0, sck=self.sck, mosi=self.mosi, miso=self.miso)
+			self.spi = SoftSPI(0)
+			self.spi.init(SoftSPI.MASTER, baudrate=1000000, pins=(self.sck, self.mosi, self.miso))
+		elif board == 'esp8266' or board =='esp32':
+			self.spi = SoftSPI(baudrate=100000, polarity=0, phase=0, sck=self.sck, mosi=self.mosi, miso=self.miso)
 			self.spi.init()
 		else:
 			raise RuntimeError("Unsupported platform")
