@@ -1,6 +1,6 @@
 import network
 import time
-import requests
+import urequests as requests
 
 class Wifi:
     wlan = None
