@@ -9,7 +9,6 @@ class Download_Game:
         Minigame.__init__(self, parent)
         self.progress = 0
         self.progress_width = 0
-        self.download = False
         self.timer = TimerHelper()
         self.timer.Set(1000)
         pass
@@ -26,7 +25,6 @@ class Download_Game:
                 if self.progress > 100:
                     self.parent.wifi.send_request(self, "minigameComplete?scannerId="+self.parent.id)
                     self.parent.currentMiniGame = IdleGame()
-                    self.download = True
         else:
             self.parent.screen.display_text("Error: Walked away from task", 0, 0)
 
