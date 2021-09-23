@@ -10,8 +10,10 @@ def home():
     return model.callHomepage()
     
 
-@app.route("/minigameComplete")
-def minigameComplete():
+@app.route("/getTagName")
+def getTagName():
     args = request.args
 
-    return model.minigameComplete(args["scannerId"])
+    return model.getTagName(args["uid"])
+
+

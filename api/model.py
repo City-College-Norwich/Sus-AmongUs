@@ -1,6 +1,14 @@
 class Model:
     def __init__(self):
-        pass
+        self.uids = {"fakeKey":"testValue"}
 
-    def callHomepage(self, scannerId):
+    def minigameComplete(self, scannerId):
+        
+        #game logic
         return "hello"
+
+    def getTagName (self, uid):
+        return uids[fakeKey]
+        
+
+
