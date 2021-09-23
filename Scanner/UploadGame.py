@@ -1,7 +1,6 @@
 from Minigame import Minigame
 from IdleGame import IdleGame
 from TimerHelper import *
-from Screen import Screen
 from DownloadGame import Download_Game
 from Rfid import Rfid
 
