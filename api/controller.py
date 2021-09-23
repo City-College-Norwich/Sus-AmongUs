@@ -9,9 +9,9 @@ model = Model()
 def home():
     return model.callHomepage()
 
-@app.route("/minigame")
-def miniGame():
-    return model.miniGame()
+@app.route("/requestStation")
+def requestStation():
+    return model.requestStation()
 
 @app.route("/minigameComplete")
 def minigameComplete():
