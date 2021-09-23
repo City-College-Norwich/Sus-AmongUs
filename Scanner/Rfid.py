@@ -12,7 +12,7 @@ class Rfid:
         pass
 
     def do_read(self):
-        
+
         if self.timer.Check():
             self.timer.Set(100)
             (stat, tag_type) = self.rdr.request(self.rdr.REQIDL)
@@ -21,9 +21,9 @@ class Rfid:
                 (stat, raw_uid) = self.rdr.anticoll()   
                 if stat == self.rdr.OK:
                     uid= "0x%02x%02x%02x%02x" % (raw_uid[0], raw_uid[1], raw_uid[2], raw_uid[3])
-                    name = self.parent.wifi.send_request('getTagName?uid=' + uid )
-                    return name
-
-        return None
+                    self.name = self.parent.wifi.send_request('getTagName?uid=' + uid )
+                    return self.name
+        # send previous result if anything fails
+        return self.name
 
 
