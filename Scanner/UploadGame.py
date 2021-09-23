@@ -1,8 +1,6 @@
 from Minigame import Minigame
 from IdleGame import IdleGame
 from TimerHelper import *
-from DownloadGame import Download_Game
-from Rfid import Rfid
 
 class Upload_Game:
     def __init__(self, parent):
@@ -14,7 +12,7 @@ class Upload_Game:
         pass
     
     def update(self):
-        self.rfid = Rfid.do_read()
+        self.rfid = self.parent.rfid.do_read()
         if self.rfid:
             if self.timer.Check():
                 self.progress_width = self.progress_width + self.progress
