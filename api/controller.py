@@ -13,5 +13,8 @@ def home():
 @app.route("/minigameComplete")
 def minigameComplete():
     args = request.args
-
     return model.minigameComplete(args["scannerId"])
+
+@app.route("/keepAlive")
+def keepAlive():
+    return model.keepAlive()
