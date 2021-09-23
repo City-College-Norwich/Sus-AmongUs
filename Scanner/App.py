@@ -5,10 +5,10 @@ import Rfid, Wifi, Screen, Buttons
 
 class App:
     def __init__(self):
-        self.rfid = Rfid()
-        self.wifi = Wifi()
-        self.screen = Screen()
-        self.buttons = Buttons()
+        self.rfid = Rfid.Rfid()
+        self.wifi = Wifi.Wifi()
+        self.screen = Screen.Screen()
+        self.buttons = Buttons.Buttons()
 
         self.currentMiniGame = Startupgame(self)
 
