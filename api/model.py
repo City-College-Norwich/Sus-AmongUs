@@ -5,7 +5,7 @@ class Model:
         self.state = "Game_Running"
         pass
 
-    def callHomepage(self, scannerId):
+    def callHomepage(self):
         return "hello"
 
     def minigameComplete(self, scannerId):
