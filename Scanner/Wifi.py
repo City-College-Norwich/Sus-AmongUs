@@ -22,6 +22,6 @@ class Wifi:
                 time.sleep_ms(500)
 
     def send_request(self, message):
-        response = requests.get(self.URL+message)
+        response = requests.get(URL+ "/" + message)
         response.close()
         return(response.text)
