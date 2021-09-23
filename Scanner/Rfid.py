@@ -15,7 +15,10 @@ class Rfid:
             (stat, raw_uid) = self.rdr.anticoll()   
 
             if stat == self.rdr.OK:
-                return "0x%02x%02x%02x%02x" % (raw_uid[0], raw_uid[1], raw_uid[2], raw_uid[3])
+
+                uid= "0x%02x%02x%02x%02x" % (raw_uid[0], raw_uid[1], raw_uid[2], raw_uid[3])
+                name = self.parent.wifi.send_request('getTagName?uid=' + uid )
+                return name
             else:
                 return None
 

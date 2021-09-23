@@ -2,11 +2,15 @@ import random
 
 class Model:
     def __init__(self):
+        self.uids = {"fakeKey":"testValue"}
         self.totalMinigames = 10
         self.completedMinigames = 0
         self.state = "Game_Running"
         pass
 
+    def getTagName (self, uid):
+        return self.uids[uid]      
+      
     def callHomepage(self):
         return "hello"
 
@@ -20,5 +24,7 @@ class Model:
         if self.completedMinigames >= self.totalMinigames:
             self.state = "Game_Ended"
         
+
         if self.state == "Game_Ended":
+
             return "Game_Ended"

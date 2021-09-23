@@ -13,10 +13,17 @@ def home():
 def requestStation():
     return model.requestStation()
 
+@app.route("/getTagName")
+def getTagName():
+    args = request.args
+    return model.getTagName(args["uid"])
+
+
 @app.route("/minigameComplete")
 def minigameComplete():
     args = request.args
     return model.minigameComplete(args["scannerId"])
+  
 
 @app.route("/keepAlive")
 def keepAlive():
