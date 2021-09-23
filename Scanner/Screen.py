@@ -21,6 +21,7 @@ class Screen:
         self.display.text(text, x_coordinate, y_coordinate)
 
     def display_rectangle(self, x_coordinate, y_coordinate, width, height):
+        self.updateOccured = True
         self.display.fillRect(x_coordinate, y_coordinate, width, height)
         pass
         

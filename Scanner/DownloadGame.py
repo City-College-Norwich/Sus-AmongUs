@@ -21,7 +21,7 @@ class Download_Game:
             if self.timer.Check():
                 self.progress_width = self.progress_width + self.progress
                 self.progress = self.progress + 10
-                Screen.display_rectangle(10, 10, self.progress_width, 30)
+                self.parent.screen.display_rectangle(10, 10, self.progress_width, 30)
                 self.timer.Set(1000)
 
                 if self.progress > 100:
@@ -29,6 +29,6 @@ class Download_Game:
                     self.parent.currentMiniGame = IdleGame()
                     self.download = True
         else:
-            Screen.display_text("Error: Walked away from task", 0, 0)
+            self.parent.screen.display_text("Error: Walked away from task", 0, 0)
 
             
