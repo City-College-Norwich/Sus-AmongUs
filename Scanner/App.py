@@ -21,8 +21,7 @@ class App:
         # mainloop
         while self.isRunning:
             # update modules
-            self.rfid.update()
-
+            self.currentMiniGame.update()
             # Send keepAlive to the server for updates
             self.keepAlive()    
 
