@@ -10,10 +10,6 @@ class Model:
 
     def minigameComplete(self, scannerId):
         self.completedMinigames += 1
-        
-
-    def alertFromServer(self, alert):
-        pass
 
     def keepAlive(self):
         if self.completedMinigames >= self.totalMinigames:
