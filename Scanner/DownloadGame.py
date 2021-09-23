@@ -2,6 +2,7 @@ from Minigame import Minigame
 from IdleGame import IdleGame
 from TimerHelper import *
 from Screen import Screen
+
 from Rfid import Rfid
 
 class Download_Game:
@@ -19,13 +20,12 @@ class Download_Game:
         if self.rfid:
             if self.timer.Check():
                 self.progress_width = self.progress_width + self.progress
-                progress_bar = self.display.fillRect(10, 10, self.progress_width, 30)
                 self.progress = self.progress + 10
-                Screen.display_text(progress_bar, 10, 10)
-                Screen.draw_screen()
+                Screen.display_rectangle(10, 10, self.progress_width, 30)
+                self.timer.Set(1000)
 
-                if self.progress == 100:
-                    self.parent.wifi.send_request(self, "minigameComplete?scannerId="+scannerId)
+                if self.progress > 100:
+                    self.parent.wifi.send_request(self, "minigameComplete?scannerId="+self.parent.id)
                     self.parent.currentMiniGame = IdleGame()
                     self.download = True
         else:

@@ -19,6 +19,10 @@ class Screen:
     def display_text(self, text, x_coordinate, y_coordinate):
         self.updateOccured = True
         self.display.text(text, x_coordinate, y_coordinate)
+
+    def display_rectangle(self, x_coordinate, y_coordinate, width, height):
+        self.display.fillRect(x_coordinate, y_coordinate, width, height)
+        pass
         
     def clear_screen(self):
         self.updateOccured = True
