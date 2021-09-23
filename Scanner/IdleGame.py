@@ -7,7 +7,9 @@ import random
  from {file} import {class}                   
  e.g. from WiresMinigame import WiresMinigame 
 '''
-from idBadge import ID_Badge
+from IdBadge import IdBadge
+from Reaction_Game import Reaction_Game
+
 
 class IdleGame(Minigame):
 
@@ -15,15 +17,15 @@ class IdleGame(Minigame):
         Minigame(self, parent)
         self.parent = parent
 
-        ## update bellow tuple with minigames
-        self.__minigames = (ID_Badge(), )
+        # update bellow tuple with minigames
+        self.__minigames = (IdBadge, Reaction_Game)
 
     def update(self):
         tag = self.parent.rfid.do_read()
 
-        if tag == ".game":
-            self.parent.currentMiniGame =  random.choice(self.__minigames)
-            
-        
+        if tag == "miniGame":
+            self.parent.currentMiniGame = random.choice(self.__minigames.__init__())
+
+
     def alertFromServer(self, alert):
         pass
