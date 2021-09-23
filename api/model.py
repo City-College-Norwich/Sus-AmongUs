@@ -8,7 +8,7 @@ class Model:
         return "hello"
 
     def getTagName (self, uid):
-        return uids[fakeKey]
+        return self.uids[uid]
         
 
 
