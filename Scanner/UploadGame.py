@@ -25,13 +25,11 @@ class Upload_Game:
                     Screen.display_rectangle(10, 10, self.progress_width, 30)
                     self.timer.Set(1000)
 
-                    if self.progrss == 100:
+                    if self.progress > 100:
                         self.parent.wifi.send_request(self, "minigameComplete?scannerId="+self.parent.id)
                         self.parent.currentMiniGame = IdleGame()
                     
             else:
                 Screen.display_text("Error: Download Task not complete", 0, 0)
-                Screen.draw_screen()
         else:
             Screen.display_text("Error: Walked away from task", 0, 0)
-            Screen.draw_screen()

@@ -30,6 +30,5 @@ class Download_Game:
                     self.download = True
         else:
             Screen.display_text("Error: Walked away from task", 0, 0)
-            Screen.draw_screen()
 
             
