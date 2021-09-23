@@ -22,7 +22,7 @@ class Download_Game:
             pass
         elif ((time.ticks_ms()/1000)%1 == 0):
             self.progress_width = self.progress_width + self.progress
-            progress_bar = display.fillRect(10, 10, self.progress_width, 30)
+            progress_bar = self.display.fillRect(10, 10, self.progress_width, 30)
             self.progress = self.progress + 10
             Screen.display_text(progress_bar, 10, 10)
             Screen.draw_screen()
