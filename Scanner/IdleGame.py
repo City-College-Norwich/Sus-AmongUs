@@ -28,7 +28,7 @@ class IdleGame(Minigame):
             self.parent.currentMiniGame = random.choice(self.__minigames.__init__())
         else:
             self.parent.screen.clear_screen()
-            self.parent.screen.display_text(f"GOTO:{' ':<3}{self.__target_station:>8}")
+            self.parent.screen.display_text("GOTO: " + str(self.__target_station))
 
     def alertFromServer(self, alert):
         pass
