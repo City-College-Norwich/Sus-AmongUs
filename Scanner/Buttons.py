@@ -10,4 +10,4 @@ class Buttons:
         self.__button3 = Pin(37, Pin.IN, Pin.PULL_DOWN)
 
     def getPressedButtons(self):
-        return self.__button0.value(), self.__button1.value(), self.__button2.value(), self.__button3.value()
+        return (self.__button0.value(), self.__button1.value(), self.__button2.value(), self.__button3.value())
