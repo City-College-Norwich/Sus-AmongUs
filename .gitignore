@@ -1,0 +1,4 @@
+.DS_Store
+Scanner/.idea/
+Scanner/__pycache__/
+api/__pycache__/
