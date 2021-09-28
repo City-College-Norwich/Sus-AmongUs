@@ -3,16 +3,12 @@ from TimerHelper import TimerHelper
 class Rfid:
 
     def __init__(self):
-<<<<<<< Updated upstream
-        self.rdr = mfrc522.MFRC522(12, 2, 17, 0, 13)
+        self.rdr = mfrc522.MFRC522(26, 27, 14, 12, 25)
         self.timer = TimerHelper()
         self.timer.Set(100)
         self.timerSet = False
 
-=======
-        self.rdr = mfrc522.MFRC522(26, 27, 14, 12, 25)
-        
->>>>>>> Stashed changes
+
     def update(self):
         pass
 
