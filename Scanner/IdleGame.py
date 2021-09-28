@@ -30,5 +30,6 @@ class IdleGame(Minigame):
             self.parent.screen.clear_screen()
             self.parent.screen.display_text("GOTO: " + str(self.__target_station))
 
+
     def alertFromServer(self, alert):
         pass
