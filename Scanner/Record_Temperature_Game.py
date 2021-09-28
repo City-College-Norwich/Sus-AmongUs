@@ -2,7 +2,7 @@ from Minigame import Minigame
 from IdleGame import IdleGame
 import random
 
-class Record_Temperature:
+class Record_Temperature_Game:
     def __init__(self, parent):
         Minigame.__init__(self,parent)
         self.current_temperature = random.randint(15,33)
