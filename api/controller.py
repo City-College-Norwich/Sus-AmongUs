@@ -1,5 +1,5 @@
 
-from flask import Flask
+from flask import Flask, request
 from model import model
 app = Flask(__name__)
 
@@ -28,3 +28,5 @@ def minigameComplete():
 @app.route("/keepAlive")
 def keepAlive():
     return model.keepAlive()
+
+app.run()
