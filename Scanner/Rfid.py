@@ -6,10 +6,11 @@ class Rfid:
 
     def __init__(self):
         self.name = None
-        self.rdr = mfrc522.MFRC522(12, 2, 17, 0, 13)
+        self.rdr = mfrc522.MFRC522(26, 27, 14, 33, 25)
         self.timer = TimerHelper()
         self.timer.set(100)
         self.timerSet = False
+
 
     def update(self):
         pass
