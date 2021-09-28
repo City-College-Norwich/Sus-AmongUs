@@ -30,7 +30,10 @@ class Screen:
         self.display.fill(0)
         
     def draw_screen(self):
+        updateFirst = True
         if self.updateOccured:
+
+            self.display.fill(0)
             self.display.show()
             self.updateOccured = False
 
