@@ -23,7 +23,11 @@ class Rfid:
                     uid= "0x%02x%02x%02x%02x" % (raw_uid[0], raw_uid[1], raw_uid[2], raw_uid[3])
                     self.name = self.parent.wifi.send_request('getTagName?uid=' + uid )
                     return self.name
-        # send previous result if anything fails
+                    
+            # if anything failed set name to none
+            self.name = None    
+
+        # send previous result while timer hasnt been hit
         return self.name
 
 
