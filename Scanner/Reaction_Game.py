@@ -13,7 +13,7 @@ class Reaction_Game:
 
         self.state = "Black"
 
-    def update():
+    def update(self):
         if time.ticks_ms()/1000 >= self.endpoint:
             if self.state == "Black":
                 self.parent.screen.fill(1)
