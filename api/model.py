@@ -24,7 +24,5 @@ class Model:
         if self.completedMinigames >= self.totalMinigames:
             self.state = "Game_Ended"
         
-
         if self.state == "Game_Ended":
-
             return "Game_Ended"
