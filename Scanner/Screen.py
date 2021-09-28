@@ -44,7 +44,6 @@ class Screen:
 
     def fill(self, value):
         self.firstCheck()
-        self.updateOccured = True
         if value == 1:
             self.display.fill(1)
         elif value == 0:
