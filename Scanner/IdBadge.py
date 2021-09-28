@@ -1,6 +1,6 @@
 from Minigame import Minigame
 
-class ID_Badge(Minigame):
+class IdBadge(Minigame):
     def __init__(self, parent):
         Minigame.__init__(self,parent)
         self.parent = parent

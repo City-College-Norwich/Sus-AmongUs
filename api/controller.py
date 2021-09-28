@@ -8,7 +8,10 @@ model = Model()
 @app.route("/")
 def home():
     return model.callHomepage()
-    
+
+@app.route("/requestStation")
+def requestStation():
+    return model.requestStation()
 
 @app.route("/getTagName")
 def getTagName():
@@ -25,4 +28,3 @@ def minigameComplete():
 @app.route("/keepAlive")
 def keepAlive():
     return model.keepAlive()
-

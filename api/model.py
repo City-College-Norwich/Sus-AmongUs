@@ -1,3 +1,5 @@
+import random
+
 class Model:
     def __init__(self):
         self.uids = {"fakeKey":"testValue"}
@@ -12,6 +14,9 @@ class Model:
     def callHomepage(self):
         return "hello"
 
+    def requestStation(self):
+        return "station" + str(random.choice(range(1, 11)))
+
     def minigameComplete(self, scannerId):
         self.completedMinigames += 1
 
@@ -19,5 +24,5 @@ class Model:
         if self.completedMinigames >= self.totalMinigames:
             self.state = "Game_Ended"
         
-        if self.state = "Game_Ended":
+        if self.state == "Game_Ended":
             return "Game_Ended"
