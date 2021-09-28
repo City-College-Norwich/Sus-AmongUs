@@ -15,7 +15,7 @@ class Model:
         return "hello"
 
     def requestStation(self):
-        return "station" + random.choice(range(1, 11))
+        return "station" + str(random.choice(range(1, 11)))
 
     def minigameComplete(self, scannerId):
         self.completedMinigames += 1
