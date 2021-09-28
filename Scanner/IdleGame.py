@@ -29,7 +29,7 @@ class IdleGame(Minigame):
 
         else:
             self.parent.screen.clear_screen()
-            self.parent.screen.display_text(f"GOTO:{' ':<3}{self.__target_station:>8}")
+            self.parent.screen.display_text("GOTO:{' ':<3}{self.__target_station:>8}")
 
 
     def alertFromServer(self, alert):

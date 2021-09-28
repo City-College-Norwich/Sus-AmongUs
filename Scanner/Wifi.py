@@ -4,9 +4,9 @@ import urequests as requests
 
 class Wifi:
     wlan = None
-    SSID = "woodnet"
-    PASSWORD = "CCNRules"
-    URL = "http://localhost/"
+    SSID = "AmongstUsNet"
+    PASSWORD = "AmongstUs"
+    URL = "http://192.1.1.1:5000/"
     def __init__(self):
         # Initilize wlan object
         if(self.wlan == None):
@@ -22,6 +22,5 @@ class Wifi:
                 time.sleep_ms(500)
 
     def send_request(self, message):
-        response = requests.get(URL+ "/" + message)
-        response.close()
+        response = requests.get(self.URL + message)
         return(response.text)
