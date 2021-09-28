@@ -31,14 +31,19 @@ class Screen:
         
     def draw_screen(self):
         if self.updateOccured:
-            self.clear_screen()
             self.display.show()
             self.updateOccured = False
 
     def update(self):
         pass
 
+    def firstCheck(self):
+        if updateOccured = False:
+            self.clear_screen()
+            updateOccured = True
+
     def fill(self, value):
+        self.firstCheck()
         self.updateOccured = True
         if value == 1:
             self.display.fill(1)
