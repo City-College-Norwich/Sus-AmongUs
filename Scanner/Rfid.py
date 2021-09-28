@@ -11,6 +11,7 @@ class Rfid:
         self.timer.set(100)
         self.timerSet = False
 
+
     def update(self):
         pass
 
