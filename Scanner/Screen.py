@@ -38,7 +38,6 @@ class Screen:
         pass
 
     def fill(self, value):
-        self.firstCheck()
         if value == 1:
             self.display.fill(1)
         elif value == 0:
