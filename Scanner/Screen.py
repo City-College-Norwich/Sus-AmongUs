@@ -38,8 +38,10 @@ class Screen:
         pass
 
     def fill(self, value):
-        self.updateOccurred = True
         if value == 1:
             self.display.fill(1)
         elif value == 0:
             self.display.fill(0)
+            
+if self.updateOccured = False:
+    self.clear_screen()
