@@ -8,7 +8,7 @@ class Model:
         self.state = "Game_Running"
         pass
 
-    def getTagName (self, uid):
+    def getTagName(self, uid):
         return self.uids[uid]      
       
     def callHomepage(self):
