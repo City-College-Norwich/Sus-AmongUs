@@ -37,14 +37,12 @@ class Screen:
     def update(self):
         pass
 
-    def firstCheck(self):
-        if updateOccured = False:
-            self.clear_screen()
-            updateOccured = True
-
     def fill(self, value):
         self.firstCheck()
         if value == 1:
             self.display.fill(1)
         elif value == 0:
             self.display.fill(0)
+            
+if self.updateOccured = False:
+            self.clear_screen()
