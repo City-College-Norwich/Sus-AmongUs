@@ -6,24 +6,7 @@
 
 Copyright (C) 2007 Free Software Foundation, Inc. <https://fsf.org/>
 
-Everyone is permitted to copy and distribute verbatim copies of this
-license document, but changing it is not allowed.
-
 ï¼ˆè¨³: æœ¬ãƒ©ã‚¤ã‚»ãƒ³ã‚¹æ–‡æ›¸ã‚’ã€ä¸€å­—ä¸€å¥å¿ å®Ÿã«è¤‡è£½ã€é ’å¸ƒã™ã‚‹ã“ã¨ã¯è¨±å¯ã™ã‚‹ã€‚ã—ã‹ã—å¤‰æ›´ã¯èªã‚ãªã„ã€‚ï¼‰
-
-This is an unofficial translation of the GNU Affero General Public License
-into Japanese. It was not published by the Free Software Foundation,
-and does not legally state the distribution terms for software that
-uses the GNU AGPLâ€“only the original English text of the GNU AGPL does
-that. However, we hope that this translation will help Japanese
-speakers understand the GNU AGPL better.
-
-ï¼ˆè¨³: ä»¥ä¸‹ã¯ GNU Affero General Public License ã®éžå…¬å¼ãªæ—¥æœ¬èªžè¨³ã§ã™ã€‚ã“ã‚Œã¯ãƒ•ãƒªãƒ¼ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢è²¡å›£ï¼ˆFree Software Foundationï¼‰ã«ã‚ˆã£ã¦æ­£å¼ã«ç™ºè¡¨ã•ã‚ŒãŸã‚‚ã®ã§ã¯ãªãã€GNU AGPL ãŒé©ç”¨ã•ã‚ŒãŸã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢ã®é ’å¸ƒæ¡ä»¶ã‚’æ³•çš„ã«æœ‰åŠ¹ãªå½¢ã§è¿°ã¹ãŸã‚‚ã®ã§ã¯ã‚ã‚Šã¾ã›ã‚“ã€‚é ’å¸ƒæ¡ä»¶ã¨ã—ã¦ã¯ã€GNU AGPL ã®è‹±èªžç‰ˆãƒ†ã‚­ã‚¹ãƒˆã§æŒ‡å®šã•ã‚Œã¦ã„ã‚‹ã‚‚ã®ã®ã¿ãŒæœ‰åŠ¹ã§ã™ã€‚ã—ã‹ã—ãªãŒã‚‰ã€ç§ãŸã¡ã¯ã“ã®ç¿»è¨³ãŒã€æ—¥æœ¬èªžã‚’ä½¿ç”¨ã™ã‚‹äººã€…ã«ã¨ã£ã¦ GNU AGPL ã‚’ã‚ˆã‚Šè‰¯ãç†è§£ã™ã‚‹åŠ©ã‘ã¨ãªã‚‹ã“ã¨ã‚’æœ›ã‚“ã§ã„ã¾ã™ã€‚ï¼‰
-
-You may publish this translation, modified or unmodified, only under
-the terms at https://www.gnu.org/licenses/translations.html.
-
-ï¼ˆè¨³: ã‚ãªãŸã¯ã“ã®ç¿»è¨³ã‚’ã€æ”¹å¤‰ã®æœ‰ç„¡ã‚’å•ã‚ãšã€https://www.gnu.org/licenses/translations.html ã«è¨˜è¼‰ã•ã‚ŒãŸæ¡ä»¶ã®ä¸‹ã§ã®ã¿å…¬é–‹ã™ã‚‹ã“ã¨ãŒã§ãã¾ã™ã€‚ï¼‰
 
 ç¿»è¨³ã¯å…«ç”°çœŸè¡Œ <mhatta@gnu.org> ãŒè¡Œã£ãŸã€‚åŽŸæ–‡ã¯ https://www.gnu.org/licenses/agpl.txt ã§ã‚ã‚‹ã€‚èª¤è¨³ã®æŒ‡æ‘˜ã‚„è¨³ã®æ”¹å–„æ¡ˆã‚’æ­“è¿Žã™ã‚‹ã€‚ãªãŠã€æ—¥æœ¬èªžè¨³ã®åˆ©ç”¨æ¡ä»¶ã¯åŽŸæ–‡ã«æº–ãšã‚‹ã€‚
 
