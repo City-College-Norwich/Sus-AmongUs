@@ -44,4 +44,4 @@ class Screen:
             self.display.fill(0)
             
 if self.updateOccured = False:
-            self.clear_screen()
+        self.clear_screen()
