@@ -7,26 +7,26 @@ model = Model()
 
 @app.route("/")
 def home():
-    return model.callHomepage()
+    return Model.callHomepage()
 
 @app.route("/requestStation")
 def requestStation():
-    return model.requestStation()
+    return Model.requestStation()
 
 @app.route("/getTagName")
 def getTagName():
     args = request.args
-    return model.getTagName(args["uid"])
+    return Model.getTagName(args["uid"])
 
 
 @app.route("/minigameComplete")
 def minigameComplete():
     args = request.args
-    return model.minigameComplete(args["scannerId"])
+    return Model.minigameComplete(args["scannerId"])
   
 
 @app.route("/keepAlive")
 def keepAlive():
-    return model.keepAlive()
+    return Model.keepAlive()
 
-app.run()
+if __name__ == '__main__': app.run(host='0.0.0.0')
