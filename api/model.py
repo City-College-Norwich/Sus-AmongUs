@@ -1,3 +1,4 @@
+from Team_Select import Team_Select
 import random
 import csv
 
@@ -10,11 +11,17 @@ class Model:
 
         self.totalMinigames = 10
         self.completedMinigames = 0
-        self.state = "Game_Running"
-        pass
+        self.state = "Game_Starting"
+        self.players ={99:['player_uid', 'team'],}
 
     def getTagName(self, uid):
-        return self.uids[uid]      
+        return self.uids[uid] 
+
+    def startGame(self):
+        self.state = "Game_Running"
+        self.Team_Select.assign_team(self.players)
+        return self.state
+
       
     def callHomepage(self):
         return "hello"
