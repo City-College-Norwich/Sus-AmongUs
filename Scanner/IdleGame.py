@@ -42,7 +42,6 @@ class IdleGame(Minigame):
             self.parent.screen.display_text("Game Over!")
 
     def alertFromServer(self, alert):
-        pass
         if alert == 'Gameended':
             self.state = ENDED
         # If alert = game ended
