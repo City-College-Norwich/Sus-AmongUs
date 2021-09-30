@@ -1,8 +1,13 @@
 import random
+import csv
 
 class Model:
     def __init__(self):
-        self.uids = {"fakeKey":"testValue"}
+
+        with open('RFIDMap.csv', mode='r') as csvfile:
+            reader = csv.reader(csvfile)
+            self.uids = {row[0]: row[1] for row in reader}
+
         self.totalMinigames = 10
         self.completedMinigames = 0
         self.state = "Game_Running"
