@@ -1,4 +1,3 @@
-from Team_Select import Team_Select
 import random
 import csv
 
@@ -13,13 +12,28 @@ class Model:
         self.completedMinigames = 0
         self.state = "Game_Starting"
         self.players ={99:['player_uid', 'team'],}
+        self.Crewmate = 0
+        self.Imposter = 0
 
     def getTagName(self, uid):
         return self.uids[uid] 
 
     def startGame(self):
         self.state = "Game_Running"
-        self.Team_Select.assign_team(self.players)
+        for i in range(0, len(self.players )):
+            team_assigner = random.randint(0,2)
+            if self.Crewmate == 8:
+                team_assigner == 1
+
+            if self.Imposter == 2:
+                team_assigner == 0
+
+            if team_assigner == 0 :
+                self.players [i][1] = "Crewmate"
+                self.Crewmate +=1
+            elif team_assigner == 1:
+                self.players [i][1] = "Imposter"
+                self.Imposter += 1
         return self.state
 
       
