@@ -12,7 +12,3 @@ class StartupGame(Minigame):
 
         if tag == ".main":
             self.parent.wifi.sendRequest('StartGame')
-
-    def alertFromServer(self, alert):
-        if alert == 'GameStarted':
-            self.parent.currentMiniGame = IdleGame()

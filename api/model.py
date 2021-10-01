@@ -1,6 +1,7 @@
 import random
 import csv
 
+
 class Model:
     def __init__(self):
 
@@ -11,7 +12,6 @@ class Model:
         self.totalMinigames = 10
         self.completedMinigames = 0
         self.state = "Game_Running"
-        pass
 
     def getTagName(self, uid):
         return self.uids[uid]      
@@ -26,8 +26,12 @@ class Model:
         self.completedMinigames += 1
 
     def keepAlive(self):
+        alerts = set()
+
         if self.completedMinigames >= self.totalMinigames:
             self.state = "Game_Ended"
         
         if self.state == "Game_Ended":
-            return "Game_Ended"
+            alerts.add("Game_Ended")
+
+        return alerts

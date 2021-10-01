@@ -18,6 +18,3 @@ class IdBadge(Minigame):
             self.parent.screen.clear_screen()
             self.parent.screen.display_text('Card Scanned', 0, 0)
             self.parent.wifi.sendRequest('minigameComplete?scannerId='+self.parent.id)
-
-    def alertFromServer(self, alert):
-        pass
