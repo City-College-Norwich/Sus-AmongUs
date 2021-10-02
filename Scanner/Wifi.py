@@ -11,7 +11,7 @@ class Wifi:
     URL = "http://192.1.1.1:5000/"
 
     def __init__(self):
-        # Initilize wlan object
+        # Initialize wlan object
         self.wlan = network.WLAN(network.STA_IF)
         self.wlan.active(True)
         # try to connect to the set wifi AP
