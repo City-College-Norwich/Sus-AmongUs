@@ -5,9 +5,9 @@ from IdleGame import IdleGame
 from Minigame import Minigame
 
 
-class ReactionGame:
+class ReactionGame(Minigame):
     def __init__(self, parent):
-        Minigame.__init__(self, parent)
+        super().__init__(self, parent)
         self.parent = parent
         self.can_press_button = False
         time_to_change = random.randint(5, 16)

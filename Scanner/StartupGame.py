@@ -4,7 +4,7 @@ from IdleGame import IdleGame
 
 class StartupGame(Minigame):
     def __init__(self, parent):
-        Minigame.__init__(self, parent)
+        super().__init__(self, parent)
         self.parent = parent
 
     def update(self):

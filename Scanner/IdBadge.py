@@ -3,7 +3,7 @@ from Minigame import Minigame
 
 class IdBadge(Minigame):
     def __init__(self, parent):
-        Minigame.__init__(self, parent)
+        super().__init__(self, parent)
         self.parent = parent
 
         self.parent.screen.display_text('Scan Card', 0, 0)
