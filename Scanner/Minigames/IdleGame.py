@@ -7,8 +7,8 @@ from Minigame import Minigame
  from {file} import {class}                   
  e.g. from WiresMinigame import WiresMinigame 
 '''
-from IdBadge import IdBadge
-from ReactionGame import ReactionGame
+from Minigames.IdBadge import IdBadge
+from Minigames.ReactionGame import ReactionGame
 
 RUNNING = 0
 ENDED = 1

@@ -4,7 +4,7 @@ import Buttons
 import Rfid
 import Screen
 import Wifi
-from StartupGame import StartupGame
+from Minigames.StartupGame import StartupGame
 
 
 class App:
