@@ -15,9 +15,6 @@ class Minigame:
         if 'Game_Ended' in alerts:
             self.parent.currentMiniGame = IdleGame()
             self.parent.currentMiniGame.state = 1  # ENDED
-   
-
-
 
 
 
