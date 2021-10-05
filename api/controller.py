@@ -1,6 +1,6 @@
 
 from flask import Flask, request
-from model import model
+from model import Model
 app = Flask(__name__)
 
 model = Model()
@@ -8,6 +8,10 @@ model = Model()
 @app.route("/")
 def home():
     return Model.callHomepage()
+
+@app.route("/StartGame")
+def startGame():
+    return Model.startGame()
 
 @app.route("/requestStation")
 def requestStation():
