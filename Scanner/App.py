@@ -4,7 +4,10 @@ import Buttons
 import Rfid
 import Screen
 import Wifi
+from TimerHelper import TimerHelper
 from Minigames.StartupGame import StartupGame
+
+KEEP_ALIVE_TIMEOUT = 500  # timeout in ms
 
 
 class App:
@@ -18,8 +21,10 @@ class App:
 
         self.id = 1
         self.isRunning = True
+        self.keep_alive_timer = TimerHelper()
 
     def run(self):
+        self.keep_alive_timer.set(KEEP_ALIVE_TIMEOUT)
         # mainloop
         while self.isRunning:
             # update modules
@@ -31,8 +36,7 @@ class App:
             self.screen.draw_screen()
 
     def keepAlive(self):
-        # if set amount of time has passed then
-        # reset time
-        # send msg to server
-        # inform current minigame of results
-        pass
+        if self.keep_alive_timer.check():
+            alerts = self.wifi.send_request("keepAlive")
+            self.currentMiniGame.alertsFromServer(alerts)
+            self.keep_alive_timer.set(KEEP_ALIVE_TIMEOUT)

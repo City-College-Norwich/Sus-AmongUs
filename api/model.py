@@ -12,35 +12,39 @@ class Model:
         self.totalMinigames = 10
         self.completedMinigames = 0
         self.state = "Game_Starting"
+
                         # card ID,   team,   alive/dead
         self.players ={99:['player_uid', 'team', True],}
         self.Crewmate = 0
         self.Imposter = 0
-        self.totalImposters = 2
 
+        self.totalImposters = 2
+        self.userID = 0
 
     def getTagName(self, uid):
-        if tag != self.uids[uid]:
-            return "No tags found"
-        else:
+        
+        if uid in self.uids.keys():            
             return self.uids[uid] 
+        else:
+            return "No tags found"
+            
 
     def startGame(self):
         self.state = "Game_Running"
         for i in range(0, len(self.players)):
-            team_assigner = random.randint(0,2)
-            if self.Crewmate == len(self.players) - self.totalImposters:
-                team_assigner = 1
+            teamAssigner = random.randint(0,2)
+            if self.crewmate == len(self.players) - self.totalImposters:
+                teamAssigner = 1
 
-            if self.Imposter == self.totalImposters:
-                team_assigner = 0
+            if self.imposter == self.totalImposters:
+                teamAssigner = 0
 
-            if team_assigner == 0 :
+            if teamAssigner == 0 :
                 self.players[i][1] = "Crewmate"
-                self.Crewmate +=1
-            elif team_assigner == 1:
+                self.crewmate +=1
+            elif teamAssigner == 1:
                 self.players[i][1] = "Imposter"
-                self.Imposter += 1
+                self.imposter += 1
         return self.state
 
       
@@ -66,6 +70,7 @@ class Model:
             alerts.add("Game_Ended")
 
         return alerts
+
             return "Game_Ended"
 
     def deadbodyfound(self, playerId):
@@ -75,6 +80,12 @@ class Model:
         
         if self.players [id][2] == False:
             startVote() #This needs creating first
-        
-         
+
+    def askForID(self):
+        self.userID += 1
+        return self.userID
+
+    def registerUser(self, scannerId, uid):
+        self.players[scannerId] = [uid, "team", True]
+        return "Okay"
 

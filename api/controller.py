@@ -35,13 +35,23 @@ def minigameComplete():
 @app.route("/keepAlive")
 def keepAlive():
     return model.keepAlive()
-
-
+  
 
 @app.route("/deadBodyFound")
 def deadBodyFound():
     args = request.args
     return model.deadbodyfound(args["playerId"])
-  
 
+  
+@app.route("/askForID")
+def askForID():
+    return model.askForID()
+
+  
+@app.route("/registerUser")
+def registerUser():
+    args = request.args
+    return model.registerUser(args["scannerId"], args["uid"])
+  
+  
 if __name__ == '__main__': app.run(host='0.0.0.0')
