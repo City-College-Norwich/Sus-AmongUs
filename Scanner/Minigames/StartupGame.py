@@ -14,3 +14,4 @@ class StartupGame(Minigame):
 
         if tag == ".main":
             self.parent.wifi.send_request('StartGame')
+            print(tag)

@@ -16,7 +16,7 @@ class Screen:
         i2c = I2C(scl=scl, sda=sda)
         self.display = ssd1306.SSD1306_I2C(128, 64, i2c)
         self.updateOccurred = False
-        print("Initiate Screen")
+        self.display_text("Ready to Start", 0, 0)
         
     def display_text(self, text, x_coordinate, y_coordinate):
         self.updateOccurred = True

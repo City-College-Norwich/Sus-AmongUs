@@ -34,4 +34,6 @@ class Rfid:
             self.name = None
 
         # send previous result while timer hasnt been hit
+        if self.name != None:
+          print(self.name)
         return self.name
