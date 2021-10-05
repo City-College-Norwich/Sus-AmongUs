@@ -11,4 +11,4 @@ class StartupGame(Minigame):
         tag = self.parent.rfid.do_read()
 
         if tag == ".main":
-            self.parent.wifi.sendRequest('StartGame')
+            self.parent.wifi.send_request('StartGame')

@@ -25,7 +25,7 @@ class IdleGame(Minigame):
         
         # update bellow set with minigames
         self.__minigames = {IdBadge, ReactionGame}
-        self.__target_station = self.parent.wifi.sendRequest("requestStation")
+        self.__target_station = self.parent.wifi.send_request("requestStation")
 
     def update(self):
         if self.state == RUNNING:

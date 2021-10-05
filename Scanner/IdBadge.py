@@ -17,4 +17,4 @@ class IdBadge(Minigame):
         if tag == 'card':  # TODO- get format of id card data.
             self.parent.screen.clear_screen()
             self.parent.screen.display_text('Card Scanned', 0, 0)
-            self.parent.wifi.sendRequest('minigameComplete?scannerId='+self.parent.id)
+            self.parent.wifi.send_request('minigameComplete?scannerId='+self.parent.id)
