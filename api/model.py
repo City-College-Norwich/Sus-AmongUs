@@ -13,8 +13,8 @@ class Model:
         self.completedMinigames = 0
         self.state = "Game_Starting"
         self.players ={99:['player_uid', 'team'],}
-        self.Crewmate = 0
-        self.Imposter = 0
+        self.crewmate = 0
+        self.imposter = 0
         self.totalImposters = 2
         self.userID = 0
 
@@ -27,19 +27,19 @@ class Model:
     def startGame(self):
         self.state = "Game_Running"
         for i in range(0, len(self.players)):
-            team_assigner = random.randint(0,2)
-            if self.Crewmate == len(self.players) - self.totalImposters:
-                team_assigner = 1
+            teamAssigner = random.randint(0,2)
+            if self.crewmate == len(self.players) - self.totalImposters:
+                teamAssigner = 1
 
-            if self.Imposter == self.totalImposters:
-                team_assigner = 0
+            if self.imposter == self.totalImposters:
+                teamAssigner = 0
 
-            if team_assigner == 0 :
+            if teamAssigner == 0 :
                 self.players[i][1] = "Crewmate"
-                self.Crewmate +=1
-            elif team_assigner == 1:
+                self.crewmate +=1
+            elif teamAssigner == 1:
                 self.players[i][1] = "Imposter"
-                self.Imposter += 1
+                self.imposter += 1
         return self.state
 
       
