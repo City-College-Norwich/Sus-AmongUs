@@ -27,4 +27,4 @@ Please make sure to update tests as appropriate and follow [PEP 8](https://www.p
 
 ## License
 
-[GNU AGPLv3](https://choosealicense.com/licenses/agpl-3.0/) Japanese Edition 
+[GNU AGPLv3](https://choosealicense.com/licenses/agpl-3.0/)
