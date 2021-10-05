@@ -11,6 +11,10 @@ def home():
     return model.callHomepage()
 
 
+@app.route("/StartGame")
+def startGame():
+    return Model.startGame()
+
 @app.route("/requestStation")
 def requestStation():
     return model.requestStation()
