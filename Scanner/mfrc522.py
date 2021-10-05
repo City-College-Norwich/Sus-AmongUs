@@ -19,7 +19,7 @@ class MFRC522:
 		self.mosi = Pin(mosi, Pin.OUT)
 		self.miso = Pin(miso)
 		self.rst = Pin(rst, Pin.OUT)
-		self.cs = Pin(cs, Pin.OUT)
+		self.cs = Pin(sda, Pin.OUT)
 
 		self.rst.value(0)
 		self.cs.value(1)
