@@ -42,6 +42,7 @@ class Screen:
             self.display.fill(1)
         elif value == 0:
             self.display.fill(0)
-            
-if self.updateOccured = False:
+
+
+if not self.updateOccured:
     self.clear_screen()
