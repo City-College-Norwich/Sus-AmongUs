@@ -41,7 +41,7 @@ def keepAlive():
 @app.route("/deadBodyFound")
 def deadBodyFound():
     args = request.args
-    return Model.deadbodyfound(args["playerId"])
+    return model.deadbodyfound(args["playerId"])
   
 
 if __name__ == '__main__': app.run(host='0.0.0.0')
