@@ -21,6 +21,7 @@ class Screen:
     def display_text(self, text, x_coordinate, y_coordinate):
         self.updateOccurred = True
         self.display.text(text, x_coordinate, y_coordinate)
+        self.draw_screen()
 
     def display_rectangle(self, x_coordinate, y_coordinate, width, height):
         self.updateOccurred = True
