@@ -31,7 +31,14 @@ class IdleGame(Minigame):
         if self.state == RUNNING:
            
             targetRfidTag = self.parent.rfid.do_read()
+            # check if the first 7 characters == playerId
+            # if yes, then split at the colon and get the playerId number (just like in model)
+            # send that playerId in the sendRequest
 
+            #targetRfidTag = 'playerId:12'
+            if targetRfidTag == 'playerId':
+                playerId = targetRfidTag.split(':')
+                self.parent.wifi.sendRequest("deadBodyFound?playerId="+playerId)
             if targetRfidTag == self.__target_station:
                 self.parent.currentMiniGame = random.choice(self.__minigames.__init__())
             else:
