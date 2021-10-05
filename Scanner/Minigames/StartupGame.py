@@ -6,9 +6,14 @@ class StartupGame(Minigame):
     def __init__(self, parent):
         super().__init__(self, parent)
         self.parent = parent
+
     
         # Save ID
         userID = self.parent.wifi.send_request('askForID')
+
+        print("Initiate StartupGame")
+
+
 
         self.parent.id = userID
     
@@ -21,8 +26,12 @@ class StartupGame(Minigame):
         if tag == ".main":
             self.parent.wifi.send_request('StartGame')
 
+
         # ID badge scanned
         # If not recognised by server, tell server to register badge and ID
         
         elif tag not None:
             self.parent.wifi.send_request('registerUser?scannerId='+self.parent.id+'&uid='+uid)
+
+            print(tag)
+

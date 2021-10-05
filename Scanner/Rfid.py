@@ -4,12 +4,14 @@ from TimerHelper import TimerHelper
 
 class Rfid:
 
-    def __init__(self):
+    def __init__(self, parent):
         self.name = None
         self.rdr = mfrc522.MFRC522(26, 27, 14, 33, 25)
         self.timer = TimerHelper()
         self.timer.set(100)
         self.timerSet = False
+        self.parent = parent
+        print("Initiate Rfid")
 
 
     def update(self):
@@ -39,4 +41,6 @@ class Rfid:
             self.name = None
 
         # send previous result while timer hasnt been hit
+        if self.name != None:
+          print(self.name)
         return self.name

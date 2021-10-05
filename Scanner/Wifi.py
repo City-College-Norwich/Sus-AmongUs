@@ -19,12 +19,18 @@ class Wifi:
         # Keep looping until connection is successful
         while True:
             if self.wlan.isconnected():
+                print("Connected to: " + self.SSID)
                 return
             else:
                 time.sleep_ms(500)
+                print("Connecting...")
                 
     def send_request(self, message):
-        response = requests.get(self.URL + message)
-        return(response.text)
+        response = requests.get(self.URL+ message)
+        print(self.URL+ message)
+        text = response.text
+        print(text)
+        response.close()
+        return(text)
 
     
