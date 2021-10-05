@@ -19,10 +19,12 @@ class Model:
         self.userID = 0
 
     def getTagName(self, uid):
-        if tag != self.uids[uid]:
-            return "No tags found"
-        else:
+        
+        if uid in self.uids.keys():            
             return self.uids[uid] 
+        else:
+            return "No tags found"
+            
 
     def startGame(self):
         self.state = "Game_Running"
