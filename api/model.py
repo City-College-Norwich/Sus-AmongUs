@@ -16,7 +16,7 @@ class Model:
         self.Crewmate = 0
         self.Imposter = 0
         self.totalImposters = 2
-
+        self.userID = 0
 
     def getTagName(self, uid):
         if tag != self.uids[uid]:
@@ -65,3 +65,11 @@ class Model:
             alerts.add("Game_Ended")
 
         return alerts
+
+    def askForID(self):
+        self.userID += 1
+        return self.userID
+
+    def registerUser(self, scannerId, uid):
+        self.players[scannerId] = [uid, "team", True]
+        return "Okay"
