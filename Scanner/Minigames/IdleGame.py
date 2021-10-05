@@ -12,9 +12,12 @@ from Minigames.ReactionGame import ReactionGame
 
 RUNNING = 0
 ENDED = 1
+
+
 class IdleGame(Minigame):
 
     def __init__(self, parent):
+        super().__init__(parent)
         Minigame(self, parent)
         self.parent = parent
         # Add state variable 
@@ -22,12 +25,10 @@ class IdleGame(Minigame):
         
         # update bellow set with minigames
         self.__minigames = {IdBadge, ReactionGame}
-        self.__target_station = self.parent.wifi.sendRequest("requestStation")
+        self.__target_station = self.parent.wifi.send_request("requestStation")
 
-    def update(self): 
-        # If state = running 
-            # then do all of that
-        if self.state == RUNNING
+    def update(self):
+        if self.state == RUNNING:
            
             targetRfidTag = self.parent.rfid.do_read()
 
@@ -36,14 +37,5 @@ class IdleGame(Minigame):
             else:
                 self.parent.screen.clear_screen()
                 self.parent.screen.display_text("GOTO: " + str(self.__target_station))
-        #elseif gamestopped 
-        #display game ended message 
         elif self.state == ENDED:
             self.parent.screen.display_text("Game Over!")
-
-    def alertFromServer(self, alert):
-        if alert == 'Gameended':
-            self.state = ENDED
-        # If alert = game ended
-            #Then set state to game ended
-        

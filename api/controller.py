@@ -5,9 +5,11 @@ app = Flask(__name__)
 
 model = Model()
 
+
 @app.route("/")
 def home():
-    return Model.callHomepage()
+    return model.callHomepage()
+
 
 @app.route("/StartGame")
 def startGame():
@@ -15,22 +17,24 @@ def startGame():
 
 @app.route("/requestStation")
 def requestStation():
-    return Model.requestStation()
+    return model.requestStation()
+
 
 @app.route("/getTagName")
 def getTagName():
     args = request.args
-    return Model.getTagName(args["uid"])
+    return model.getTagName(args["uid"])
 
 
 @app.route("/minigameComplete")
 def minigameComplete():
     args = request.args
-    return Model.minigameComplete(args["scannerId"])
-  
+    return model.minigameComplete(args["scannerId"])
+
 
 @app.route("/keepAlive")
 def keepAlive():
-    return Model.keepAlive()
+    return model.keepAlive()
+
 
 if __name__ == '__main__': app.run(host='0.0.0.0')

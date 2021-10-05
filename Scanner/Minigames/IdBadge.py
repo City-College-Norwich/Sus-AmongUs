@@ -3,7 +3,7 @@ from Minigame import Minigame
 
 class IdBadge(Minigame):
     def __init__(self, parent):
-        Minigame.__init__(self, parent)
+        super().__init__(self, parent)
         self.parent = parent
 
         self.parent.screen.display_text('Scan Card', 0, 0)
@@ -17,7 +17,4 @@ class IdBadge(Minigame):
         if tag == 'card':  # TODO- get format of id card data.
             self.parent.screen.clear_screen()
             self.parent.screen.display_text('Card Scanned', 0, 0)
-            self.parent.wifi.sendRequest('minigameComplete?scannerId='+self.parent.id)
-
-    def alertFromServer(self, alert):
-        pass
+            self.parent.wifi.send_request('minigameComplete?scannerId='+self.parent.id)
