@@ -13,7 +13,7 @@ def home():
 
 @app.route("/StartGame")
 def startGame():
-    return Model.startGame()
+    return model.startGame()
 
 @app.route("/requestStation")
 def requestStation():

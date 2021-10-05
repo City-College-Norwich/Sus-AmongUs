@@ -9,7 +9,7 @@ from Minigames.StartupGame import StartupGame
 
 class App:
     def __init__(self):
-        self.rfid = Rfid.Rfid()
+        self.rfid = Rfid.Rfid(self)
         self.wifi = Wifi.Wifi()
         self.screen = Screen.Screen()
         self.buttons = Buttons.Buttons()
