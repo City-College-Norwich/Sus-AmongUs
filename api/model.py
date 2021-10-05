@@ -53,10 +53,10 @@ class Model:
         alerts = set()
 
         if self.totalImposters == 0:
-            self.state == "Game_Ended"
+            self.state = "Game_Ended"
 
         if self.completedMinigames >= self.totalMinigames:
-            self.state == "Game_Ended"
+            self.state = "Game_Ended"
         
         if self.state == "Game_Ended":
             alerts.add("Game_Ended")
