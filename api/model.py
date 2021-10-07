@@ -1,6 +1,6 @@
 import random
 import csv
-import json
+import pickle
 
 
 class Model:
@@ -67,7 +67,7 @@ class Model:
         if self.state == "Game_Ended":
             alerts.add("Game_Ended")
 
-        return json.dumps(alerts)
+        return pickle.dumps(alerts)
 
     def askForID(self):
         self.userID += 1
