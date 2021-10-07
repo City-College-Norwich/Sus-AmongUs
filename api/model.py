@@ -1,6 +1,6 @@
 import random
 import csv
-
+from TimeHelper import TimeHelper
 
 class Model:
     def __init__(self):
@@ -17,6 +17,10 @@ class Model:
         self.impostor = 0
         self.totalImpostors = 2
         self.userID = 0
+        self.sabotaged = False
+        self.sabotage_time = 0
+        self.sabotage_type = 0
+        self.time = TimeHelper()
 
     def getTagName(self, uid):
         
@@ -56,6 +60,10 @@ class Model:
 
     def keepAlive(self):
         alerts = set()
+        
+        if self.sabotaged == True:
+            alerts.add("Sabotaged")
+            return self.sabotage_type
 
         if self.totalImpostors == 0:
             self.state = "Crewmates_Win"
@@ -81,3 +89,8 @@ class Model:
     def registerUser(self, scannerId, uid):
         self.players[scannerId] = [uid, "team", True]
         return "Okay"
+
+    def sabotage(self, sabotageType):
+        self.sabotaged = True
+        self.sabotage_type = sabotageType
+

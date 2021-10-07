@@ -19,3 +19,7 @@ class Minigame:
         elif "Impostor_Win" in alerts:
             self.parent.currentMiniGame = IdleGame()
             self.parent.currentMiniGame.state = 2  # Impostor win
+
+        if 'Sabotaged' in alerts:
+            pass
+
