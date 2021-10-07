@@ -52,6 +52,11 @@ def askForID():
 def registerUser():
     args = request.args
     return model.registerUser(args["scannerId"], args["uid"])
+
   
-  
+  @app.route("/sabotage")
+def sabotage():
+    args = request.args
+    return model.sabotage(args["sabotageType"])
+
 if __name__ == '__main__': app.run(host='0.0.0.0')
