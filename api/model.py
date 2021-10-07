@@ -63,7 +63,7 @@ class Model:
         if self.completedMinigames >= self.totalMinigames:
             self.state = "Crewmates_Win"
 
-        if totalImpostes == crewmates:
+        if totalImpostors == crewmates:
             self.state = "Impostor_Win"
         
         if self.state == "Crewmates_Win":
