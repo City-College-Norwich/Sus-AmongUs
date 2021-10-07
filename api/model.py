@@ -2,7 +2,7 @@ import random
 import csv
 import pickle
 
-from TimeHelper import TimeHelper
+from TimerHelper import TimerHelper
 
 GAME_STARTING = 1
 GAME_RUNNING = 2
@@ -27,13 +27,14 @@ class Model:
         self.crewmate = 0
         self.imposter = 0
 
+
         self.totalImposters = 2
 
         self.userID = 0
         self.sabotaged = False
         self.sabotage_time = 0
         self.sabotage_type = 0
-        self.time = TimeHelper()
+        self.time = TimerHelper()
 
     def getTagName(self, uid):
         
@@ -45,7 +46,7 @@ class Model:
 
     def startGame(self):
         self.state = self.GAME_RUNNING
-        for i in range(0, len(self.players)):
+        for i in self.players.keys():
             teamAssigner = random.randint(0,2)
             if self.crewmate == len(self.players) - self.totalImposters:
                 teamAssigner = 1
