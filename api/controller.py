@@ -70,4 +70,9 @@ def sabotageTimeout():
     return model.sabotageTimeout()
 
 
+@app.route("/sabotageCompleted")
+def sabotageCompleted():
+    return model.sabotageCompleted()
+
+
 if __name__ == '__main__': app.run(host='0.0.0.0')

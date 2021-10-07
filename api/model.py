@@ -64,7 +64,7 @@ class Model:
     def keepAlive(self):
         alerts = set()
         
-        if self.sabotaged == True:
+        if self.sabotaged:
             alerts.add("Sabotaged")
 
         if self.totalImpostors == 0:
@@ -109,3 +109,6 @@ class Model:
 
     def sabotageTimeout(self):
         self.state = "Impostor_Win"
+
+    def sabotageCompleted(self):
+        self.sabotaged = False
