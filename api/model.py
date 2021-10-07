@@ -1,6 +1,9 @@
 import random
 import csv
+import pickle
+
 from TimeHelper import TimeHelper
+
 
 class Model:
     def __init__(self):
@@ -17,8 +20,8 @@ class Model:
         self.players ={99:['player_uid', 'team', True],}
         self.Crewmate = 0
         self.Imposter = 0
-
         self.totalImposters = 2
+
         self.userID = 0
         self.sabotaged = False
         self.sabotage_time = 0
@@ -47,8 +50,8 @@ class Model:
                 self.players[i][1] = "Crewmate"
                 self.crewmate +=1
             elif teamAssigner == 1:
-                self.players[i][1] = "Imposter"
-                self.imposter += 1
+                self.players[i][1] = "Impostor"
+                self.impostor += 1
         return self.state
 
       
@@ -68,16 +71,23 @@ class Model:
             alerts.add("Sabotaged")
             return self.sabotage_type
 
-        if self.totalImposters == 0:
-            self.state = "Game_Ended"
+        if self.totalImpostors == 0:
+            self.state = "Crewmates_Win"
 
         if self.completedMinigames >= self.totalMinigames:
-            self.state = "Game_Ended"
-        
-        if self.state == "Game_Ended":
-            alerts.add("Game_Ended")
+            self.state = "Crewmates_Win"
 
-        return alerts
+        if totalImpostors == crewmates:
+            self.state = "Impostor_Win"
+        
+        if self.state == "Crewmates_Win":
+            alerts.add("Crewmates_Win")
+
+        elif self.state == "Impostor_Win":
+            alerts.add("Impostor_Win")
+            
+        return pickle.dumps(alerts)
+
 
     def deadbodyfound(self, playerId):
         # split the playerId into the cmd (on the left) and the actual playerId# (on the right)

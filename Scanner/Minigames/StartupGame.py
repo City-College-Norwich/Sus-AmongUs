@@ -1,5 +1,5 @@
 from Minigame import Minigame
-from IdleGame import IdleGame
+from GoodGuyGame import GoodGuyGame
 
 
 class StartupGame(Minigame):
