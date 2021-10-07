@@ -23,6 +23,7 @@ class ImposterGame(Minigame):
             elif buttons[2] == 1:
                 self.wifi.send_request("sabotage?sabotageType=3")
 
+
         if self.state == RUNNING:
            
             targetRfidTag = self.parent.rfid.do_read()
@@ -46,6 +47,7 @@ class ImposterGame(Minigame):
         elif self.state == IMPOSTOR_WIN:
             self.parent.screen.clear_screen()
             self.parent.screen.display_text("Game Over! Impostors Has won!")
+
 
     def alertsFromServer(self, alerts):
         Minigame.alertsFromServer(self, alerts)
