@@ -40,7 +40,7 @@ class Model:
                 self.players[i][1] = "Crewmate"
                 self.crewmate +=1
             elif teamAssigner == 1:
-                self.players[i][1] = "Imposter"
+                self.players[i][1] = "Impostor"
                 self.imposter += 1
         return self.state
 
@@ -69,6 +69,9 @@ class Model:
         if self.state == "Crewmates_Win":
             alerts.add("Crewmates_Win")
 
+        elif self.state == "Impostor_Win":
+            alerts.add("Impostor_Win")
+            
         return alerts
 
     def askForID(self):
