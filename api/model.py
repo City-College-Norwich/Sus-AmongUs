@@ -112,7 +112,7 @@ class Model:
         return self.sabotage_type
 
     def sabotageTimeout(self):
-        self.state = "Impostor_Win"
+        self.state = "Imposter_Win"
 
     def sabotageCompleted(self):
         self.sabotaged = False
