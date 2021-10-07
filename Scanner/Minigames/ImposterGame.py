@@ -39,13 +39,13 @@ class ImposterGame(Minigame):
             else:
                 self.parent.screen.clear_screen()
                 self.parent.screen.display_text("GOTO: " + str(self.__target_station))
-        else:
-            if self.state == CREWMATE_WIN:
-                self.parent.screen.clear_screen()
-                self.parent.screen.display_text("Game Over! Crewmates Has won!")
-            elif self.state == IMPOSTOR_WIN:
-                self.parent.screen.clear_screen()
-                self.parent.screen.display_text("Game Over! Impostors Has won!")
+
+        elif self.state == CREWMATE_WIN:
+            self.parent.screen.clear_screen()
+            self.parent.screen.display_text("Game Over! Crewmates Has won!")
+        elif self.state == IMPOSTOR_WIN:
+            self.parent.screen.clear_screen()
+            self.parent.screen.display_text("Game Over! Impostors Has won!")
 
     def alertsFromServer(self, alerts):
         Minigame.alertsFromServer(self, alerts)
