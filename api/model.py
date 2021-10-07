@@ -14,8 +14,8 @@ class Model:
         self.state = "Game_Starting"
         self.players ={99:['player_uid', 'team'],}
         self.crewmate = 0
-        self.imposter = 0
-        self.totalImposters = 2
+        self.impostor = 0
+        self.totalImpostors = 2
         self.userID = 0
 
     def getTagName(self, uid):
@@ -41,7 +41,7 @@ class Model:
                 self.crewmate +=1
             elif teamAssigner == 1:
                 self.players[i][1] = "Impostor"
-                self.imposter += 1
+                self.impostor += 1
         return self.state
 
       
@@ -57,7 +57,7 @@ class Model:
     def keepAlive(self):
         alerts = set()
 
-        if self.totalImposters == 0:
+        if self.totalImpostors == 0:
             self.state = "Crewmates_Win"
 
         if self.completedMinigames >= self.totalMinigames:
