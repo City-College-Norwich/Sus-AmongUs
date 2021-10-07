@@ -1,4 +1,4 @@
-from IdleGame import IdleGame
+from GoodGuyGame import GoodGuyGame
 from Minigame import Minigame
 from TimerHelper import *
 
@@ -25,6 +25,6 @@ class DownloadGame(Minigame):
 
                 if self.progress > 100:
                     self.parent.wifi.send_request("minigameComplete?scannerId="+self.parent.id)
-                    self.parent.currentMiniGame = IdleGame()
+                    self.parent.currentMiniGame = GoodGuyGame()
         else:
             self.parent.screen.display_text("Error: Walked away from task", 0, 0)

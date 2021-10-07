@@ -14,7 +14,7 @@ RUNNING = 0
 CREWMATE_WIN = 1
 IMPOSTOR_WIN = 2
 
-class IdleGame(Minigame):
+class GoodGuyGame(Minigame):
 
     def __init__(self, parent):
         super().__init__(parent)
