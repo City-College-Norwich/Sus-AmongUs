@@ -1,6 +1,6 @@
 import random
 import csv
-import pickle
+import json
 
 from TimeHelper import TimeHelper
 
@@ -86,7 +86,7 @@ class Model:
         elif self.state == "Impostor_Win":
             alerts.add("Impostor_Win")
             
-        return pickle.dumps(alerts)
+        return json.dumps(list(alerts))
 
 
     def deadbodyfound(self, playerId):
