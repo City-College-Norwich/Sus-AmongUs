@@ -45,7 +45,7 @@ class Model:
             
 
     def startGame(self):
-        self.state = self.GAME_RUNNING
+        self.state = GAME_RUNNING
         for i in self.players.keys():
             teamAssigner = random.randint(0,2)
             if self.crewmate == len(self.players) - self.totalImposters:
