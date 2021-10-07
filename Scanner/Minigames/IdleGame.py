@@ -11,8 +11,8 @@ from Minigames.IdBadge import IdBadge
 from Minigames.ReactionGame import ReactionGame
 
 RUNNING = 0
-ENDED = 1
-
+CREWMATE_WIN = 1
+IMPOSTOR_WIN = 2
 
 class IdleGame(Minigame):
 
@@ -31,11 +31,23 @@ class IdleGame(Minigame):
         if self.state == RUNNING:
            
             targetRfidTag = self.parent.rfid.do_read()
+            # check if the first 7 characters == playerId
+            # if yes, then split at the colon and get the playerId number (just like in model)
+            # send that playerId in the sendRequest
 
+            #targetRfidTag = 'playerId:12'
+            if targetRfidTag[:8] == 'playerId':
+                playerId = targetRfidTag.split(':')
+                self.parent.wifi.sendRequest("deadBodyFound?playerId="+playerId[1])
             if targetRfidTag == self.__target_station:
                 self.parent.currentMiniGame = random.choice(self.__minigames.__init__())
             else:
                 self.parent.screen.clear_screen()
                 self.parent.screen.display_text("GOTO: " + str(self.__target_station))
-        elif self.state == ENDED:
-            self.parent.screen.display_text("Game Over!")
+        else:
+            if self.state == CREWMATE_WIN:
+                self.parent.screen.clear_screen()
+                self.parent.screen.display_text("Game Over! Crewmates Has won!")
+            elif self.state == IMPOSTOR_WIN:
+                self.parent.screen.clear_screen()
+                self.parent.screen.display_text("Game Over! Impostors Has won!")
