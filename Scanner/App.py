@@ -33,10 +33,10 @@ class App:
             self.keepAlive()
 
             # draw screen
-            self.screen.draw_screen()
+            self.screen.draw()
 
     def keepAlive(self):
         if self.keep_alive_timer.check():
-            alerts = self.wifi.send_request("keepAlive")
+            alerts = self.wifi.sendRequest("keepAlive")
             self.currentMiniGame.alertsFromServer(alerts)
             self.keep_alive_timer.set(KEEP_ALIVE_TIMEOUT)
