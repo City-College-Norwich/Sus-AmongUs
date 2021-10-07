@@ -12,10 +12,13 @@ class Model:
         self.totalMinigames = 10
         self.completedMinigames = 0
         self.state = "Game_Starting"
-        self.players ={99:['player_uid', 'team'],}
-        self.crewmate = 0
-        self.impostor = 0
-        self.totalImpostors = 2
+
+                        # card ID,   team,   alive/dead
+        self.players ={99:['player_uid', 'team', True],}
+        self.Crewmate = 0
+        self.Imposter = 0
+        self.totalImposters = 2
+
         self.userID = 0
         self.sabotaged = False
         self.sabotage_time = 0
@@ -82,6 +85,14 @@ class Model:
             
         return alerts
 
+    def deadbodyfound(self, playerId):
+        # split the playerId into the cmd (on the left) and the actual playerId# (on the right)
+        result = playerId.split(':')
+        id = result[1]
+        
+        if self.players [id][2] == False:
+            startVote() #This needs creating first
+
     def askForID(self):
         self.userID += 1
         return self.userID
@@ -93,4 +104,5 @@ class Model:
     def sabotage(self, sabotageType):
         self.sabotaged = True
         self.sabotage_type = sabotageType
+
 
