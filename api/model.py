@@ -1,5 +1,7 @@
 import random
 import csv
+import pickle
+
 from TimeHelper import TimeHelper
 
 GAME_STARTING = 1
@@ -7,6 +9,7 @@ GAME_RUNNING = 2
 GAME_ENDED = 3
 CREWMATE_WIN = 4
 IMPOSTER_WIN = 5
+
 class Model:
     def __init__(self):
 
@@ -87,7 +90,8 @@ class Model:
         elif self.state == IMPOSTER_WIN:
             alerts.add("Imposter_Win")
             
-        return alerts
+        return pickle.dumps(alerts)
+
 
     def deadbodyfound(self, playerId):
         # split the playerId into the cmd (on the left) and the actual playerId# (on the right)
