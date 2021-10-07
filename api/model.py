@@ -58,13 +58,16 @@ class Model:
         alerts = set()
 
         if self.totalImposters == 0:
-            self.state = "Game_Ended"
+            self.state = "Crewmates_Win"
 
         if self.completedMinigames >= self.totalMinigames:
-            self.state = "Game_Ended"
+            self.state = "Crewmates_Win"
+
+        if totalImpostes == crewmates:
+            self.state = "Impostor_Win"
         
-        if self.state == "Game_Ended":
-            alerts.add("Game_Ended")
+        if self.state == "Crewmates_Win":
+            alerts.add("Crewmates_Win")
 
         return alerts
 

@@ -11,8 +11,8 @@ from Minigames.IdBadge import IdBadge
 from Minigames.ReactionGame import ReactionGame
 
 RUNNING = 0
-ENDED = 1
-
+CREWMATE_WIN = 1
+IMPOSTOR_WIN = 2
 
 class IdleGame(Minigame):
 
@@ -37,5 +37,10 @@ class IdleGame(Minigame):
             else:
                 self.parent.screen.clear_screen()
                 self.parent.screen.display_text("GOTO: " + str(self.__target_station))
-        elif self.state == ENDED:
-            self.parent.screen.display_text("Game Over!")
+        else:
+            if self.state == CREWMATE_WIN:
+                self.parent.screen.clear_screen()
+                self.parent.screen.display_text("Game Over! Crewmates Has won!")
+            elif self.state == IMPOSTOR_WIN:
+                self.parent.screen.clear_screen()
+                self.parent.screen.display_text("Game Over! Impostors Has won!")

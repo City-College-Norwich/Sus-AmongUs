@@ -12,7 +12,10 @@ class Minigame:
         if 'GameStarted' in alerts:
             self.parent.currentMiniGame = IdleGame()
 
-        if 'Game_Ended' in alerts:
+        if 'Crewmate_Win' in alerts:
             self.parent.currentMiniGame = IdleGame()
-            self.parent.currentMiniGame.state = 1  # ENDED
-            
+            self.parent.currentMiniGame.state = 1  # Crewmate win
+
+        elif "Impostor_Win" in alerts:
+            self.parent.currentMiniGame = IdleGame()
+            self.parent.currentMiniGame.state = 2  # Impostor win
