@@ -1,5 +1,9 @@
 from Minigame import Minigame
 from TimeHelper import TimeHelper
+import random
+
+RUNNING = 0
+ENDED = 1
 
 class ImposterGame(Minigame):
     def __init__(self, parent):
@@ -16,6 +20,26 @@ class ImposterGame(Minigame):
                 self.wifi.send_request("sabotage?sabotageType=2")
             elif buttons[2] == 1:
                 self.wifi.send_request("sabotage?sabotageType=3")
+
+
+            if self.state == RUNNING:
+           
+                targetRfidTag = self.parent.rfid.do_read()
+                # check if the first 7 characters == playerId
+                # if yes, then split at the colon and get the playerId number (just like in model)
+                # send that playerId in the sendRequest
+
+                #targetRfidTag = 'playerId:12'
+                if targetRfidTag[:8] == 'playerId':
+                    playerId = targetRfidTag.split(':')
+                    self.parent.wifi.sendRequest("deadBodyFound?playerId="+playerId[1])
+                if targetRfidTag == self.__target_station:
+                    self.parent.currentMiniGame = random.choice(self.__minigames.__init__())
+                else:
+                    self.parent.screen.clear_screen()
+                    self.parent.screen.display_text("GOTO: " + str(self.__target_station))
+            elif self.state == ENDED:
+                self.parent.screen.display_text("Game Over!")
 
     def alertsFromServer(self, alerts):
         Minigame.alertsFromServer(self, alerts)
