@@ -36,9 +36,9 @@ class IdleGame(Minigame):
             # send that playerId in the sendRequest
 
             #targetRfidTag = 'playerId:12'
-            if targetRfidTag == 'playerId':
+            if targetRfidTag[:8] == 'playerId':
                 playerId = targetRfidTag.split(':')
-                self.parent.wifi.sendRequest("deadBodyFound?playerId="+playerId)
+                self.parent.wifi.sendRequest("deadBodyFound?playerId="+playerId[1])
             if targetRfidTag == self.__target_station:
                 self.parent.currentMiniGame = random.choice(self.__minigames.__init__())
             else:
