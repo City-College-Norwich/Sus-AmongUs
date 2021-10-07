@@ -1,5 +1,7 @@
 """ Among Us Clone Scanner App
 """
+import json
+
 import Buttons
 import Rfid
 import Screen
@@ -37,6 +39,6 @@ class App:
 
     def keepAlive(self):
         if self.keep_alive_timer.check():
-            alerts = self.wifi.send_request("keepAlive")
+            alerts = json.loads(self.wifi.send_request("keepAlive"))
             self.currentMiniGame.alertsFromServer(alerts)
             self.keep_alive_timer.set(KEEP_ALIVE_TIMEOUT)

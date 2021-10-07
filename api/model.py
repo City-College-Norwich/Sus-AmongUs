@@ -1,5 +1,6 @@
 import random
 import csv
+import json
 
 
 class Model:
@@ -66,7 +67,7 @@ class Model:
         if self.state == "Game_Ended":
             alerts.add("Game_Ended")
 
-        return alerts
+        return json.dumps(alerts)
 
     def askForID(self):
         self.userID += 1
