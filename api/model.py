@@ -82,8 +82,8 @@ class Model:
         if self.state == "Crewmates_Win":
             alerts.add("Crewmates_Win")
 
-        elif self.state == "Impostor_Win":
-            alerts.add("Impostor_Win")
+        elif self.state == "Imposter_Win":
+            alerts.add("Imposter_Win")
             
         return pickle.dumps(alerts)
 
