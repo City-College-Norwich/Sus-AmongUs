@@ -2,6 +2,11 @@ import random
 import csv
 from TimeHelper import TimeHelper
 
+GAME_STARTING = 1
+GAME_RUNNING = 2
+GAME_ENDED = 3
+CREWMATE_WIN = 4
+IMPOSTER_WIN = 5
 class Model:
     def __init__(self):
 
@@ -11,19 +16,16 @@ class Model:
 
         self.totalMinigames = 10
         self.completedMinigames = 0
-
-
-        self.GAME_STARTING = "Game_Starting"
-        self.GAME_RUNNING = "Game_Running"
-        self.GAME_ENDED = "Game_Ended"
-        self.state = self.GAME_STARTING
+        self.state = GAME_STARTING
 
                            # card ID,   team,   alive/dead
         self.players ={99:['player_uid', 'team', True],}
+
         self.crewmate = 0
         self.imposter = 0
 
         self.totalImposters = 2
+
         self.userID = 0
         self.sabotaged = False
         self.sabotage_time = 0
@@ -74,14 +76,17 @@ class Model:
             return self.sabotage_type
 
         if self.totalImposters == 0:
-            self.state = self.GAME_ENDED
+            self.state = CREWMATE_WIN
 
-        if self.completedMinigames >= self.totalMinigames:
-            self.state = self.GAME_ENDED
+        if self.totalImposters == self.crewmates:
+            self.state = IMPOSTER_WIN
         
-        if self.state == self.GAME_ENDED:
-            alerts.add("Game_Ended")
+        if self.state == CREWMATE_WIN:
+            alerts.add("Crewmates_Win")
 
+        elif self.state == IMPOSTER_WIN:
+            alerts.add("Imposter_Win")
+            
         return alerts
 
     def deadbodyfound(self, playerId):
