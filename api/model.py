@@ -11,7 +11,12 @@ class Model:
 
         self.totalMinigames = 10
         self.completedMinigames = 0
-        self.state = "Game_Starting"
+
+        self.GAME_STARTING = "Game_Starting"
+        self.GAME_RUNNING = "Game_Running"
+        self.GAME_ENDED = "Game_Ended"
+        self.state = self.GAME_STARTING
+
         self.players ={99:['player_uid', 'team'],}
         self.crewmate = 0
         self.imposter = 0
@@ -31,7 +36,7 @@ class Model:
             
 
     def startGame(self):
-        self.state = "Game_Running"
+        self.state = self.GAME_RUNNING
         for i in range(0, len(self.players)):
             teamAssigner = random.randint(0,2)
             if self.crewmate == len(self.players) - self.totalImposters:
@@ -66,12 +71,12 @@ class Model:
             return self.sabotage_type
 
         if self.totalImposters == 0:
-            self.state = "Game_Ended"
+            self.state = self.GAME_ENDED
 
         if self.completedMinigames >= self.totalMinigames:
-            self.state = "Game_Ended"
+            self.state = self.GAME_ENDED
         
-        if self.state == "Game_Ended":
+        if self.state == self.GAME_ENDED:
             alerts.add("Game_Ended")
 
         return alerts
