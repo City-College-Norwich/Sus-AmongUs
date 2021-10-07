@@ -63,10 +63,7 @@ class Model:
         
         if self.sabotaged == True:
             alerts.add("Sabotaged")
-            if self.time.check():
-                self.state = "Game_Ended"
-            else:
-                return self.sabotage_type
+            return self.sabotage_type
 
         if self.totalImposters == 0:
             self.state = "Game_Ended"
@@ -90,5 +87,4 @@ class Model:
     def sabotage(self, sabotageType):
         self.sabotaged = True
         self.sabotage_type = sabotageType
-        self.time.set(60000)
 
