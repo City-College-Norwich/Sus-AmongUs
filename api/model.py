@@ -66,7 +66,6 @@ class Model:
         
         if self.sabotaged == True:
             alerts.add("Sabotaged")
-            return self.sabotage_type
 
         if self.totalImpostors == 0:
             self.state = "Crewmates_Win"
@@ -105,4 +104,8 @@ class Model:
         self.sabotaged = True
         self.sabotage_type = sabotageType
 
+    def getSabotageType(self):
+        return self.sabotage_type
 
+    def sabotageTimeout(self):
+        self.state = "Impostor_Win"
