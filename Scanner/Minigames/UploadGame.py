@@ -1,4 +1,4 @@
-from IdleGame import IdleGame
+from GoodGuyGame import GoodGuyGame
 from Minigame import Minigame
 from TimerHelper import *
 
@@ -24,7 +24,7 @@ class Upload_Game(Minigame):
 
                 if self.progress > 100:
                     self.parent.wifi.sendRequest(self, "minigameComplete?scannerId=" + self.parent.id)
-                    self.parent.currentMiniGame = IdleGame()
+                    self.parent.currentMiniGame = GoodGuyGame()
 
             else:
                 self.parent.screen.drawText("Error: Download Task not complete", 0, 0)

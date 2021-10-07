@@ -1,7 +1,7 @@
 import random
 import time
 
-from IdleGame import IdleGame
+from GoodGuyGame import GoodGuyGame
 from Minigame import Minigame
 
 
@@ -32,4 +32,4 @@ class ReactionGame(Minigame):
             buttons = self.parent.buttons.getPressedButtons()
             if buttons[0] == 1:
                 self.parent.wifi.sendRequest(self, "minigameComplete?scannerId=" + self.parent.id)
-                self.parent.currentMiniGame = IdleGame()
+                self.parent.currentMiniGame = GoodGuyGame()
