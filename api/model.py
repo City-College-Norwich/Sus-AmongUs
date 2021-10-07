@@ -71,8 +71,6 @@ class Model:
 
         return alerts
 
-            return "Game_Ended"
-
     def deadbodyfound(self, playerId):
         # split the playerId into the cmd (on the left) and the actual playerId# (on the right)
         result = playerId.split(':')
