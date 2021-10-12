@@ -35,7 +35,7 @@ class GoodGuyGame(Minigame):
             if targetRfidTag == self.__target_station:
                 self.parent.currentMiniGame = random.choice(self.__minigames.__init__())
             else:
-                self.parent.screen.drawText("GOTO: " + str(self.__target_station))
+                self.parent.screen.drawText("GOTO: " + str(self.__target_station),0,0)
         else:
             if self.state == CREWMATE_WIN:
                 self.parent.screen.drawText("Game Over! Crewmates Has won!")
