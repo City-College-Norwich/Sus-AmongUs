@@ -2,6 +2,12 @@
 """
 import json
 
+from dotenv import load_dotenv
+load_dotenv()
+import os
+mode = os.environ.get("MODE")
+print("System Mode: " + mode)
+
 import Buttons
 import Rfid
 import Screen
