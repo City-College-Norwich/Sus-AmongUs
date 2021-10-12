@@ -1,6 +1,5 @@
 import random
 
-from Minigames.GoodGuyGame import GoodGuyGame
 from Minigames.Minigame import Minigame
 
 

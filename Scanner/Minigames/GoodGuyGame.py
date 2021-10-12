@@ -1,12 +1,6 @@
 import random
 
 from Minigames.Minigame import Minigame
-
-'''
- game imports here                            
- from {file} import {class}                   
- e.g. from WiresMinigame import WiresMinigame 
-'''
 from Minigames.IdBadge import IdBadge
 from Minigames.ReactionGame import ReactionGame
 
@@ -17,7 +11,7 @@ IMPOSTOR_WIN = 2
 class GoodGuyGame(Minigame):
 
     def __init__(self, parent):
-        Minigame.__init__(parent)
+        Minigame.__init__(self, parent)
         self.parent = parent
         # Add state variable 
         self.state = RUNNING
