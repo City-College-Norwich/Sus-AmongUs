@@ -25,7 +25,7 @@ class Wifi:
                 time.sleep_ms(500)
                 print("Connecting...")
                 
-    def send_request(self, message):
+    def sendRequest(self, message):
         response = requests.get(self.URL+ message)
         print(self.URL+ message)
         text = response.text

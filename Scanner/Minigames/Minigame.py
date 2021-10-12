@@ -1,3 +1,5 @@
+from GoodGuyGame import GoodGuyGame
+from Sabotage1 import Sabotage1
 
 
 
@@ -21,5 +23,11 @@ class Minigame:
             self.parent.currentMiniGame.state = 2  # Impostor win
 
         if 'Sabotaged' in alerts:
-            pass
+            sabotage_type = self.parent.wifi.send_request("getSabotageType")
 
+            if sabotage_type == 1:
+                self.parent.currentMiniGame = Sabotage1(parent)
+            elif sabotage_type == 2:
+                self.parent.currentMiniGame = Sabotage2(parent)
+            else:
+                self.parent.currentMiniGame = Sabotage3(parent)

@@ -19,21 +19,21 @@ class Screen:
         i2c = I2C(scl=scl, sda=sda)
         self.display = ssd1306.SSD1306_I2C(128, 64, i2c)
         self.updateOccurred = False
-        self.display_text("Ready to Start", 0, 0)
+        self.drawText("Ready to Start", 0, 0)
         
-    def display_text(self, text, x_coordinate, y_coordinate):
+    def drawText(self, text, x_coordinate, y_coordinate):
         self.updateOccurred = True
         self.display.text(text, x_coordinate, y_coordinate)
 
-    def display_rectangle(self, x_coordinate, y_coordinate, width, height):
+    def drawRectangle(self, x_coordinate, y_coordinate, width, height):
         self.updateOccurred = True
         self.display.fillRect(x_coordinate, y_coordinate, width, height)
         
-    def clear_screen(self):
+    def clear(self):
         self.updateOccurred = True
         self.display.fill(0)
         
-    def draw_screen(self):
+    def draw(self):
         if self.updateOccurred:
             self.display.show()
             self.updateOccurred = False
@@ -47,5 +47,5 @@ class Screen:
         elif value == 0:
             self.display.fill(0)
 
-
-
+if not self.updateOccured:
+    self.clear()
