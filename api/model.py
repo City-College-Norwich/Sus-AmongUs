@@ -1,6 +1,6 @@
 import random
 import csv
-import pickle
+import json
 
 from TimerHelper import TimerHelper
 
@@ -91,7 +91,7 @@ class Model:
         elif self.state == IMPOSTER_WIN:
             alerts.add("Imposter_Win")
             
-        return pickle.dumps(alerts)
+        return json.dumps(list(alerts))
 
 
     def deadbodyfound(self, playerId):
