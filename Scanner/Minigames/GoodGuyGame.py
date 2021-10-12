@@ -29,7 +29,7 @@ class GoodGuyGame(Minigame):
             # send that playerId in the sendRequest
 
             #targetRfidTag = 'playerId:12'
-            if targetRfidTag[:8] == 'playerId':
+            if targetRfidTag is not None and targetRfidTag[:8] == 'playerId':
                 playerId = targetRfidTag.split(':')
                 self.parent.wifi.sendRequest("deadBodyFound?playerId="+playerId[1])
             if targetRfidTag == self.__target_station:

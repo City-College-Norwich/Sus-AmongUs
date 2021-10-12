@@ -36,7 +36,7 @@ class Screen:
         self.display.fillRect(x_coordinate, y_coordinate, width, height)
         
     def clear(self):
-        self.clearScreen()
+        self.fill(0)
         self.display.fill(0)
         
     def draw(self):
@@ -55,5 +55,5 @@ class Screen:
 
     def clearScreen(self):
         if self.updateOccurred == False:
-            self.clear()
+            self.fill(0)
             self.updateOccurred = True
