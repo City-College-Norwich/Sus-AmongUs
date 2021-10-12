@@ -1,7 +1,6 @@
 import random
 import time
 
-
 from Minigames.Minigame import Minigame
 
 

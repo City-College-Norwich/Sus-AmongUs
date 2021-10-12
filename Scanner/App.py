@@ -7,12 +7,14 @@ os.environ['MODE'] = 'DEBUG'
 mode = os.environ.get("MODE")
 print("System Mode: " + mode)
 
+
 import Buttons
 import Rfid
 import Screen
 import Wifi
 from TimerHelper import TimerHelper
 from Minigames.StartupGame import StartupGame
+from Minigames.GoodGuyGame import GoodGuyGame
 
 KEEP_ALIVE_TIMEOUT = 500  # timeout in ms
 
@@ -45,9 +47,12 @@ class App:
     def keepAlive(self):
         if self.keep_alive_timer.check():
 
-            alerts = set(json.loads(self.wifi.send_request("keepAlive")))
+            alerts = set(json.loads(self.wifi.sendRequest("keepAlive")))
 
             self.currentMiniGame.alertsFromServer(alerts)
             self.keep_alive_timer.set(KEEP_ALIVE_TIMEOUT)
+            
+    def gotoGoodGuyGame(self):
+        self.currentMiniGame = GoodGuyGame(self)
 
-App().run()
+        App().run()
