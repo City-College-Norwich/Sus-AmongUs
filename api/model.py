@@ -60,7 +60,7 @@ class Model:
             elif teamAssigner == 1:
                 self.players[i][1] = "Imposter"
                 self.imposter += 1
-        return self.state
+        
 
       
     def callHomepage(self):
