@@ -1,6 +1,6 @@
 """ Among Us Clone Scanner App
 """
-import pickle
+import json
 
 import Buttons
 import Rfid
@@ -35,10 +35,10 @@ class App:
             self.keepAlive()
 
             # draw screen
-            self.screen.draw_screen()
+            self.screen.draw()
 
     def keepAlive(self):
         if self.keep_alive_timer.check():
-            alerts = pickle.loads(self.wifi.send_request("keepAlive"))
+            alerts = pickle.loads(self.wifi.sendRequest("keepAlive"))
             self.currentMiniGame.alertsFromServer(alerts)
             self.keep_alive_timer.set(KEEP_ALIVE_TIMEOUT)

@@ -1,6 +1,6 @@
 import random
 
-from IdleGame import IdleGame
+from GoodGuyGame import GoodGuyGame
 from Minigame import Minigame
 
 
@@ -13,11 +13,11 @@ class RecordTemperatureGame(Minigame):
         self.logged_temperature = random.randint(self.temperature.lower_bound, self.temperature.upper_bound)
 
     def update(self):
-        self.parent.screen.display_text("Current Temperature: "+self.current_temperature, 0, 0)
-        self.parent.screen.display_text("Logged Temperature: "+self.logged_temperature, 0, 20)
+        self.parent.screen.drawText("Current Temperature: " + self.current_temperature, 0, 0)
+        self.parent.screen.drawText("Logged Temperature: " + self.logged_temperature, 0, 20)
         if self.logged_temperature == self.current_temperature:
-            self.parent.wifi.send_request(self, "minigameComplete?scannerId="+self.parent.id)
-            self.parent.currentMiniGame = IdleGame()
+            self.parent.wifi.sendRequest(self, "minigameComplete?scannerId=" + self.parent.id)
+            self.parent.currentMiniGame = GoodGuyGame()
         else:
             buttons = self.parent.buttons.getPressedButtons()
             if buttons[0] == 1:

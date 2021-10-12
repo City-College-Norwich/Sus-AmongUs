@@ -1,6 +1,6 @@
 import random
 import csv
-import pickle
+import json
 
 from TimerHelper import TimerHelper
 
@@ -45,7 +45,8 @@ class Model:
             
 
     def startGame(self):
-        self.state = self.GAME_RUNNING
+        self.state = GAME_RUNNING
+
         for i in self.players.keys():
             teamAssigner = random.randint(0,2)
             if self.crewmate == len(self.players) - self.totalImposters:
@@ -67,7 +68,7 @@ class Model:
         return "hello"
 
     def requestStation(self):
-        return "station" + str(random.choice(range(1, 11)))
+        return "station" + str(random.choice(range(1, 6)))
 
     def minigameComplete(self, scannerId):
         self.completedMinigames += 1
@@ -91,7 +92,7 @@ class Model:
         elif self.state == IMPOSTER_WIN:
             alerts.add("Imposter_Win")
             
-        return pickle.dumps(alerts)
+        return json.dumps(list(alerts))
 
 
     def deadbodyfound(self, playerId):

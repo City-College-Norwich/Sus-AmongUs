@@ -1,5 +1,5 @@
 from Minigame import Minigame
-from IdleGame import IdleGame
+from GoodGuyGame import GoodGuyGame
 
 
 class StartupGame(Minigame):
@@ -9,7 +9,7 @@ class StartupGame(Minigame):
 
     
         # Save ID
-        userID = self.parent.wifi.send_request('askForID')
+        userID = self.parent.wifi.sendRequest('askForID')
 
         print("Initiate StartupGame")
 
@@ -18,20 +18,20 @@ class StartupGame(Minigame):
         self.parent.id = userID
     
         # Tell player to scan badge
-        self.parent.screen.display_text('Scan Card', 0, 0)
+        self.parent.screen.drawText('Scan Card', 0, 0)
         
     def update(self):
-        uid, tag = self.parent.rfid.do_read(returnUID = True)
+        uid, tag = self.parent.rfid.doRead(returnUID = True)
         
         if tag == ".main":
-            self.parent.wifi.send_request('StartGame')
+            self.parent.wifi.sendRequest('StartGame')
 
 
         # ID badge scanned
         # If not recognised by server, tell server to register badge and ID
         
         elif tag not None:
-            self.parent.wifi.send_request('registerUser?scannerId='+self.parent.id+'&uid='+uid)
+            self.parent.wifi.sendRequest('registerUser?scannerId=' + self.parent.id + '&uid=' + uid)
 
             print(tag)
 

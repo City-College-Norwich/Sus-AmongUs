@@ -54,7 +54,7 @@ def registerUser():
     return model.registerUser(args["scannerId"], args["uid"])
 
   
-  @app.route("/sabotage")
+@app.route("/sabotage")
 def sabotage():
     args = request.args
     return model.sabotage(args["sabotageType"])
