@@ -13,7 +13,6 @@ class Sabotage1(Minigame):
         self.__participants = {}
 
     def update(self):
-        self.parent.screen.clear_screen()
         self.parent.screen.display_text("GOTO: " + self.__target_station)
         if self.__sabotage_timer.check():
             self.parent.wifi.send_request("sabotageTimeout")
