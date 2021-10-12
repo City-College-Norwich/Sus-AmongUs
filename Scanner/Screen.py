@@ -1,4 +1,7 @@
-from machine import Pin, I2C
+try:
+    from machine import Pin, I2C
+except(ModuleNotFoundError):
+    print("ModuleNotFoundError: Pin,I2C")
 
 import ssd1306
 import time

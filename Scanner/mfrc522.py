@@ -1,4 +1,9 @@
-from machine import Pin, SoftSPI
+try:
+	from machine import Pin, SoftSPI
+
+except(ModuleNotFoundError):
+    print("ModuleNotFoundError: Pin, SoftSPI")
+
 from os import uname
 
 
