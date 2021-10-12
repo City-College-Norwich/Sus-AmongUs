@@ -1,6 +1,6 @@
 """ Among Us Clone Scanner App
 """
-import pickle
+import json
 
 import Buttons
 import Rfid
