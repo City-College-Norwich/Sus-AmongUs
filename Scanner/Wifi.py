@@ -16,7 +16,7 @@ class Wifi:
     wlan = None
     SSID = "AmongstUsNet"
     PASSWORD = "AmongstUs"
-    URL = "http://192.168.1.1:5000/"
+    URL = "http://192.1.1.1:5000/"
 
     def __init__(self):
         if(mode == "DEBUG"):
