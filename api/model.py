@@ -74,22 +74,23 @@ class Model:
 
     def keepAlive(self):
         alerts = set()
-        
-        if self.sabotaged:
-            alerts.add("Sabotaged")
+        if self.state == GAME_RUNNING:
+            alerts.add("GameStarted")
+            if self.sabotaged:
+                alerts.add("Sabotaged")
 
-        if self.totalImposters == 0:
-            self.state = CREWMATE_WIN
+            if self.totalImposters == 0:
+                self.state = CREWMATE_WIN
 
-        if self.imposter == self.crewmate:
-            self.state = IMPOSTER_WIN
-        
-        if self.state == CREWMATE_WIN:
-            alerts.add("Crewmates_Win")
+            if self.imposter == self.crewmate:
+                self.state = IMPOSTER_WIN
+            
+            if self.state == CREWMATE_WIN:
+                alerts.add("Crewmates_Win")
 
-        elif self.state == IMPOSTER_WIN:
+            elif self.state == IMPOSTER_WIN:
 
-            alerts.add("Imposter_Win")
+                alerts.add("Imposter_Win")
             
         return json.dumps(list(alerts))
 
