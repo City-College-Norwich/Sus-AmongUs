@@ -1,4 +1,4 @@
-from GoodGuyGame import GoodGuyGame
+
 
 
 class Minigame:

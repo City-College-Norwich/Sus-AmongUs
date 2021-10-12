@@ -1,11 +1,11 @@
-from GoodGuyGame import GoodGuyGame
-from Minigame import Minigame
+from Minigames.GoodGuyGame import GoodGuyGame
+from Minigames.Minigame import Minigame
 from TimerHelper import *
 
 
 class DownloadGame(Minigame):
     def __init__(self, parent):
-        super().__init__(parent)
+        Minigame.__init__(parent)
         self.parent = parent
         self.progress = 0
         self.progress_width = 0

@@ -1,13 +1,13 @@
 import random
 import time
 
-from GoodGuyGame import GoodGuyGame
-from Minigame import Minigame
+from Minigames.GoodGuyGame import GoodGuyGame
+from Minigames.Minigame import Minigame
 
 
 class ReactionGame(Minigame):
     def __init__(self, parent):
-        super().__init__(self, parent)
+        Minigame.__init__(self, parent)
         self.parent = parent
         self.can_press_button = False
         time_to_change = random.randint(5, 16)

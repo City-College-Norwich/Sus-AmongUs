@@ -48,5 +48,4 @@ class Screen:
             self.display.fill(0)
 
 
-if not self.updateOccured:
-    self.clear_screen()
+

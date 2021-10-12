@@ -1,6 +1,6 @@
 import random
 
-from Minigame import Minigame
+from Minigames.Minigame import Minigame
 
 '''
  game imports here                            
@@ -17,8 +17,7 @@ IMPOSTOR_WIN = 2
 class GoodGuyGame(Minigame):
 
     def __init__(self, parent):
-        super().__init__(parent)
-        Minigame(self, parent)
+        Minigame.__init__(parent)
         self.parent = parent
         # Add state variable 
         self.state = RUNNING
