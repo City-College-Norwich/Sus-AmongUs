@@ -2,11 +2,11 @@
 """
 import json
 
-# from dotenv import load_dotenv
-# load_dotenv()
-# import os
-# mode = os.environ.get("MODE")
-# print("System Mode: " + mode)
+import os
+os.environ['MODE'] = 'DEBUG'
+mode = os.environ.get("MODE")
+print("System Mode: " + mode)
+
 
 import Buttons
 import Rfid
@@ -51,6 +51,8 @@ class App:
 
             self.currentMiniGame.alertsFromServer(alerts)
             self.keep_alive_timer.set(KEEP_ALIVE_TIMEOUT)
-    
+            
     def gotoGoodGuyGame(self):
         self.currentMiniGame = GoodGuyGame(self)
+
+        App().run()

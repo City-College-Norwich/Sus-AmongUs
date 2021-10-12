@@ -1,5 +1,17 @@
-import mfrc522
 from TimerHelper import TimerHelper
+
+import DummyLibraries.dummymfrc522 as mfrc522
+
+import os
+mode = os.environ.get("MODE")
+
+if(mode == "DEBUG"):
+    print("network")
+    print("urequests")
+
+    #raise(NotImplementedError)
+else:
+    import mfrc522
 
 
 class Rfid:
