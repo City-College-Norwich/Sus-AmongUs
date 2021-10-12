@@ -10,7 +10,7 @@ class Sabotage1(Minigame):
         self.__target_station = self.parent.wifi.send_request("requestStation")
         self.__sabotage_timer = TimerHelper()
         self.__sabotage_timer.set(60000)
-        self.__participants = {}
+        self.__participants = set()
 
     def update(self):
         self.parent.screen.display_text("GOTO: " + self.__target_station)
