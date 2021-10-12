@@ -1,5 +1,5 @@
-from GoodGuyGame import GoodGuyGame
-from Sabotage1 import Sabotage1
+from Minigames.GoodGuyGame import GoodGuyGame
+from Minigames.Sabotage1 import Sabotage1
 
 
 
