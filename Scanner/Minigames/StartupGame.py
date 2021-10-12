@@ -31,7 +31,7 @@ class StartupGame(Minigame):
         # If not recognised by server, tell server to register badge and ID
         
         elif tag is not None:
-            self.parent.wifi.send_request('registerUser?scannerId='+self.parent.id+'&uid='+uid)
+            self.parent.wifi.sendRequest('registerUser?scannerId='+str(self.parent.id)+'&uid='+uid)
 
             print(tag)
 

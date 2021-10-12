@@ -1,9 +1,15 @@
-try:
-    from machine import Pin, I2C
-except(ModuleNotFoundError):
-    print("ModuleNotFoundError: Pin,I2C")
+import os
+mode = os.environ.get("MODE")
 
-import ssd1306
+if(mode == "DEBUG"):
+    print("Need Pin")
+    print("Need I2C")
+
+    raise(NotImplementedError)
+else:
+    import ssd1306
+    from machine import Pin, I2C
+
 import time
 
 
