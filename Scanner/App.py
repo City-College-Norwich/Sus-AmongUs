@@ -1,6 +1,6 @@
 """ Among Us Clone Scanner App
 """
-import pickle
+import json
 
 from dotenv import load_dotenv
 load_dotenv()
@@ -41,10 +41,12 @@ class App:
             self.keepAlive()
 
             # draw screen
-            self.screen.draw_screen()
+            self.screen.draw()
 
     def keepAlive(self):
         if self.keep_alive_timer.check():
+
             alerts = set(json.loads(self.wifi.send_request("keepAlive")))
+
             self.currentMiniGame.alertsFromServer(alerts)
             self.keep_alive_timer.set(KEEP_ALIVE_TIMEOUT)

@@ -1,4 +1,4 @@
-from Minigame import Minigame
+from Minigames.Minigame import Minigame
 from TimeHelper import TimeHelper
 import random
 
@@ -17,11 +17,11 @@ class ImposterGame(Minigame):
         if self.timer.check() == self.cooldown:
             buttons = self.parent.buttons.getPressedButtons()
             if buttons[0] == 1:
-                self.wifi.send_request("sabotage?sabotageType=1")
+                self.wifi.sendRequest("sabotage?sabotageType=1")
             elif buttons[1] == 1:
-                self.wifi.send_request("sabotage?sabotageType=2")
+                self.wifi.sendRequest("sabotage?sabotageType=2")
             elif buttons[2] == 1:
-                self.wifi.send_request("sabotage?sabotageType=3")
+                self.wifi.sendRequest("sabotage?sabotageType=3")
 
 
         if self.state == RUNNING:
@@ -38,14 +38,11 @@ class ImposterGame(Minigame):
             if targetRfidTag == self.__target_station:
                 self.parent.currentMiniGame = random.choice(self.__minigames.__init__())
             else:
-                self.parent.screen.clear_screen()
                 self.parent.screen.display_text("GOTO: " + str(self.__target_station))
 
         elif self.state == CREWMATE_WIN:
-            self.parent.screen.clear_screen()
             self.parent.screen.display_text("Game Over! Crewmates Has won!")
         elif self.state == IMPOSTOR_WIN:
-            self.parent.screen.clear_screen()
             self.parent.screen.display_text("Game Over! Impostors Has won!")
 
 

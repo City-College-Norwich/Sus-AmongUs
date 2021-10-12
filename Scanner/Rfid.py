@@ -17,7 +17,7 @@ class Rfid:
     def update(self):
         pass
 
-    def do_read(self, returnUID = False):
+    def doRead(self, returnUID = False):
 
         if self.timer.check():
             self.timer.set(100)
@@ -29,11 +29,11 @@ class Rfid:
                     uid = "0x%02x%02x%02x%02x" % (raw_uid[0], raw_uid[1], raw_uid[2], raw_uid[3])
 
                     if returnUID == True:
-                        self.name = self.parent.wifi.send_request('getTagName?uid='+uid)
+                        self.name = self.parent.wifi.sendRequest('getTagName?uid=' + uid)
                         return uid, self.name
                     
                     else:
-                        self.name = self.parent.wifi.send_request('getTagName?uid='+uid)
+                        self.name = self.parent.wifi.sendRequest('getTagName?uid=' + uid)
                         return self.name
 
 
@@ -41,6 +41,7 @@ class Rfid:
             self.name = None
 
         # send previous result while timer hasnt been hit
-        if self.name != None:
-          print(self.name)
+        
+        if returnUID == True:
+            return None, self.name
         return self.name
