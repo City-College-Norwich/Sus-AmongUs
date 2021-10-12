@@ -1,12 +1,11 @@
 import random
 
-from GoodGuyGame import GoodGuyGame
-from Minigame import Minigame
+from Minigames.Minigame import Minigame
 
 
 class RecordTemperatureGame(Minigame):
     def __init__(self, parent):
-        super().__init__(self, parent)
+        Minigame.__init__(self, parent)
         self.current_temperature = random.randint(15, 33)
         self.temperature_upper_bound = self.current_temperature * 2
         self.temperature_lower_bound = self.current_temperature+5

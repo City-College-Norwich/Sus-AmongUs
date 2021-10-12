@@ -1,6 +1,15 @@
-from machine import Pin, I2C
+import os
+mode = os.environ.get("MODE")
 
-import ssd1306
+if(mode == "DEBUG"):
+    print("Need Pin")
+    print("Need I2C")
+
+    raise(NotImplementedError)
+else:
+    import ssd1306
+    from machine import Pin, I2C
+
 import time
 
 
@@ -44,6 +53,3 @@ class Screen:
         elif value == 0:
             self.display.fill(0)
 
-
-if not self.updateOccured:
-    self.clear()

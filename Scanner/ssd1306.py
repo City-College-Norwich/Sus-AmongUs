@@ -1,8 +1,10 @@
 # MicroPython SSD1306 OLED driver, I2C and SPI interfaces
 
-from micropython import const
-import framebuf
-
+try:
+    from micropython import const
+    import framebuf
+except(ModuleNotFoundError):
+    print("ModuleNotFoundError: micropython")
 
 # register definitions
 SET_CONTRAST = const(0x81)

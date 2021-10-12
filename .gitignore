@@ -315,6 +315,7 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
 Scanner/.idea/workspace.xml
 Scanner/.idea/Scanner.iml
 Scanner/.idea/modules.xml
@@ -323,3 +324,4 @@ Scanner/.idea/vcs.xml
 Scanner/.idea/Scanner.iml
 Scanner/.idea/inspectionProfiles/profiles_settings.xml
 Scanner/.idea/Scanner.iml
+

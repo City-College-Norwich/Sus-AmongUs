@@ -1,4 +1,4 @@
-from Minigame import Minigame
+from Minigames.Minigame import Minigame
 from TimeHelper import TimeHelper
 import random
 

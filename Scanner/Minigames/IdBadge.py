@@ -1,9 +1,9 @@
-from Minigame import Minigame
+from Minigames.Minigame import Minigame
 
 
 class IdBadge(Minigame):
     def __init__(self, parent):
-        super().__init__(self, parent)
+        Minigame.__init__(self, parent)
         self.parent = parent
 
         self.parent.screen.drawText('Scan Card', 0, 0)
