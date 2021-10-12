@@ -3,11 +3,10 @@ import time
 import os
 mode = os.environ.get("MODE")
 
+DEBUG = False
 if(mode == "DEBUG"):
-    print("network")
-    print("urequests")
-
-    #raise(NotImplementedError)
+    DEBUG = True
+    import requests
 else:
     import network
     import urequests as requests
@@ -17,7 +16,7 @@ class Wifi:
     wlan = None
     SSID = "AmongstUsNet"
     PASSWORD = "AmongstUs"
-    URL = "http://192.1.1.1:5000/"
+    URL = "http://localhost:5000/"
 
     def __init__(self):
         if(mode == "DEBUG"):
@@ -40,6 +39,11 @@ class Wifi:
                 print("Connecting...")
                 
     def sendRequest(self, message):
+        print("Requesting: " + self.URL+ message)
+        if(DEBUG):
+            r = requests.get(self.URL+ message)
+            print (r.text)
+            return (r.text)
         response = requests.get(self.URL+ message)
         print(self.URL+ message)
         text = response.text

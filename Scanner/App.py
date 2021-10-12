@@ -2,9 +2,8 @@
 """
 import json
 
-from dotenv import load_dotenv
-load_dotenv()
 import os
+os.environ['MODE'] = 'DEBUG'
 mode = os.environ.get("MODE")
 print("System Mode: " + mode)
 
