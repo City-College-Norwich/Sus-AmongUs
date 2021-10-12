@@ -2,6 +2,9 @@ import os
 mode = os.environ.get("MODE")
 
 if(mode == "DEBUG"):
+    print("Need Pin")
+    print("Need I2C")
+
     raise(NotImplementedError)
 else:
     import ssd1306
