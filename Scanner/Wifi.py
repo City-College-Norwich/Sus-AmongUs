@@ -1,7 +1,16 @@
 import time
 
-import network
-import urequests as requests
+import os
+mode = os.environ.get("MODE")
+
+if(mode == "DEBUG"):
+    print("network")
+    print("urequests")
+
+    #raise(NotImplementedError)
+else:
+    import network
+    import urequests as requests
 
 
 class Wifi:
@@ -11,6 +20,11 @@ class Wifi:
     URL = "http://192.1.1.1:5000/"
 
     def __init__(self):
+        if(mode == "DEBUG"):
+            print("WiFi Loading in Debug Mode")
+            return;
+
+
         # Initialize wlan object
         self.wlan = network.WLAN(network.STA_IF)
         self.wlan.active(True)

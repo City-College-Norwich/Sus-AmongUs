@@ -50,3 +50,5 @@ class App:
 
             self.currentMiniGame.alertsFromServer(alerts)
             self.keep_alive_timer.set(KEEP_ALIVE_TIMEOUT)
+
+App().run()
