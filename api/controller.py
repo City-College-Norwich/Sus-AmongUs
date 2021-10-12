@@ -59,4 +59,20 @@ def sabotage():
     args = request.args
     return model.sabotage(args["sabotageType"])
 
+
+@app.route("/getSabotageType")
+def getSabotageType():
+    return model.sabotage_type()
+
+
+@app.route("/sabotageTimeout")
+def sabotageTimeout():
+    return model.sabotageTimeout()
+
+
+@app.route("/sabotageCompleted")
+def sabotageCompleted():
+    return model.sabotageCompleted()
+
+
 if __name__ == '__main__': app.run(host='0.0.0.0')

@@ -75,9 +75,8 @@ class Model:
     def keepAlive(self):
         alerts = set()
         
-        if self.sabotaged == True:
+        if self.sabotaged:
             alerts.add("Sabotaged")
-            return self.sabotage_type
 
         if self.totalImposters == 0:
             self.state = CREWMATE_WIN
@@ -89,6 +88,7 @@ class Model:
             alerts.add("Crewmates_Win")
 
         elif self.state == IMPOSTER_WIN:
+
             alerts.add("Imposter_Win")
             
         return json.dumps(list(alerts))
@@ -114,4 +114,11 @@ class Model:
         self.sabotaged = True
         self.sabotage_type = sabotageType
 
+    def getSabotageType(self):
+        return self.sabotage_type
 
+    def sabotageTimeout(self):
+        self.state = IMPOSTER_WIN
+
+    def sabotageCompleted(self):
+        self.sabotaged = False
