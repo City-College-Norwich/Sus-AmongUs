@@ -81,7 +81,7 @@ class Model:
         if self.totalImposters == 0:
             self.state = CREWMATE_WIN
 
-        if self.totalImposters == self.crewmates:
+        if self.imposter == self.crewmate:
             self.state = IMPOSTER_WIN
         
         if self.state == CREWMATE_WIN:
