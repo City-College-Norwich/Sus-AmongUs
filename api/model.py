@@ -1,9 +1,14 @@
 import random
 import csv
-import pickle
+import json
 
-from TimeHelper import TimeHelper
+from TimerHelper import TimerHelper
 
+GAME_STARTING = 1
+GAME_RUNNING = 2
+GAME_ENDED = 3
+CREWMATE_WIN = 4
+IMPOSTER_WIN = 5
 
 class Model:
     def __init__(self):
@@ -14,19 +19,22 @@ class Model:
 
         self.totalMinigames = 10
         self.completedMinigames = 0
-        self.state = "Game_Starting"
+        self.state = GAME_STARTING
 
-                        # card ID,   team,   alive/dead
+                           # card ID,   team,   alive/dead
         self.players ={99:['player_uid', 'team', True],}
-        self.Crewmate = 0
-        self.Imposter = 0
+
+        self.crewmate = 0
+        self.imposter = 0
+
+
         self.totalImposters = 2
 
         self.userID = 0
         self.sabotaged = False
         self.sabotage_time = 0
         self.sabotage_type = 0
-        self.time = TimeHelper()
+        self.time = TimerHelper()
 
     def getTagName(self, uid):
         
@@ -37,8 +45,8 @@ class Model:
             
 
     def startGame(self):
-        self.state = "Game_Running"
-        for i in range(0, len(self.players)):
+        self.state = GAME_RUNNING
+        for i in self.players.keys():
             teamAssigner = random.randint(0,2)
             if self.crewmate == len(self.players) - self.totalImposters:
                 teamAssigner = 1
@@ -50,8 +58,8 @@ class Model:
                 self.players[i][1] = "Crewmate"
                 self.crewmate +=1
             elif teamAssigner == 1:
-                self.players[i][1] = "Impostor"
-                self.impostor += 1
+                self.players[i][1] = "Imposter"
+                self.imposter += 1
         return self.state
 
       
@@ -59,7 +67,7 @@ class Model:
         return "hello"
 
     def requestStation(self):
-        return "station" + str(random.choice(range(1, 11)))
+        return "station" + str(random.choice(range(1, 6)))
 
     def minigameComplete(self, scannerId):
         self.completedMinigames += 1
@@ -70,22 +78,20 @@ class Model:
         if self.sabotaged:
             alerts.add("Sabotaged")
 
-        if self.totalImpostors == 0:
-            self.state = "Crewmates_Win"
+        if self.totalImposters == 0:
+            self.state = CREWMATE_WIN
 
-        if self.completedMinigames >= self.totalMinigames:
-            self.state = "Crewmates_Win"
-
-        if totalImpostors == crewmates:
-            self.state = "Impostor_Win"
+        if self.totalImposters == self.crewmates:
+            self.state = IMPOSTER_WIN
         
-        if self.state == "Crewmates_Win":
+        if self.state == CREWMATE_WIN:
             alerts.add("Crewmates_Win")
 
-        elif self.state == "Imposter_Win":
+        elif self.state == IMPOSTER_WIN:
+
             alerts.add("Imposter_Win")
             
-        return pickle.dumps(alerts)
+        return json.dumps(list(alerts))
 
 
     def deadbodyfound(self, playerId):
