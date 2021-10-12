@@ -24,11 +24,11 @@ class Model:
                            # card ID,   team,   alive/dead
         self.players ={99:['player_uid', 'team', True],}
 
-        self.crewmate = 0
-        self.imposter = 0
+        self.crewmateCount = 0
+        self.imposterCount = 0
 
 
-        self.totalImposters = 2
+        self.maxImposters = 2
 
         self.userID = 0
         self.sabotaged = False
@@ -37,7 +37,6 @@ class Model:
         self.time = TimerHelper()
 
     def getTagName(self, uid):
-        
         if uid in self.uids.keys():            
             return self.uids[uid] 
         else:
@@ -46,20 +45,23 @@ class Model:
 
     def startGame(self):
         self.state = GAME_RUNNING
-        for i in self.players.keys():
-            teamAssigner = random.randint(0,2)
-            if self.crewmate == len(self.players) - self.totalImposters:
-                teamAssigner = 1
 
-            if self.imposter == self.totalImposters:
-                teamAssigner = 0
+        i = 0
+        while i != len(self.players) - 1:
+            keys = list(self.players.keys())
 
-            if teamAssigner == 0 :
-                self.players[i][1] = "Crewmate"
-                self.crewmate +=1
-            elif teamAssigner == 1:
-                self.players[i][1] = "Imposter"
-                self.imposter += 1
+            if self.imposterCount != self.maxImposters:
+                randomPlayerIndex = random.randint(0, len(self.players) - 1)
+                chosenPlayerUID = keys[randomPlayerIndex]
+                if self.players[chosenPlayerUID][1] != "Imposter":
+                    self.players[chosenPlayerUID][1] = "Imposter"
+                    self.imposterCount += 1
+                    i += 1
+                else:
+                    print(chosenPlayerUID + " is already a imposter, Itterating again!")
+            else:
+                self.players[keys[i]][1] = "Crewmate"
+                self.crewmateCount += 1
         return "okay"
 
       
@@ -79,19 +81,13 @@ class Model:
             if self.sabotaged:
                 alerts.add("Sabotaged")
 
-            if self.totalImposters == 0:
+            if self.imposterCount == 0:
                 self.state = CREWMATE_WIN
-
-            if self.imposter == self.crewmate:
-                self.state = IMPOSTER_WIN
-            
-            if self.state == CREWMATE_WIN:
                 alerts.add("Crewmates_Win")
-
-            elif self.state == IMPOSTER_WIN:
-
+            elif self.crewmateCount == 0:
+                self.state = IMPOSTER_WIN
                 alerts.add("Imposter_Win")
-            
+
         return json.dumps(list(alerts))
 
 
@@ -108,6 +104,9 @@ class Model:
         return str(self.userID)
 
     def registerUser(self, scannerId, uid):
+        if scannerId in self.players.keys(): 
+            return "User is already Registered!"
+            
         self.players[scannerId] = [uid, "team", True]
         return "Okay"
 
