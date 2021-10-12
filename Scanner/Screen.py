@@ -28,15 +28,15 @@ class Screen:
         self.drawText("Ready to Start", 0, 0)
         
     def drawText(self, text, x_coordinate, y_coordinate):
-        self.updateOccurred = True
+        self.clearScreen()
         self.display.text(text, x_coordinate, y_coordinate)
 
     def drawRectangle(self, x_coordinate, y_coordinate, width, height):
-        self.updateOccurred = True
+        self.clearScreen()
         self.display.fillRect(x_coordinate, y_coordinate, width, height)
         
     def clear(self):
-        self.updateOccurred = True
+        self.clearScreen()
         self.display.fill(0)
         
     def draw(self):
@@ -53,3 +53,7 @@ class Screen:
         elif value == 0:
             self.display.fill(0)
 
+    def clearScreen(self):
+        if self.updateOccurred == False:
+            self.clear()
+            self.updateOccurred = True
