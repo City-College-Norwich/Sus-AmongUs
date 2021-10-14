@@ -53,7 +53,7 @@ class Model:
                     self.players[chosenPlayerUID][0] = "Imposter"
                     self.imposterCount += 1
                 else:
-                    print(chosenPlayerUID + " is already a imposter, Itterating again!")
+                    print(str(chosenPlayerUID) + " is already a imposter, Itterating again!")
                     continue
             else:
                 self.players[keys[i]][0] = "Crewmate"
