@@ -44,24 +44,25 @@ class Model:
             
 
     def startGame(self):
-        self.state = GAME_RUNNING
-
         i = 0
-        while i != len(self.players) - 1:
+        while i < len(self.players):
             keys = list(self.players.keys())
 
             if self.imposterCount != self.maxImposters:
                 randomPlayerIndex = random.randint(0, len(self.players) - 1)
-                chosenPlayerUID = keys[randomPlayerIndex]
-                if self.players[chosenPlayerUID][1] != "Imposter":
-                    self.players[chosenPlayerUID][1] = "Imposter"
+                chosenPlayerID = keys[randomPlayerIndex]
+                if self.players[chosenPlayerID][1] != "Imposter":
+                    self.players[chosenPlayerID][1] = "Imposter"
                     self.imposterCount += 1
-                    i += 1
                 else:
-                    print(chosenPlayerUID + " is already a imposter, Itterating again!")
+                    print(chosenPlayerID + " is already a imposter, Itterating again!")
+                    continue
             else:
                 self.players[keys[i]][1] = "Crewmate"
                 self.crewmateCount += 1
+            i += 1
+        
+        self.state = GAME_RUNNING
         return "okay"
 
       
