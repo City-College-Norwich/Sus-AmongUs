@@ -2,7 +2,7 @@ from Minigames.Minigame import Minigame
 from TimerHelper import *
 
 
-class Upload_Game(Minigame):
+class UploadGame(Minigame):
     def __init__(self, parent):
         Minigame.__init__(self, parent)
         self.progress = 0
