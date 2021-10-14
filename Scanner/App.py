@@ -28,7 +28,7 @@ class App:
 
         self.currentMiniGame = StartupGame(self)
 
-        self.id = 1
+        self.badgeUID = None
         self.isRunning = True
         self.keep_alive_timer = TimerHelper()
         self.state = 1

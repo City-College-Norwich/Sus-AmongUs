@@ -1,4 +1,3 @@
-from Minigames.GoodGuyGame import GoodGuyGame
 from Minigames.Minigame import Minigame
 from TimerHelper import *
 
@@ -25,8 +24,9 @@ class DownloadGame(Minigame):
                 self.timer.set(1000)
 
                 if self.progress >= 100:
-                    self.parent.wifi.sendRequest("minigameComplete?scannerId=" + str(self.parent.id))
+                    self.parent.wifi.sendRequest("minigameComplete?badgeUID=" + self.parent.badgeUID)
                     self.parent.gotoGoodGuyGame()
+
         else:
             self.parent.screen.drawText("Keep Scanning", 0, 0)
             self.parent.screen.drawRectangle(10, 20, self.progress_width, 15)
