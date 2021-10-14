@@ -18,13 +18,16 @@ class DownloadGame(Minigame):
         self.rfid = self.parent.rfid.doRead()
         if self.rfid:
             if self.timer.check():
-                self.progress_width = self.progress_width+self.progress
+                self.progress_width = self.progress_width+10
                 self.progress = self.progress+10
-                self.parent.screen.drawRectangle(10, 10, self.progress_width, 30)
+                self.parent.screen.drawRectangle(10, 20, self.progress_width, 15)
+                self.parent.screen.drawText(str(self.progress) + "%", 50, 45)
                 self.timer.set(1000)
 
-                if self.progress > 100:
-                    self.parent.wifi.sendRequest("minigameComplete?scannerId=" + self.parent.id)
-                    self.parent.currentMiniGame = GoodGuyGame()
+                if self.progress >= 100:
+                    self.parent.wifi.sendRequest("minigameComplete?scannerId=" + str(self.parent.id))
+                    self.parent.gotoGoodGuyGame()
         else:
-            self.parent.screen.drawText("Error: Walked away from task", 0, 0)
+            self.parent.screen.drawText("Keep Scanning", 0, 0)
+            self.parent.screen.drawRectangle(10, 20, self.progress_width, 15)
+            self.parent.screen.drawText(str(self.progress) + "%", 50, 45)

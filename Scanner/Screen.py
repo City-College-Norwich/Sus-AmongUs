@@ -33,7 +33,7 @@ class Screen:
 
     def drawRectangle(self, x_coordinate, y_coordinate, width, height):
         self.clearScreen()
-        self.display.fillRect(x_coordinate, y_coordinate, width, height)
+        self.display.fill_rect(x_coordinate, y_coordinate, width, height, 1)
         
     def clear(self):
         self.fill(0)

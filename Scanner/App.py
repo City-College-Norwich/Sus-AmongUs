@@ -31,6 +31,7 @@ class App:
         self.id = 1
         self.isRunning = True
         self.keep_alive_timer = TimerHelper()
+        self.state = 1
 
     def run(self):
         self.keep_alive_timer.set(KEEP_ALIVE_TIMEOUT)
