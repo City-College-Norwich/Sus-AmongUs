@@ -29,7 +29,7 @@ def getTagName():
 @app.route("/minigameComplete")
 def minigameComplete():
     args = request.args
-    return model.minigameComplete(args["scannerId"])
+    return model.minigameComplete(args["badgeUID"])
 
 
 @app.route("/keepAlive")
@@ -40,18 +40,13 @@ def keepAlive():
 @app.route("/deadBodyFound")
 def deadBodyFound():
     args = request.args
-    return model.deadbodyfound(args["playerId"])
+    return model.deadbodyfound(args["badgeUID"])
 
-  
-@app.route("/askForID")
-def askForID():
-    return model.askForID()
 
-  
 @app.route("/registerUser")
 def registerUser():
     args = request.args
-    return model.registerUser(args["scannerId"], args["uid"])
+    return model.registerUser(args["badgeUID"])
 
   
 @app.route("/sabotage")

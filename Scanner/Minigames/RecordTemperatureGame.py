@@ -15,7 +15,7 @@ class RecordTemperatureGame(Minigame):
         self.parent.screen.drawText("Current Temperature: " + self.current_temperature, 0, 0)
         self.parent.screen.drawText("Logged Temperature: " + self.logged_temperature, 0, 20)
         if self.logged_temperature == self.current_temperature:
-            self.parent.wifi.sendRequest(self, "minigameComplete?scannerId=" + self.parent.id)
+            self.parent.wifi.sendRequest(self, "minigameComplete?badgeUID=" + self.parent.badgeUID)
             self.parent.currentMiniGame = GoodGuyGame()
         else:
             buttons = self.parent.buttons.getPressedButtons()

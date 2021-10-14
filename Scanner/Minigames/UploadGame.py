@@ -23,7 +23,7 @@ class Upload_Game(Minigame):
                 self.timer.set(1000)
 
                 if self.progress > 100:
-                    self.parent.wifi.sendRequest(self, "minigameComplete?scannerId=" + self.parent.id)
+                    self.parent.wifi.sendRequest(self, "minigameComplete?badgeUID=" + self.parent.badgeUID)
                     self.parent.currentMiniGame = GoodGuyGame()
 
             else:
