@@ -72,6 +72,7 @@ class Model:
 
     def minigameComplete(self, scannerId):
         self.completedMinigames += 1
+        return "Okay"
 
     def keepAlive(self):
         alerts = set()
