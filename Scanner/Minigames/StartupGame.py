@@ -18,7 +18,6 @@ class StartupGame(Minigame):
         
         if tag == ".main":
             self.parent.wifi.sendRequest('StartGame')
-
         elif self.parent.badgeUID is None and tag is not None:
             self.parent.badgeUID = uid
             self.parent.wifi.sendRequest('registerUser?badgeUID='+self.parent.badgeUID)
