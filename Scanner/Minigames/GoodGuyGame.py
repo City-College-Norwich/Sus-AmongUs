@@ -11,7 +11,7 @@ IMPOSTOR_WIN = 2
 class GoodGuyGame(Minigame):
 
     def __init__(self, parent):
-        Minigame.__init__(self, parent)
+        Minigame.__init__(parent)
         self.parent = parent
         # Add state variable 
         self.state = RUNNING
