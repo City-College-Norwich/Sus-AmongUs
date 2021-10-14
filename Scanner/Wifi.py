@@ -22,11 +22,13 @@ class Wifi:
             if self.wlan.isconnected():
                 print("Connected to: " + self.SSID)
                 self.parent.screen.drawText("Connected", 0, 0)
+                self.parent.screen.draw()
                 return
             else:
                 time.sleep_ms(500)
                 print("Connecting...")
                 self.parent.screen.drawText("Connecting", 0, 0)
+                self.parent.screen.draw()
     def sendRequest(self, message):
         response = requests.get(self.URL+ message)
         print(self.URL+ message)
