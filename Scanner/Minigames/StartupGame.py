@@ -7,15 +7,8 @@ class StartupGame(Minigame):
         Minigame.__init__(self, parent)
         self.parent = parent
 
-    
-        # Save ID
-        userID = self.parent.wifi.sendRequest('askForID')
 
         print("Initiate StartupGame")
-
-
-
-        self.parent.id = userID
     
         # Tell player to scan badge
         self.parent.screen.drawText('Scan Card', 0, 0)
@@ -26,12 +19,8 @@ class StartupGame(Minigame):
         if tag == ".main":
             self.parent.wifi.sendRequest('StartGame')
 
+        elif self.parent.badgeUID is None and tag is not None:
+            self.parent.badgeUID = uid
+            self.parent.wifi.sendRequest('registerUser?badgeUID='+self.parent.badgeUID)
 
-        # ID badge scanned
-        # If not recognised by server, tell server to register badge and ID
-        
-        elif tag is not None:
-            self.parent.wifi.sendRequest('registerUser?scannerId='+str(self.parent.id)+'&uid='+uid)
-
-            print(tag)
 

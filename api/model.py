@@ -21,16 +21,14 @@ class Model:
         self.completedMinigames = 0
         self.state = GAME_STARTING
 
-                           # card ID,   team,   alive/dead
-        self.players ={99:['player_uid', 'team', True],}
+                      # card ID,   team,   alive/dead
+        self.players ={99:['team', True],}
 
         self.crewmateCount = 0
         self.imposterCount = 0
 
-
         self.maxImposters = 2
 
-        self.userID = 0
         self.sabotaged = False
         self.sabotage_time = 0
         self.sabotage_type = 0
@@ -50,15 +48,15 @@ class Model:
 
             if self.imposterCount != self.maxImposters:
                 randomPlayerIndex = random.randint(0, len(self.players) - 1)
-                chosenPlayerID = keys[randomPlayerIndex]
-                if self.players[chosenPlayerID][1] != "Imposter":
-                    self.players[chosenPlayerID][1] = "Imposter"
+                chosenPlayerUID = keys[randomPlayerIndex]
+                if self.players[chosenPlayerUID][0] != "Imposter":
+                    self.players[chosenPlayerUID][0] = "Imposter"
                     self.imposterCount += 1
                 else:
-                    print(chosenPlayerID + " is already a imposter, Itterating again!")
+                    print(chosenPlayerUID + " is already a imposter, Itterating again!")
                     continue
             else:
-                self.players[keys[i]][1] = "Crewmate"
+                self.players[keys[i]][0] = "Crewmate"
                 self.crewmateCount += 1
             i += 1
         
@@ -92,23 +90,17 @@ class Model:
         return json.dumps(list(alerts))
 
 
-    def deadbodyfound(self, playerId):
+    def deadbodyfound(self, badgeUID):
         # split the playerId into the cmd (on the left) and the actual playerId# (on the right)
-        result = playerId.split(':')
-        id = result[1]
-        
-        if self.players [id][2] == False:
+
+        if self.players[badgeUID][1] == False:
             startVote() #This needs creating first
 
-    def askForID(self):
-        self.userID += 1
-        return str(self.userID)
-
-    def registerUser(self, scannerId, uid):
-        if scannerId in self.players.keys(): 
+    def registerUser(self,badgeUID):
+        if badgeUID in self.players.keys(): 
             return "User is already Registered!"
             
-        self.players[scannerId] = [uid, "team", True]
+        self.players[badgeUID] = ["team", True]
         return "Okay"
 
     def sabotage(self, sabotageType):

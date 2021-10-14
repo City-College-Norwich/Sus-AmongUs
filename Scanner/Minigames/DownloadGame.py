@@ -24,7 +24,7 @@ class DownloadGame(Minigame):
                 self.timer.set(1000)
 
                 if self.progress > 100:
-                    self.parent.wifi.sendRequest("minigameComplete?scannerId=" + self.parent.id)
+                    self.parent.wifi.sendRequest("minigameComplete?badgeUID=" + self.parent.badgeUID)
                     self.parent.currentMiniGame = GoodGuyGame()
         else:
             self.parent.screen.drawText("Error: Walked away from task", 0, 0)
