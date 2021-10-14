@@ -4,7 +4,7 @@ from Minigames.Minigame import Minigame
 from Minigames.IdBadge import IdBadge
 from Minigames.ReactionGame import ReactionGame
 from Minigames.DownloadGame import DownloadGame
-from Minigames.UploadGame import DownloadGame
+from Minigames.UploadGame import UploadGame
 from Minigames.RecordTemperatureGame import RecordTemperatureGame
 
 
@@ -21,7 +21,7 @@ class GoodGuyGame(Minigame):
         self.state = RUNNING
         
         # update bellow set with minigames
-        self.__minigames = [IdBadge, ReactionGame,DownloadGame,DownloadGame,RecordTemperatureGame]
+        self.__minigames = [IdBadge, ReactionGame, DownloadGame, UploadGame, RecordTemperatureGame]
         self.__target_station = self.parent.wifi.sendRequest("requestStation")
 
     def update(self):
