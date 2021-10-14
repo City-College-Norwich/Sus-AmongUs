@@ -16,7 +16,7 @@ class UploadGame(Minigame):
         self.rfid = self.parent.rfid.doRead()
         if self.rfid:
             if self.timer.check():
-                self.progress_width = self.progress_width+self.progress
+                self.progress_width = self.progress_width+10
                 self.progress = self.progress+10
                 self.parent.screen.drawRectangle(10, 20, self.progress_width, 15)
                 self.parent.screen.drawText(str(self.progress) + "%", 50, 45)
@@ -24,7 +24,7 @@ class UploadGame(Minigame):
 
 
                 if self.progress >= 100:
-                    self.parent.wifi.sendRequest(self, "minigameComplete?badgeUID=" + self.parent.badgeUID)
+                    self.parent.wifi.sendRequest("minigameComplete?badgeUID=" + self.parent.badgeUID)
                     self.parent.gotoGoodGuyGame()
 
             else:
