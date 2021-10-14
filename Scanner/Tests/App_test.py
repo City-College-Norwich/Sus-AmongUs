@@ -17,6 +17,7 @@ from unittest.mock import MagicMock
 import json
 from Minigames.GoodGuyGame import GoodGuyGame
 
+# create "mock" objects for all the imports we can't actually import
 sys.modules['ssd1306'] = MagicMock()
 sys.modules['machine'] = MagicMock()
 sys.modules['mfrc522'] = MagicMock()
@@ -29,6 +30,7 @@ sys.modules['StartupGame'] = MagicMock()
 
 from App import App, KEEP_ALIVE_TIMEOUT
 
+# --------------------------
 class IsRunningSurrogate:
     def __init__(self, totalIterations=1):
         self.totalIterations = totalIterations
@@ -39,6 +41,7 @@ class IsRunningSurrogate:
             self.currentIteration+= 1
             return True
         return False
+# --------------------------
 
 def test_appCreated():
     app = App()
