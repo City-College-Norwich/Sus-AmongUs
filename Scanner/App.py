@@ -22,8 +22,8 @@ KEEP_ALIVE_TIMEOUT = 500  # timeout in ms
 class App:
     def __init__(self):
         self.rfid = Rfid.Rfid(self)
-        self.wifi = Wifi.Wifi()
         self.screen = Screen.Screen()
+        self.wifi = Wifi.Wifi()
         self.buttons = Buttons.Buttons()
 
         self.currentMiniGame = StartupGame(self)
