@@ -33,7 +33,7 @@ class GoodGuyGame(Minigame):
                 playerId = targetRfidTag.split(':')
                 self.parent.wifi.sendRequest("deadBodyFound?playerId="+playerId[1])
             if targetRfidTag == self.__target_station:
-                self.parent.currentMiniGame = random.choice(self.__minigames).__init__()
+                self.parent.currentMiniGame = random.choice(self.__minigames)()
             else:
                 self.parent.screen.drawText("GOTO: " + str(self.__target_station),0,0)
         else:
