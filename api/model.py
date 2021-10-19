@@ -83,11 +83,19 @@ class Model:
             if self.imposterCount == 0:
                 self.state = CREWMATE_WIN
                 alerts.add("Crewmates_Win")
-            elif self.crewmateCount == 0:
+            elif self.crewmateCount == self.imposterCount:
                 self.state = IMPOSTER_WIN
                 alerts.add("Imposter_Win")
 
         return json.dumps(list(alerts))
+
+
+    def killPlayer(self, badgeUID):
+        self.players[badgeUID][1] = False
+        if self.players[badgeUID][0] == "Imposter":
+            self.imposterCount -= 1
+        else:
+            self.crewmateCount -= 1
 
 
     def deadbodyfound(self, badgeUID):
@@ -115,3 +123,6 @@ class Model:
 
     def sabotageCompleted(self):
         self.sabotaged = False
+
+    def isAlive(self, badgeUID):
+        return self.players[badgeUID][1]
