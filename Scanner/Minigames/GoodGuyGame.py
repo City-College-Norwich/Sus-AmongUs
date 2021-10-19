@@ -3,6 +3,10 @@ import random
 from Minigames.Minigame import Minigame
 from Minigames.IdBadge import IdBadge
 from Minigames.ReactionGame import ReactionGame
+from Minigames.DownloadGame import DownloadGame
+from Minigames.UploadGame import UploadGame
+from Minigames.RecordTemperatureGame import RecordTemperatureGame
+
 
 RUNNING = 0
 CREWMATE_WIN = 1
@@ -17,7 +21,7 @@ class GoodGuyGame(Minigame):
         self.state = RUNNING
         
         # update bellow set with minigames
-        self.__minigames = {IdBadge, ReactionGame}
+        self.__minigames = [IdBadge, ReactionGame, DownloadGame, UploadGame, RecordTemperatureGame]
         self.__target_station = self.parent.wifi.sendRequest("requestStation")
 
     def update(self):
@@ -33,7 +37,7 @@ class GoodGuyGame(Minigame):
                 playerId = targetRfidTag.split(':')
                 self.parent.wifi.sendRequest("deadBodyFound?badgeUID="+playerId[1])
             if targetRfidTag == self.__target_station:
-                self.parent.currentMiniGame = random.choice(self.__minigames.__init__())
+                self.parent.currentMiniGame = random.choice(self.__minigames)(self.parent)
             else:
                 self.parent.screen.drawText("GOTO: " + str(self.__target_station),0,0)
         else:

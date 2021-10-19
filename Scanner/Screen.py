@@ -1,14 +1,6 @@
-import os
-mode = os.environ.get("MODE")
 
-if(mode == "DEBUG"):
-    print("Need Pin")
-    print("Need I2C")
-
-    raise(NotImplementedError)
-else:
-    import ssd1306
-    from machine import Pin, I2C
+import ssd1306
+from machine import Pin, I2C
 
 import time
 
@@ -25,7 +17,6 @@ class Screen:
         i2c = I2C(scl=scl, sda=sda)
         self.display = ssd1306.SSD1306_I2C(128, 64, i2c)
         self.updateOccurred = False
-        self.drawText("Ready to Start", 0, 0)
         
     def drawText(self, text, x_coordinate, y_coordinate):
         self.clearScreen()
@@ -33,7 +24,7 @@ class Screen:
 
     def drawRectangle(self, x_coordinate, y_coordinate, width, height):
         self.clearScreen()
-        self.display.fillRect(x_coordinate, y_coordinate, width, height)
+        self.display.fill_rect(x_coordinate, y_coordinate, width, height, 1)
         
     def clear(self):
         self.fill(0)
