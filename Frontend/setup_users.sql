@@ -14,4 +14,3 @@ create user web@localhost
 	identified by 'BUIOSDBfOAJDOPASdjal334VBUIOV89GVuiv';
 
 grant alter, create, delete, drop, insert, select, update on table past_games to web@localhost;
-
