@@ -15,6 +15,7 @@ import Wifi
 from TimerHelper import TimerHelper
 from Minigames.StartupGame import StartupGame
 from Minigames.GoodGuyGame import GoodGuyGame
+from Minigames.VotingGame import VotingGame
 
 KEEP_ALIVE_TIMEOUT = 500  # timeout in ms
 
@@ -54,3 +55,7 @@ class App:
     
     def gotoGoodGuyGame(self):
         self.currentMiniGame = GoodGuyGame(self)
+    
+    def gotoVotingGame(self):
+        self.currentMiniGame = VotingGame(self)
+

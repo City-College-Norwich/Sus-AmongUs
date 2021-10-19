@@ -70,4 +70,10 @@ def sabotageCompleted():
     return model.sabotageCompleted()
 
 
+@app.route("/voteTally")
+def voteTally():
+    args = request.args
+    return model.voteTally(args["voteTally"])
+
+
 if __name__ == '__main__': app.run(host='0.0.0.0')

@@ -21,8 +21,8 @@ class Model:
         self.completedMinigames = 0
         self.state = GAME_STARTING
 
-                      # card ID,   team,   alive/dead
-        self.players ={99:['team', True],}
+                      # card ID,   team,   alive/dead, votecounter
+        self.players ={99:['team', True, 0],}
 
         self.crewmateCount = 0
         self.imposterCount = 0
@@ -33,6 +33,8 @@ class Model:
         self.sabotage_time = 0
         self.sabotage_type = 0
         self.time = TimerHelper()
+        self.playerTotalVote = 0
+        self.totalVote = 0
 
     def getTagName(self, uid):
         if uid in self.uids.keys():            
@@ -92,6 +94,7 @@ class Model:
 
     def deadbodyfound(self, badgeUID):
         # split the playerId into the cmd (on the left) and the actual playerId# (on the right)
+        self.totalVote = 0
 
         if self.players[badgeUID][1] == False:
             startVote() #This needs creating first
@@ -115,3 +118,10 @@ class Model:
 
     def sabotageCompleted(self):
         self.sabotaged = False
+
+    def voteTally(self, badgeUID):
+        keys = list(self.players.keys())
+        self.playerTotalVote = int(self.players[keys[badgeUID][2]]) + 1
+        self.players[keys[badgeUID][2]] = str(self.playerTotalVote)
+        self.totalVote += 1
+        
