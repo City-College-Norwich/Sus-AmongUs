@@ -12,7 +12,7 @@ class TimerHelper:
         self.targetTime = timeInMS
 
     def check(self):
-        delta = time.ticks_diff(time.time()*1000, self.start)
+        delta = (time.time()*1000 - self.start)
         if delta >= self.targetTime:
             return True
         else:

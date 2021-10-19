@@ -1,11 +1,9 @@
 import time
-
 import os
 mode = os.environ.get("MODE")
 
 DEBUG = False
 if(mode == "DEBUG"):
-    DEBUG = True
     import requests
 else:
     import network
@@ -16,7 +14,7 @@ class Wifi:
     wlan = None
     SSID = "AmongstUsNet"
     PASSWORD = "AmongstUs"
-    URL = "http://192.1.1.1:5000/"
+    URL = "http://10.65.21.98:5000/"
 
     def __init__(self):
         if(mode == "DEBUG"):
@@ -37,7 +35,7 @@ class Wifi:
             else:
                 time.sleep_ms(500)
                 print("Connecting...")
-                
+
     def sendRequest(self, message):
         print("Requesting: " + self.URL+ message)
         if(DEBUG):
@@ -51,4 +49,4 @@ class Wifi:
         response.close()
         return(text)
 
-    
+

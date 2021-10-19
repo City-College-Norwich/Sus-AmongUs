@@ -4,8 +4,7 @@ mode = os.environ.get("MODE")
 DEBUG = False
 if(mode == "DEBUG"):
     DEBUG = True
-    print("Need Pin")
-    print("Need I2C")
+
 
     import DummyLibraries.Pin
     import DummyLibraries.ssd1306
@@ -50,7 +49,8 @@ class Screen:
         
     def draw(self):
         if self.updateOccurred:
-            self.display.show()
+            if(not DEBUG):
+                self.display.show()
             self.updateOccurred = False
 
     def update(self):

@@ -55,4 +55,4 @@ class App:
     def gotoGoodGuyGame(self):
         self.currentMiniGame = GoodGuyGame(self)
 
-        App().run()
+App().run()

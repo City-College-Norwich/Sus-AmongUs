@@ -13,7 +13,7 @@ IMPOSTER_WIN = 5
 class Model:
     def __init__(self):
 
-        with open('RFIDMap.csv', mode='r') as csvfile:
+        with open('RFIDMap.csv', mode='a+') as csvfile:
             reader = csv.reader(csvfile)
             self.uids = {row[0]: row[1] for row in reader}
 
