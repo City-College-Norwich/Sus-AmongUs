@@ -20,6 +20,8 @@ KEEP_ALIVE_TIMEOUT = 500  # timeout in ms
 
 
 class App:
+    STARTING = 0
+    RUNNING = 1
     def __init__(self):
         self.rfid = Rfid.Rfid(self)
         self.wifi = Wifi.Wifi()
@@ -31,7 +33,7 @@ class App:
         self.badgeUID = None
         self.isRunning = True
         self.keep_alive_timer = TimerHelper()
-        self.state = 1
+        self.state = self.STARTING
 
     def run(self):
         self.keep_alive_timer.set(KEEP_ALIVE_TIMEOUT)
