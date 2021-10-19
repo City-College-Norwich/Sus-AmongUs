@@ -37,6 +37,12 @@ def keepAlive():
     return model.keepAlive()
   
 
+@app.route("/killCrewmate")
+def killCrewmate():
+    args = request.args
+    return model.killCrewmate(args["badgeUID"])
+
+
 @app.route("/deadBodyFound")
 def deadBodyFound():
     args = request.args
@@ -68,6 +74,12 @@ def sabotageTimeout():
 @app.route("/sabotageCompleted")
 def sabotageCompleted():
     return model.sabotageCompleted()
+
+
+@app.route("/isAlive")
+def isAlive():
+    args = request.args
+    return model.isAlive(args[badgeUID])
 
 
 if __name__ == '__main__': app.run(host='0.0.0.0')
