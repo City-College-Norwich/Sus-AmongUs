@@ -20,6 +20,12 @@
           case "GAMES_LOGS":
             include "./pages/pastGames/index.php";
             break;
+          case "USERS":
+            include "./pages/users/index.php";
+            break;
+          case "USERS_EDIT":
+            include "./pages/users/edit/edit.php";
+            break;
         }
         
         ?>

@@ -1,7 +1,7 @@
 <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script> -->
 
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-          <h1 class="h2">Past Games!</h1>
+          <h1 class="h2">Users!</h1>
           <div class="btn-toolbar mb-2 mb-md-0">
             <div class="btn-group me-2">
               <script>
@@ -15,7 +15,7 @@
                 //     setTimeout(() => {  reload() }, 100); // Dont say anything about this i stg
                 // }
                 function exportCSV() {
-                    location.href = "./pages/pastGames/export.php";
+                    location.href = "./pages/users/export.php";
                 }
                 function reload() {
                     location.reload(); 
@@ -31,12 +31,12 @@
           <table class="table table-striped table-sm">
             <thead>
               <tr>
-              <th scope="col">#</th>
-              <th scope="col">Date</th>
-                <th scope="col">Player Count</th>
-                <th scope="col">Match Length</th>
-                <th scope="col">WinnerID</th>
-                <th scope="col">WinMethod</th>
+                <th scope="col">#</th>
+                <th scope="col">Username</th>
+                <th scope="col">Email</th>
+                <th scope="col">Phone Number</th>
+                <th scope="col">Rank</th>
+                <th scope="col"></th>
               </tr>
             </thead>
             <tbody id="ENTRYS">

@@ -43,7 +43,7 @@ function isActive($str) {
 
           <ul class="nav flex-column mb-2">
             <li class="nav-item">
-              <a class="nav-link" href="#">
+              <a class="nav-link" href="./?selected=USERS">
                 <span data-feather="file-text"></span>
                 Users
               </a>
