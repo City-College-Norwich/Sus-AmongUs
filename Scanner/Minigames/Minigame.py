@@ -6,9 +6,10 @@ class Minigame:
         pass
 
     def alertsFromServer(self, alerts):
-        if 'GameStarted' in alerts:
+        if 'GameStarted' in alerts and self.parent.state == self.parent.STARTING:
 
             self.parent.gotoGoodGuyGame()
+            self.parent.state = self.parent.RUNNING
 
         if 'Crewmate_Win' in alerts:
             self.parent.gotoGoodGuyGame()

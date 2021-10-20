@@ -21,23 +21,20 @@ class Model:
         self.completedMinigames = 0
         self.state = GAME_STARTING
 
-                           # card ID,   team,   alive/dead
-        self.players ={99:['player_uid', 'team', True],}
+                      # card ID,   team,   alive/dead
+        self.players ={99:['team', True],}
 
-        self.crewmate = 0
-        self.imposter = 0
+        self.crewmateCount = 0
+        self.imposterCount = 0
 
+        self.maxImposters = 2
 
-        self.totalImposters = 2
-
-        self.userID = 0
         self.sabotaged = False
         self.sabotage_time = 0
         self.sabotage_type = 0
         self.time = TimerHelper()
 
     def getTagName(self, uid):
-        
         if uid in self.uids.keys():            
             return self.uids[uid] 
         else:
@@ -45,21 +42,25 @@ class Model:
             
 
     def startGame(self):
+        i = 0
+        while i < len(self.players):
+            keys = list(self.players.keys())
+
+            if self.imposterCount != self.maxImposters:
+                randomPlayerIndex = random.randint(0, len(self.players) - 1)
+                chosenPlayerUID = keys[randomPlayerIndex]
+                if self.players[chosenPlayerUID][0] != "Imposter":
+                    self.players[chosenPlayerUID][0] = "Imposter"
+                    self.imposterCount += 1
+                else:
+                    print(str(chosenPlayerUID) + " is already a imposter, Itterating again!")
+                    continue
+            else:
+                self.players[keys[i]][0] = "Crewmate"
+                self.crewmateCount += 1
+            i += 1
+        
         self.state = GAME_RUNNING
-        for i in self.players.keys():
-            teamAssigner = random.randint(0,2)
-            if self.crewmate == len(self.players) - self.totalImposters:
-                teamAssigner = 1
-
-            if self.imposter == self.totalImposters:
-                teamAssigner = 0
-
-            if teamAssigner == 0 :
-                self.players[i][1] = "Crewmate"
-                self.crewmate +=1
-            elif teamAssigner == 1:
-                self.players[i][1] = "Imposter"
-                self.imposter += 1
         return "okay"
 
       
@@ -71,6 +72,7 @@ class Model:
 
     def minigameComplete(self, scannerId):
         self.completedMinigames += 1
+        return "Okay"
 
     def keepAlive(self):
         alerts = set()
@@ -79,36 +81,35 @@ class Model:
             if self.sabotaged:
                 alerts.add("Sabotaged")
 
-            if self.totalImposters == 0:
+            if self.imposterCount == 0:
                 self.state = CREWMATE_WIN
-
-            if self.imposter == self.crewmate:
-                self.state = IMPOSTER_WIN
-            
-            if self.state == CREWMATE_WIN:
                 alerts.add("Crewmates_Win")
-
-            elif self.state == IMPOSTER_WIN:
-
+            elif self.crewmateCount == self.imposterCount:
+                self.state = IMPOSTER_WIN
                 alerts.add("Imposter_Win")
-            
+
         return json.dumps(list(alerts))
 
 
-    def deadbodyfound(self, playerId):
+    def killPlayer(self, badgeUID):
+        self.players[badgeUID][1] = False
+        if self.players[badgeUID][0] == "Imposter":
+            self.imposterCount -= 1
+        else:
+            self.crewmateCount -= 1
+
+
+    def deadbodyfound(self, badgeUID):
         # split the playerId into the cmd (on the left) and the actual playerId# (on the right)
-        result = playerId.split(':')
-        id = result[1]
-        
-        if self.players [id][2] == False:
+
+        if self.players[badgeUID][1] == False:
             startVote() #This needs creating first
 
-    def askForID(self):
-        self.userID += 1
-        return str(self.userID)
-
-    def registerUser(self, scannerId, uid):
-        self.players[scannerId] = [uid, "team", True]
+    def registerUser(self,badgeUID):
+        if badgeUID in self.players.keys(): 
+            return "User is already Registered!"
+            
+        self.players[badgeUID] = ["team", True]
         return "Okay"
 
     def sabotage(self, sabotageType):
@@ -123,3 +124,8 @@ class Model:
 
     def sabotageCompleted(self):
         self.sabotaged = False
+
+    def isAlive(self, badgeUID):
+        if self.players[badgeUID][1]:
+            return "yes"
+        return "no"
