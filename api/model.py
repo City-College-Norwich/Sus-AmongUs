@@ -55,7 +55,7 @@ class Model:
                     self.players[chosenPlayerUID][0] = "Imposter"
                     self.imposterCount += 1
                 else:
-                    print(chosenPlayerUID + " is already a imposter, Itterating again!")
+                    print(str(chosenPlayerUID) + " is already a imposter, Itterating again!")
                     continue
             else:
                 self.players[keys[i]][0] = "Crewmate"
@@ -74,6 +74,7 @@ class Model:
 
     def minigameComplete(self, scannerId):
         self.completedMinigames += 1
+        return "Okay"
 
     def keepAlive(self):
         alerts = set()
@@ -85,11 +86,19 @@ class Model:
             if self.imposterCount == 0:
                 self.state = CREWMATE_WIN
                 alerts.add("Crewmates_Win")
-            elif self.crewmateCount == 0:
+            elif self.crewmateCount == self.imposterCount:
                 self.state = IMPOSTER_WIN
                 alerts.add("Imposter_Win")
 
         return json.dumps(list(alerts))
+
+
+    def killPlayer(self, badgeUID):
+        self.players[badgeUID][1] = False
+        if self.players[badgeUID][0] == "Imposter":
+            self.imposterCount -= 1
+        else:
+            self.crewmateCount -= 1
 
 
     def deadbodyfound(self, badgeUID):
@@ -125,3 +134,9 @@ class Model:
         self.players[keys[badgeUID][2]] = str(self.playerTotalVote)
         self.totalVote += 1
         
+
+    def isAlive(self, badgeUID):
+        if self.players[badgeUID][1]:
+            return "yes"
+        return "no"
+

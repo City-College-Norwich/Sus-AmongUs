@@ -37,6 +37,12 @@ def keepAlive():
     return model.keepAlive()
   
 
+@app.route("/killPlayer")
+def killPlayer():
+    args = request.args
+    return model.killPlayer(args["badgeUID"])
+
+
 @app.route("/deadBodyFound")
 def deadBodyFound():
     args = request.args
@@ -74,6 +80,11 @@ def sabotageCompleted():
 def voteTally():
     args = request.args
     return model.voteTally(args["voteTally"])
+
+@app.route("/isAlive")
+def isAlive():
+    args = request.args
+    return model.isAlive(args[badgeUID])
 
 
 if __name__ == '__main__': app.run(host='0.0.0.0')
