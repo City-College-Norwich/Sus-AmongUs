@@ -23,6 +23,7 @@ KEEP_ALIVE_TIMEOUT = 500  # timeout in ms
 class App:
     STARTING = 0
     RUNNING = 1
+    VOTING = 2
     def __init__(self):
         self.rfid = Rfid.Rfid(self)
         self.screen = Screen.Screen()
@@ -60,5 +61,6 @@ class App:
         self.currentMiniGame = GoodGuyGame(self)
     
     def gotoVotingGame(self):
+        self.state = self.VOTING
         self.currentMiniGame = VotingGame(self)
 

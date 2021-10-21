@@ -22,7 +22,7 @@ class Model:
         self.state = GAME_STARTING
 
                       # card ID,   team,   alive/dead, votecounter
-        self.players ={99:['team', True, 0],}
+        self.players ={"0x14742558":['crewmate', False, 0]}
 
         self.crewmateCount = 0
         self.imposterCount = 0
@@ -111,12 +111,15 @@ class Model:
 
         if self.players[badgeUID][1] == False:
             self.voting = True
+            return "Dead"
+        return "Alive"
 
     def registerUser(self,badgeUID):
         if badgeUID in self.players.keys(): 
             return "User is already Registered!"
             
-        self.players[badgeUID] = ["team", True]
+        self.players[badgeUID] = ["team", True, 0]
+        self.uids[badgeUID] = "playerId:"+badgeUID
         return "Okay"
 
     def sabotage(self, sabotageType):

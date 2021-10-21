@@ -84,7 +84,7 @@ def voteTally():
 @app.route("/isAlive")
 def isAlive():
     args = request.args
-    return model.isAlive(args[badgeUID])
+    return model.isAlive(args["badgeUID"])
 
 
 if __name__ == '__main__': app.run(host='0.0.0.0')

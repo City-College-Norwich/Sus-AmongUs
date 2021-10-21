@@ -29,13 +29,7 @@ class GoodGuyGame(Minigame):
 
             targetRfidTag = self.parent.rfid.doRead()
             
-            if self.parent.wifi.sendRequest("isAlive?badgeUID=" + self.parent.badgeUID):
-                
-                # check if the first 7 characters == playerId
-                # if yes, then split at the colon and get the playerId number (just like in model)
-                # send that playerId in the sendRequest
-
-                #targetRfidTag = 'playerId:12'
+            if self.parent.wifi.sendRequest("isAlive?badgeUID=" + self.parent.badgeUID) == "yes":
                 if targetRfidTag is not None and targetRfidTag[:8] == 'playerId':
                     playerId = targetRfidTag.split(':')
                     self.parent.wifi.sendRequest("deadBodyFound?badgeUID="+playerId[1])

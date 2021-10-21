@@ -1,4 +1,4 @@
-from Minigames.Minigames import Minigame
+from Minigames.Minigame import Minigame
 
 class VotingGame(Minigame):
     def __init__(self, parent):
