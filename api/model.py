@@ -35,6 +35,7 @@ class Model:
         self.time = TimerHelper()
         self.playerTotalVote = 0
         self.totalVote = 0
+        self.voting = False
 
     def getTagName(self, uid):
         if uid in self.uids.keys():            
@@ -82,6 +83,9 @@ class Model:
             alerts.add("GameStarted")
             if self.sabotaged:
                 alerts.add("Sabotaged")
+            elif self.voting == True:
+                alerts.add("Voting")
+                self.voting = False
 
             if self.imposterCount == 0:
                 self.state = CREWMATE_WIN
@@ -106,7 +110,7 @@ class Model:
         self.totalVote = 0
 
         if self.players[badgeUID][1] == False:
-            startVote() #This needs creating first
+            self.voting = True
 
     def registerUser(self,badgeUID):
         if badgeUID in self.players.keys(): 
