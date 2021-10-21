@@ -126,4 +126,6 @@ class Model:
         self.sabotaged = False
 
     def isAlive(self, badgeUID):
-        return self.players[badgeUID][1]
+        if self.players[badgeUID][1]:
+            return "yes"
+        return "no"
