@@ -79,7 +79,16 @@ def sabotageCompleted():
 @app.route("/isAlive")
 def isAlive():
     args = request.args
-    return model.isAlive(args[badgeUID])
+    return model.isAlive(args['badgeUID'])
 
+
+@app.route("/AutoDownloader/GetFileList")
+def getFileList():
+    return model.getFileList()
+
+@app.route("AutoDownloader/GetFile")
+def getFile():
+    args = request.args
+    return model.getFile(args['fileName'])
 
 if __name__ == '__main__': app.run(host='0.0.0.0')
