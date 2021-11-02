@@ -25,7 +25,7 @@ class App:
     def __init__(self):
         self.rfid = Rfid.Rfid(self)
         self.screen = Screen.Screen()
-        self.wifi = Wifi.Wifi()
+        self.wifi = Wifi.Wifi(self)
         self.buttons = Buttons.Buttons()
 
         self.currentMiniGame = StartupGame(self)
