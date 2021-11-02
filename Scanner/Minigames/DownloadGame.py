@@ -4,7 +4,7 @@ from TimerHelper import *
 
 class DownloadGame(Minigame):
     def __init__(self, parent):
-        Minigame.__init__(parent)
+        Minigame.__init__(self,parent)
         self.parent = parent
         self.progress = 0
         self.progress_width = 0
