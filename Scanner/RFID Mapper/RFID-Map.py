@@ -20,7 +20,8 @@ while True:
         (status,uid) = rdr.MFRC522_Anticoll()
         if status == rdr.MI_OK:
             RFIDMap = {}
-            
+            uid = "0x%02x%02x%02x%02x" % (uid[0], uid[1], uid[2], uid[3])
+
             with open(FILE_PATH, mode='r') as csvfile:
                 reader = csv.reader(csvfile)
                 RFIDMap = {row[0]: row[1] for row in reader}
