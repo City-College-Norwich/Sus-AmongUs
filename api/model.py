@@ -138,7 +138,8 @@ class Model:
         "Screen.py", 
         "TimerHelper.py", 
         "Wifi.py",
-        "Mingames/DownloadGame.py",
+        "boot.py",
+        "Minigames/DownloadGame.py",
         "Minigames/GoodGuyGame.py",
         "Minigames/IdBadge.py",
         "Minigames/ImposterGame.py",
@@ -155,9 +156,10 @@ class Model:
     def getFile(self, fileName):
         currentdir = os.path.dirname(os.path.realpath(__file__))
         parentdir = os.path.dirname(currentdir)
+        scannerdir = os.path.join(parentdir, "Scanner")
 
         if fileName in self.fileList:
-            with open(os.join(parentdir, "/Scanner", fileName), "r") as f:
+            with open(os.join(scannerdir, fileName), "r") as f:
                 file = f.read()
             return file
         return ""
