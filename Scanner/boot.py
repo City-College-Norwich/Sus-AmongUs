@@ -1,5 +1,5 @@
 import os
 
-from App iport App
+from App import App
 
 
