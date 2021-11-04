@@ -19,8 +19,8 @@ class DownloadGame(Minigame):
             if self.timer.check():
                 self.progress_width = self.progress_width+10
                 self.progress = self.progress+10
-                self.parent.screen.drawRectangle(10, 20, self.progress_width, 15)
                 self.parent.screen.drawText("Keep Scanning", 0, 0)
+                self.parent.screen.drawRectangle(10, 20, self.progress_width, 15)
                 self.parent.screen.drawText(str(self.progress) + "%", 50, 45)
                 self.timer.set(1000)
 
