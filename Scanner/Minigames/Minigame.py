@@ -8,7 +8,7 @@ class Minigame:
     def alertsFromServer(self, alerts):
         if 'GameStarted' in alerts and self.parent.state == self.parent.STARTING:
 
-            self.parent.gotoGoodGuyGame()
+            self.parent.gotoIdleGame()
             self.parent.state = self.parent.RUNNING
 
         if 'Crewmate_Win' in alerts:
