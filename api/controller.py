@@ -82,4 +82,10 @@ def isAlive():
     return model.isAlive(args['badgeUID'])
 
 
+@app.route("/isImposter")
+def isImposter():
+    args = request.args
+    return mode.isImposter(args['uid'])
+
+
 if __name__ == '__main__': app.run(host='0.0.0.0')
