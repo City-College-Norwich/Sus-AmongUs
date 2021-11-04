@@ -15,6 +15,7 @@ class DownloadGame(Minigame):
 
     def update(self):
         self.rfid = self.parent.rfid.doRead()
+        self.parent.screen.drawText("Download Game", 0, 0)
         if self.rfid:
             if self.timer.check():
                 self.progress_width = self.progress_width+10
