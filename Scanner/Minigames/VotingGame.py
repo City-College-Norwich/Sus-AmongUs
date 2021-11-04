@@ -6,6 +6,7 @@ class VotingGame(Minigame):
         self.parent.screen.drawText("Voting Started", 0, 0)
         self.parent.screen.drawText("Go to Voting Room ", 0, 20)
         self.parent.screen.drawText("Scan Players Badge ", 0, 40)
+        self.MyUID = self.parent.badgeUID
 
         self.voted = False
 
@@ -19,7 +20,7 @@ class VotingGame(Minigame):
         if targetRfidTag is not None and targetRfidTag[:8] == 'playerId' and self.voted == False: #number of players weather they have voted 
             if self.parent.wifi.sendRequest("isAlive?badgeUID=" + self.parent.badgeUID)=='yes': #if they are alive then
                 playerId = targetRfidTag.split(':')                                             #scan for vote
-                self.parent.wifi.sendRequest("voteTally?badgeUID="+playerId[1])                 #tallys the vote
+                self.parent.wifi.sendRequest("voteTally?badgeUID="+playerId[10]+"myUID="+self.MyUID)                 #tallys the vote
                 self.voted = True                                                               # ends voting once all players who voted 
             elif self.parent.wifi.sendRequest("isAlive?badgeUID=" + self.parent.badgeUID)=='no':#if they are dead
                 self.voted = True                                                               #they can't vote 
