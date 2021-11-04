@@ -55,5 +55,8 @@ class App:
             self.currentMiniGame.alertsFromServer(alerts)
             self.keep_alive_timer.set(KEEP_ALIVE_TIMEOUT)
     
-    def gotoGoodGuyGame(self):
-        self.currentMiniGame = GoodGuyGame(self)
+    def gotoIdleGame(self):
+        if self.wifi.sendRequest("isImposter?uid="+self.badgeUID) == "False":
+            self.currentMiniGame = GoodGuyGame(self)
+        else:
+            self.currentMiniGame = ImposterGame(self)
