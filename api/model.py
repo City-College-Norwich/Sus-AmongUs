@@ -129,3 +129,9 @@ class Model:
         if self.players[badgeUID][1]:
             return "yes"
         return "no"
+    
+    def isImposter(self, uid):
+        if self.players[uid][0] == "Imposter":
+            return "True"
+        else:
+            return "False"
