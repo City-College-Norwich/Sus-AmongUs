@@ -86,7 +86,7 @@ def isAlive():
 def getFileList():
     return model.getFileList()
 
-@app.route("AutoDownloader/GetFile")
+@app.route("/AutoDownloader/GetFile")
 def getFile():
     args = request.args
     return model.getFile(args['fileName'])
