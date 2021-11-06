@@ -17,6 +17,7 @@ class ReactionGame(Minigame):
         print("ReactionGame")
 
     def update(self):
+        self.parent.screen.drawText("Reaction Game", 0, 0)
 
         if self.timer.check():
             print(1)
