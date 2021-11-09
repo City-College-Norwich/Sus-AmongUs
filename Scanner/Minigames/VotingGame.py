@@ -1,3 +1,4 @@
+from typing_extensions import get_origin
 from Minigames.Minigames import Minigame
 
 class VotingGame(Minigame):
@@ -16,11 +17,13 @@ class VotingGame(Minigame):
             # send that playerId in the sendRequest
 
             #targetRfidTag = 'playerId:12'
-        if targetRfidTag is not None and targetRfidTag[:8] == 'playerId' and self.voted == False: #number of players weather they have voted 
-            if self.parent.wifi.sendRequest("isAlive?badgeUID=" + self.parent.badgeUID)=='yes': #if they are alive then
-                playerId = targetRfidTag.split(':')                                             #scan for vote
-                self.parent.wifi.sendRequest("voteTally?badgeUID="+playerId[1])                 #tallys the vote
-                self.voted = True                                                               # ends voting once all players who voted 
-            elif self.parent.wifi.sendRequest("isAlive?badgeUID=" + self.parent.badgeUID)=='no':#if they are dead
-                self.voted = True                                                               #they can't vote 
-
+        if self.parent.model.players in self.parent.model.players.keys():
+            if targetRfidTag is not None and targetRfidTag[:8] == 'playerId' and self.voted == False: #number of players whether they have voted 
+                if self.parent.wifi.sendRequest("isAlive?badgeUID=" + self.parent.badgeUID)=='yes': #if they are alive then
+                    playerId = targetRfidTag.split(':')                                             #scan for vote
+                    self.parent.wifi.sendRequest("voteTally?badgeUID="+playerId[1])                 #tallies the vote
+                    self.voted = True                                                               # ends voting once all players who voted 
+                elif self.parent.wifi.sendRequest("isAlive?badgeUID=" + self.parent.badgeUID)=='no':#if they are dead
+                    self.voted = True                                                               #they can't vote 
+        if self.parent.model.players not in self.parent.model.players.keys():
+            print("no")
