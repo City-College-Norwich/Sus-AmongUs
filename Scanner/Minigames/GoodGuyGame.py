@@ -26,17 +26,21 @@ class GoodGuyGame(Minigame):
 
     def update(self):
         if self.state == RUNNING:
+            uid, tag = self.parent.rfid.doRead(True)
 
-            targetRfidTag = self.parent.rfid.doRead()
-            
-            if self.parent.wifi.sendRequest("isAlive?badgeUID=" + self.parent.badgeUID) == "yes":
-                if targetRfidTag is not None and targetRfidTag[:8] == 'playerId':
-                    playerId = targetRfidTag.split(':')
-                    self.parent.wifi.sendRequest("deadBodyFound?badgeUID="+playerId[1])
+            # Check if the user scanned is dead, and if so, start the voting process
+            if tag is not None and tag[:8] == 'playerId':
+                if self.parent.wifi.sendRequest("isAlive?badgeUID=" + self.parent.badgeUID) == "yes":  
+                    if self.parent.wifi.sendRequest("isAlive?badgeUID=" + uid) == "no":
+                        self.parent.wifi.sendRequest("startVote")
+
+            if tag == ".votingHub":
+                self.parent.wifi.sendRequest("startVote")
+                self.parent.gotoVotingGame()
                 
-            if targetRfidTag == self.__target_station:
+            elif tag == self.__target_station:
                 self.parent.currentMiniGame = random.choice(self.__minigames)(self.parent)
-            else:
+            elif:
                 self.parent.screen.drawText("GOTO: " + str(self.__target_station),0,0)
         else:
             if self.state == CREWMATE_WIN:

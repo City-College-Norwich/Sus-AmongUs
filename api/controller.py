@@ -43,10 +43,9 @@ def killPlayer():
     return model.killPlayer(args["badgeUID"])
 
 
-@app.route("/deadBodyFound")
-def deadBodyFound():
-    args = request.args
-    return model.deadbodyfound(args["badgeUID"])
+@app.route("/startVote")
+def startVote():
+    return model.startVote()
 
 
 @app.route("/registerUser")

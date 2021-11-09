@@ -104,22 +104,17 @@ class Model:
         else:
             self.crewmateCount -= 1
 
-
-    def deadbodyfound(self, badgeUID):
-        # split the playerId into the cmd (on the left) and the actual playerId# (on the right)
+    def startVote(self):
         self.totalVote = 0
-
-        if self.players[badgeUID][1] == False:
-            self.voting = True
-            i = 0
-            while i < len(self.players):
-                keys = list(self.players.keys())
-                self.players[keys[i]][2] = 0
-                self.players[keys[i]][3] = 0
-                i+=1
-            return "Dead"
-        return "Alive"
-
+        i = 0
+        while i < len(self.players):
+            keys = list(self.players.keys())
+            self.players[keys[i]][2] = 0
+            self.players[keys[i]][3] = 0
+            i+=1
+        self.voting = True
+        
+        
     def registerUser(self,badgeUID):
         if badgeUID in self.players.keys(): 
             return "User is already Registered!"
