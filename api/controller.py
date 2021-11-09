@@ -87,6 +87,12 @@ def isAlive():
 
 
 
+@app.route("/isImposter")
+def isImposter():
+    args = request.args
+    return model.isImposter(args['uid'])
+
+
 @app.route("/AutoDownloader/GetFileList")
 def getFileList():
     return model.getFileList()

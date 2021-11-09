@@ -145,6 +145,13 @@ class Model:
             return "yes"
         return "no"
 
+    
+    def isImposter(self, uid):
+        if self.players[uid][0] == "Imposter":
+            return "True"
+       
+
+
     fileList = [
         "App.py", 
         "Buttons.py", 
@@ -177,4 +184,3 @@ class Model:
                 file = f.read()
             return file
         return ""
-      
