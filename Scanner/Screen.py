@@ -27,8 +27,8 @@ class Screen:
         self.display.fill_rect(x_coordinate, y_coordinate, width, height, 1)
         
     def clear(self):
+        self.clearScreen()
         self.fill(0)
-        self.display.fill(0)
         
     def draw(self):
         if self.updateOccurred:
