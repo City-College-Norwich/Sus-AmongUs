@@ -16,6 +16,7 @@ from unittest.mock import MagicMock
 # import actual used dependencies
 import json
 from Minigames.GoodGuyGame import GoodGuyGame
+from Minigames.ImposterGame import ImposterGame
 
 # create "mock" objects for all the imports we can't actually import
 sys.modules['ssd1306'] = MagicMock()
@@ -85,10 +86,10 @@ def test_app_keepAlive():
     except AssertionError as e:
         assert e == 0
 
-def test_app_gotoGoodGuyGame():
+def test_app_gotoIdleGame():
     app = App()
 
-    app.gotoGoodGuyGame()
+    app.gotoIdleGame()
 
-    assert isinstance(app.currentMiniGame, GoodGuyGame)
+    assert isinstance(app.currentMiniGame, GoodGuyGame) or isinstance(app.currentMiniGame, ImposterGame)
 
