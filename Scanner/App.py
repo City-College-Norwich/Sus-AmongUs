@@ -16,7 +16,7 @@ from TimerHelper import TimerHelper
 from Minigames.StartupGame import StartupGame
 from Minigames.GoodGuyGame import GoodGuyGame
 
-from Minigame.ImposterGame import ImposterGame
+from Minigames.ImposterGame import ImposterGame
 
 from Minigames.VotingGame import VotingGame
 
