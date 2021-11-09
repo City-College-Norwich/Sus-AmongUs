@@ -23,16 +23,16 @@ class ImposterGame(Minigame):
         if self.parent.state ==self.parent.RUNNING:
            
 
-            targetRfidTag = self.parent.rfid.doRead()
-            uid, tag = self.parent.rfid.doRead(True)
-            if tag is not None and tag[:8] == 'playerId':
-                if self.parent.wifi.sendRequest("isAlive?badgeUID=" + self.parent.badgeUID):   
-                    playerId = targetRfidTag.split(':')
-                    self.parent.wifi.sendRequest("deadBodyFound?badgeUID="+playerId[1])
-                    if self.parent.wifi.sendRequest("isAlive?badgeUID=" + uid) == "no":
-                        self.parent.wifi.sendRequest("startVote")
+            uid, tag = self.parent.rfid.doRead()
+            if tag == 'playerId':
+                if self.parent.wifi.sendRequest("isAlive?badgeUID=" + self.parent.badgeUID) == "yes":
+                    if uid != self.parent.badgeUID and self.parent.wifi.sendRequest("isAlive?badgeUID=" + self.parent.badgeUID) == 'yes':
+                        self.parent.wifi.sendRequest("killPlayer?badgeUID="+uid)
+                    else:
+                        if self.parent.wifi.sendRequest("isAlive?badgeUID=" + uid) == "no":
+                            self.parent.wifi.sendRequest("startVote")
                     
-           if tag == ".votingHub":
+            if tag == ".votingHub":
                 self.parent.wifi.sendRequest("startVote")
            
 

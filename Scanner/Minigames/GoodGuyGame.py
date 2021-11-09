@@ -29,7 +29,7 @@ class GoodGuyGame(Minigame):
             uid, tag = self.parent.rfid.doRead(True)
 
             # Check if the user scanned is dead, and if so, start the voting process
-            if tag is not None and tag[:8] == 'playerId':
+            if tag  == 'playerId':
                 if self.parent.wifi.sendRequest("isAlive?badgeUID=" + self.parent.badgeUID) == "yes":  
                     if self.parent.wifi.sendRequest("isAlive?badgeUID=" + uid) == "no":
                         self.parent.wifi.sendRequest("startVote")
