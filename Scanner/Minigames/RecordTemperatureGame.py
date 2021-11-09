@@ -1,4 +1,5 @@
 import random
+from TimerHelper import TimerHelper
 
 from Minigames.Minigame import Minigame
 
@@ -11,6 +12,9 @@ class RecordTemperatureGame(Minigame):
         self.temperature_lower_bound = self.current_temperature+5
         self.logged_temperature = random.randint(self.temperature_lower_bound, self.temperature_upper_bound)
 
+        self.time = TimerHelper()
+        self.time.set(500)
+
     def update(self):
         self.parent.screen.drawText("Record Temperature Game", 0, 0)
         self.parent.screen.drawText("Log Temperature", 0, 00)
@@ -20,8 +24,10 @@ class RecordTemperatureGame(Minigame):
             self.parent.wifi.sendRequest("minigameComplete?badgeUID=" + self.parent.badgeUID)
             self.parent.gotoGoodGuyGame()
         else:
-            buttons = self.parent.buttons.getPressedButtons()
-            if buttons[0] == 1:
-                self.logged_temperature += 1
-            elif buttons[2] == 1:
-                self.logged_temperature -= 1
+            if self.time.check()
+                buttons = self.parent.buttons.getPressedButtons()
+                if buttons[0] == 1:
+                    self.logged_temperature += 1
+                elif buttons[2] == 1:
+                    self.logged_temperature -= 1
+                self.time.set(500)
