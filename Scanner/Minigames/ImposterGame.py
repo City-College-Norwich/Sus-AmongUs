@@ -41,7 +41,7 @@ class ImposterGame(Minigame):
                 self.parent.gotoVotingGame()
             elif tag == self.__target_station:
                 self.parent.currentMiniGame = random.choice(self.__minigames)(self.parent)
-            elif:
+            else:
                 self.parent.screen.drawText("GOTO: " + str(self.__target_station),0,0)
 
         elif self.state == CREWMATE_WIN:
