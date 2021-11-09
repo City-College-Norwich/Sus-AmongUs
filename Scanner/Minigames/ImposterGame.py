@@ -26,23 +26,22 @@ class ImposterGame(Minigame):
 
         if self.state == RUNNING:
            
-            targetRfidTag = self.parent.rfid.do_read()
-
-            if self.parent.wifi.sendRequest("isAlive?badgeUID=" + self.parent.badgeUID):   
-
-                # check if the first 7 characters == playerId
-                # if yes, then split at the colon and get the playerId number (just like in model)
-                # send that playerId in the sendRequest
-
-                #targetRfidTag = 'playerId:12'
-                if targetRfidTag[:8] == 'playerId':
-                    playerId = targetRfidTag.split(':')
-                    self.parent.wifi.sendRequest("deadBodyFound?badgeUID="+playerId[1])
+            uid, tag = self.parent.rfid.doRead(True)
+            if tag is not None and tag[:8] == 'playerId':
+                if self.parent.wifi.sendRequest("isAlive?badgeUID=" + self.parent.badgeUID) == "yes":   
+                    # check if the first 7 characters == playerId
+                    # if yes, then split at the colon and get the playerId number (just like in model)
+                    # send that playerId in the sendRequest
+                    #targetRfidTag = 'playerId:12'
+                    if self.parent.wifi.sendRequest("isAlive?badgeUID=" + uid) == "no":
+                        self.parent.wifi.sendRequest("startVote")
                     
-            if targetRfidTag == self.__target_station:
-                self.parent.currentMiniGame = random.choice(self.__minigames.__init__())
+           if tag == ".votingHub":
+                self.parent.wifi.sendRequest("startVote")
+            elif tag == self.__target_station:
+                self.parent.currentMiniGame = random.choice(self.__minigames)(self.parent)
             else:
-                self.parent.screen.display_text("GOTO: " + str(self.__target_station))
+                self.parent.screen.drawText("GOTO: " + str(self.__target_station),0,0)
 
         elif self.state == CREWMATE_WIN:
             self.parent.screen.display_text("Game Over! Crewmates Has won!")

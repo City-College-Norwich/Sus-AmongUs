@@ -14,9 +14,8 @@ class StartupGame(Minigame):
         self.parent.screen.drawText('Scan Card', 0, 0)
         
     def update(self):
-        uid, tag = self.parent.rfid.doRead(returnUID = True)
-
-
+        uid, tag = self.parent.rfid.doRead(True)
+        
         if tag == ".main":
             self.parent.wifi.sendRequest('StartGame')
 
