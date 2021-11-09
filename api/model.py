@@ -22,8 +22,8 @@ class Model:
         self.completedMinigames = 0
         self.state = GAME_STARTING
 
-                      # card ID,   team,   alive/dead
-        self.players ={99:['team', True],}
+                      # card ID,   team,   alive/dead, votecounter, voted
+        self.players ={"0x14742558":['crewmate', False, 0, 0]}
 
         self.crewmateCount = 0
         self.imposterCount = 0
@@ -34,6 +34,9 @@ class Model:
         self.sabotage_time = 0
         self.sabotage_type = 0
         self.time = TimerHelper()
+        self.playerTotalVote = 0
+        self.totalVote = 0
+        self.voting = False
 
     def getTagName(self, uid):
         if uid in self.uids.keys():            
@@ -41,11 +44,10 @@ class Model:
         else:
             return "No tags found"
             
-
     def startGame(self):
         i = 0
         while i < len(self.players):
-            keys = list(self.players.keys())
+            keys = self.players.keys()
 
             if self.imposterCount != self.maxImposters:
                 randomPlayerIndex = random.randint(0, len(self.players) - 1)
@@ -63,7 +65,6 @@ class Model:
         
         self.state = GAME_RUNNING
         return "okay"
-
       
     def callHomepage(self):
         return "hello"
@@ -81,6 +82,9 @@ class Model:
             alerts.add("GameStarted")
             if self.sabotaged:
                 alerts.add("Sabotaged")
+            elif self.voting == True:
+                alerts.add("Voting")
+                self.voting = False
 
             if self.imposterCount == 0:
                 self.state = CREWMATE_WIN
@@ -91,7 +95,6 @@ class Model:
 
         return json.dumps(list(alerts))
 
-
     def killPlayer(self, badgeUID):
         self.players[badgeUID][1] = False
         if self.players[badgeUID][0] == "Imposter":
@@ -99,18 +102,22 @@ class Model:
         else:
             self.crewmateCount -= 1
 
-
-    def deadbodyfound(self, badgeUID):
-        # split the playerId into the cmd (on the left) and the actual playerId# (on the right)
-
-        if self.players[badgeUID][1] == False:
-            startVote() #This needs creating first
-
+    def startVote(self):
+        self.totalVote = 0
+        i = 0
+        while i < len(self.players):
+            keys = self.players.keys()
+            self.players[keys[i]][2] = 0
+            self.players[keys[i]][3] = 0
+            i+=1
+        self.voting = True
+        
     def registerUser(self,badgeUID):
         if badgeUID in self.players.keys(): 
             return "User is already Registered!"
             
-        self.players[badgeUID] = ["team", True]
+        self.players[badgeUID] = ["team", True, 0]
+        self.uids[badgeUID] = "playerId:"+badgeUID
         return "Okay"
 
     def sabotage(self, sabotageType):
@@ -126,6 +133,13 @@ class Model:
     def sabotageCompleted(self):
         self.sabotaged = False
 
+    def voteTally(self, badgeUID, myUID):
+        keys = self.players.keys()
+        self.playerTotalVote = int(self.players[keys[badgeUID][2]]) + 1
+        self.players[keys[badgeUID][2]] = str(self.playerTotalVote)
+        self.players[keys[myUID][3]] = 1
+        self.totalVote += 1
+        
     def isAlive(self, badgeUID):
         if self.players[badgeUID][1]:
             return "yes"
@@ -170,4 +184,3 @@ class Model:
                 file = f.read()
             return file
         return ""
-

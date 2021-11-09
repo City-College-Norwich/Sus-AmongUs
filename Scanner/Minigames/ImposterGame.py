@@ -22,25 +22,25 @@ class ImposterGame(Minigame):
 
         if self.parent.state ==self.parent.RUNNING:
            
+
             targetRfidTag = self.parent.rfid.doRead()
-
-            if self.parent.wifi.sendRequest("isAlive?badgeUID=" + self.parent.badgeUID):   
-
-                # check if the first 7 characters == playerId
-                # if yes, then split at the colon and get the playerId number (just like in model)
-                # send that playerId in the sendRequest
-
-                #targetRfidTag = 'playerId:12'
-                if targetRfidTag[:8] == 'playerId':
+            uid, tag = self.parent.rfid.doRead(True)
+            if tag is not None and tag[:8] == 'playerId':
+                if self.parent.wifi.sendRequest("isAlive?badgeUID=" + self.parent.badgeUID):   
                     playerId = targetRfidTag.split(':')
                     self.parent.wifi.sendRequest("deadBodyFound?badgeUID="+playerId[1])
+                    if self.parent.wifi.sendRequest("isAlive?badgeUID=" + uid) == "no":
+                        self.parent.wifi.sendRequest("startVote")
                     
+           if tag == ".votingHub":
+                self.parent.wifi.sendRequest("startVote")
            
 
         elif self.parent.state == self.parent.CREWMATE_WIN:
             self.parent.screen.drawText("Game Over! Crewmates Has won!",0,0)
         elif self.parent.state == self.parent.IMPOSTOR_WIN:
             self.parent.screen.drawText("Game Over! Impostors Has won!",0,0)
+
 
 
     def alertsFromServer(self, alerts):
