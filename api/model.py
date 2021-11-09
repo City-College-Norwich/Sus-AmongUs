@@ -117,7 +117,7 @@ class Model:
             return "User is already Registered!"
             
         self.players[badgeUID] = ["team", True, 0]
-        self.uids[badgeUID] = "playerId:"+badgeUID
+        self.uids[badgeUID] = "playerId"
         return "Okay"
 
     def sabotage(self, sabotageType):
