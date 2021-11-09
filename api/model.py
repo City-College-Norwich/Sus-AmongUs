@@ -28,7 +28,7 @@ class Model:
         self.crewmateCount = 0
         self.imposterCount = 0
 
-        self.maxImposters = 2
+        self.maxImposters = 1
 
         self.sabotaged = False
         self.sabotage_time = 0
@@ -45,23 +45,15 @@ class Model:
             return "No tags found"
             
     def startGame(self):
-        i = 0
-        while i < len(self.players):
-            keys = self.players.keys()
-
-            if self.imposterCount != self.maxImposters:
-                randomPlayerIndex = random.randint(0, len(self.players) - 1)
-                chosenPlayerUID = keys[randomPlayerIndex]
-                if self.players[chosenPlayerUID][0] != "Imposter":
-                    self.players[chosenPlayerUID][0] = "Imposter"
-                    self.imposterCount += 1
-                else:
-                    print(str(chosenPlayerUID) + " is already a imposter, Itterating again!")
-                    continue
-            else:
-                self.players[keys[i]][0] = "Crewmate"
-                self.crewmateCount += 1
-            i += 1
+        players = list(range(len(self.players.keys())))
+        for i in range(self.maxImposters):
+            imposter = players.pop(random.randint(0, len(players)-1))
+            self.players[self.players.keys()[imposter]][0] = "Imposter"
+            self.imposterCount += 1
+        
+        for crewmate in players:
+            self.players[self.players.keys()[crewmate]][0] = "Crewmate"
+        self.crewmateCount = len(players)
         
         self.state = GAME_RUNNING
         return "okay"
@@ -169,7 +161,8 @@ class Model:
         "Minigames/RecordTemperatureGame.py",
         "Minigames/Sabotage1.py",
         "Minigames/StartupGame.py",
-        "Minigames/UploadGame.py"]
+        "Minigames/UploadGame.py",
+        "Minigames/VotingGame.py"]
 
     def getFileList(self):
         return json.dumps(self.fileList)
