@@ -23,7 +23,7 @@ class ImposterGame(Minigame):
         if self.parent.state ==self.parent.RUNNING:
            
 
-            uid, tag = self.parent.rfid.doRead()
+            uid, tag = self.parent.rfid.doRead(True)
             if tag == 'playerId':
                 if self.parent.wifi.sendRequest("isAlive?badgeUID=" + self.parent.badgeUID) == "yes":
                     if uid != self.parent.badgeUID and self.parent.wifi.sendRequest("isAlive?badgeUID=" + self.parent.badgeUID) == 'yes':

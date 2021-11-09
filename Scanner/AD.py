@@ -1,4 +1,4 @@
-exclusionList = ['/ssd1306.py', '/mfrc522.py', '/AD.py']
+exclusionList = ['/ssd1306.py', '/mfrc522.py', '/AD.py', '/Wifi.py']
 
 import os
 from Wifi import Wifi
