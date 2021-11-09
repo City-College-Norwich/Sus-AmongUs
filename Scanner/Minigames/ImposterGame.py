@@ -1,20 +1,16 @@
 from Minigames.Minigame import Minigame
-from TimeHelper import TimeHelper
+from TimerHelper import TimerHelper
 import random
-
-RUNNING = 0
-CREWMATE_WIN = 1
-IMPOSTOR_WIN = 2
 
 
 class ImposterGame(Minigame):
     def __init__(self, parent):
         Minigame.__init__(self, parent)
-        self.timer = TimeHelper()
-        self.cooldown = self.timer.set(60000)
+        self.timer = TimerHelper()
+        self.timer.set(60000)
     
     def update(self):
-        if self.timer.check() == self.cooldown:
+        if self.timer.check():
             buttons = self.parent.buttons.getPressedButtons()
             if buttons[0] == 1:
                 self.wifi.sendRequest("sabotage?sabotageType=1")
@@ -24,9 +20,9 @@ class ImposterGame(Minigame):
                 self.wifi.sendRequest("sabotage?sabotageType=3")
 
 
-        if self.state == RUNNING:
+        if self.parent.state ==self.parent.RUNNING:
            
-            targetRfidTag = self.parent.rfid.do_read()
+            targetRfidTag = self.parent.rfid.doRead()
 
             if self.parent.wifi.sendRequest("isAlive?badgeUID=" + self.parent.badgeUID):   
 
@@ -39,15 +35,12 @@ class ImposterGame(Minigame):
                     playerId = targetRfidTag.split(':')
                     self.parent.wifi.sendRequest("deadBodyFound?badgeUID="+playerId[1])
                     
-            if targetRfidTag == self.__target_station:
-                self.parent.currentMiniGame = random.choice(self.__minigames.__init__())
-            else:
-                self.parent.screen.display_text("GOTO: " + str(self.__target_station))
+           
 
-        elif self.state == CREWMATE_WIN:
-            self.parent.screen.display_text("Game Over! Crewmates Has won!")
-        elif self.state == IMPOSTOR_WIN:
-            self.parent.screen.display_text("Game Over! Impostors Has won!")
+        elif self.parent.state == self.parent.CREWMATE_WIN:
+            self.parent.screen.drawText("Game Over! Crewmates Has won!",0,0)
+        elif self.parent.state == self.parent.IMPOSTOR_WIN:
+            self.parent.screen.drawText("Game Over! Impostors Has won!",0,0)
 
 
     def alertsFromServer(self, alerts):

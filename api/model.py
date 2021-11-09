@@ -133,5 +133,5 @@ class Model:
     def isImposter(self, uid):
         if self.players[uid][0] == "Imposter":
             return "True"
-        else:
-            return "False"
+       
+        return "False"
