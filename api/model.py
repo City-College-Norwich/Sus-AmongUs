@@ -47,7 +47,7 @@ class Model:
     def startGame(self):
         i = 0
         while i < len(self.players):
-            keys = list(self.players.keys())
+            keys = self.players.keys()
 
             if self.imposterCount != self.maxImposters:
                 randomPlayerIndex = random.randint(0, len(self.players) - 1)
@@ -106,7 +106,7 @@ class Model:
         self.totalVote = 0
         i = 0
         while i < len(self.players):
-            keys = list(self.players.keys())
+            keys = self.players.keys()
             self.players[keys[i]][2] = 0
             self.players[keys[i]][3] = 0
             i+=1
@@ -134,7 +134,7 @@ class Model:
         self.sabotaged = False
 
     def voteTally(self, badgeUID, myUID):
-        keys = list(self.players.keys())
+        keys = self.players.keys()
         self.playerTotalVote = int(self.players[keys[badgeUID][2]]) + 1
         self.players[keys[badgeUID][2]] = str(self.playerTotalVote)
         self.players[keys[myUID][3]] = 1
