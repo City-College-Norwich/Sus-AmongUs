@@ -127,11 +127,11 @@ class Model:
         self.sabotaged = False
 
     def voteTally(self, badgeUID, myUID):
-        keys = self.players.keys()
-        self.playerTotalVote = int(self.players[keys[badgeUID][2]]) + 1
-        self.players[keys[badgeUID][2]] = str(self.playerTotalVote)
-        self.players[keys[myUID][3]] = 1
+        self.playerTotalVote = int(self.players[badgeUID][2]) + 1
+        self.players[badgeUID][2] = str(self.playerTotalVote)
+        self.players[myUID][3] = 1
         self.totalVote += 1
+        return "ok"
         
     def isAlive(self, badgeUID):
         if self.players[badgeUID][1]:
