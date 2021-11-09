@@ -12,6 +12,7 @@ class RecordTemperatureGame(Minigame):
         self.logged_temperature = random.randint(self.temperature_lower_bound, self.temperature_upper_bound)
 
     def update(self):
+        self.parent.screen.drawText("Record Temperature Game", 0, 0)
         self.parent.screen.drawText("Log Temperature", 0, 00)
         self.parent.screen.drawText("Current: " + str(self.current_temperature), 0, 10)
         self.parent.screen.drawText("Logged: " + str(self.logged_temperature), 0, 20)
