@@ -38,7 +38,6 @@ class ImposterGame(Minigame):
                     
            if tag == ".votingHub":
                 self.parent.wifi.sendRequest("startVote")
-                self.parent.gotoVotingGame()
             elif tag == self.__target_station:
                 self.parent.currentMiniGame = random.choice(self.__minigames)(self.parent)
             else:
