@@ -12,11 +12,11 @@ class Minigame:
             self.parent.state = self.parent.RUNNING
 
         if 'Crewmate_Win' in alerts:
-            self.parent.gotoGoodGuyGame()
+            self.parent.gotoIdleGame()
             self.parent.currentMiniGame.state = 1  # Crewmate win
 
         elif "Impostor_Win" in alerts:
-            self.parent.gotoGoodGuyGame()
+            self.parent.gotoIdleGame()
             self.parent.currentMiniGame.state = 2  # Impostor win
 
         if 'Sabotaged' in alerts:
