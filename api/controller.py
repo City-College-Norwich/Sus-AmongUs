@@ -88,4 +88,13 @@ def isImposter():
     return model.isImposter(args['uid'])
 
 
+@app.route("/AutoDownloader/GetFileList")
+def getFileList():
+    return model.getFileList()
+
+@app.route("/AutoDownloader/GetFile")
+def getFile():
+    args = request.args
+    return model.getFile(args['fileName'])
+
 if __name__ == '__main__': app.run(host='0.0.0.0')

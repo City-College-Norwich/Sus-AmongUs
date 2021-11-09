@@ -10,6 +10,7 @@ class IdBadge(Minigame):
 
     def update(self):
         tag = self.parent.rfid.doRead()
+        self.parent.screen.drawText("Id Badge Game", 0, 0)
 
         self.check_card(tag)
 

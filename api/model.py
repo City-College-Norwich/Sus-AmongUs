@@ -1,6 +1,7 @@
 import random
 import csv
 import json
+import os, sys
 
 from TimerHelper import TimerHelper
 
@@ -129,9 +130,44 @@ class Model:
         if self.players[badgeUID][1]:
             return "yes"
         return "no"
+
     
     def isImposter(self, uid):
         if self.players[uid][0] == "Imposter":
             return "True"
        
-        return "False"
+
+
+    fileList = [
+        "App.py", 
+        "Buttons.py", 
+        "Rfid.py", 
+        "Screen.py", 
+        "TimerHelper.py", 
+        "Wifi.py",
+        "boot.py",
+        "Minigames/DownloadGame.py",
+        "Minigames/GoodGuyGame.py",
+        "Minigames/IdBadge.py",
+        "Minigames/ImposterGame.py",
+        "Minigames/Minigame.py",
+        "Minigames/ReactionGame.py",
+        "Minigames/RecordTemperatureGame.py",
+        "Minigames/Sabotage1.py",
+        "Minigames/StartupGame.py",
+        "Minigames/UploadGame.py"]
+
+    def getFileList(self):
+        return json.dumps(self.fileList)
+
+    def getFile(self, fileName):
+        currentdir = os.path.dirname(os.path.realpath(__file__))
+        parentdir = os.path.dirname(currentdir)
+        scannerdir = os.path.join(parentdir, "Scanner")
+
+        if fileName in self.fileList:
+            with open(os.join(scannerdir, fileName), "r") as f:
+                file = f.read()
+            return file
+        return ""
+
