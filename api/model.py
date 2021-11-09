@@ -76,7 +76,6 @@ class Model:
                 alerts.add("Sabotaged")
             elif self.voting == True:
                 alerts.add("Voting")
-                self.voting = False
 
             if self.imposterCount == 0:
                 self.state = CREWMATE_WIN
@@ -93,6 +92,7 @@ class Model:
             self.imposterCount -= 1
         else:
             self.crewmateCount -= 1
+        return "ok"
 
     def startVote(self):
         self.totalVote = 0
@@ -103,12 +103,13 @@ class Model:
             self.players[keys[i]][3] = 0
             i+=1
         self.voting = True
+        return "ok"
         
     def registerUser(self,badgeUID):
         if badgeUID in self.players.keys(): 
             return "User is already Registered!"
             
-        self.players[badgeUID] = ["team", True, 0]
+        self.players[badgeUID] = ["team", True, 0, 0]
         self.uids[badgeUID] = "playerId"
         return "Okay"
 
@@ -141,6 +142,7 @@ class Model:
     def isImposter(self, uid):
         if self.players[uid][0] == "Imposter":
             return "True"
+        return "False"
        
 
 
@@ -173,7 +175,7 @@ class Model:
         scannerdir = os.path.join(parentdir, "Scanner")
 
         if fileName in self.fileList:
-            with open(os.join(scannerdir, fileName), "r") as f:
+            with open(os.path.join(scannerdir, fileName), "r") as f:
                 file = f.read()
             return file
         return ""
