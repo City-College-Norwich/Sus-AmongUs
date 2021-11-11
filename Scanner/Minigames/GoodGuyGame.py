@@ -21,8 +21,17 @@ class GoodGuyGame(Minigame):
         self.state = RUNNING
         
         # update bellow set with minigames
-        self.__minigames = [IdBadge, ReactionGame, DownloadGame, RecordTemperatureGame]
+        #[MINIGAME-NAME, COMPLETED?] True=Completed, False=Not completed
+        self.__minigames = [[IdBadge, False], [ReactionGame, False], [DownloadGame, False], [UploadGame, False], [RecordTemperatureGame, False]]
         self.__target_station = self.parent.wifi.sendRequest("requestStation")
+
+        if self.parent.isMinigameCompleted==True:#Was minigame completed?
+        #if statement could be:
+        #if self.parent.lastMinigame!=None:
+        #then could remove the isMinigameCompleted variable.
+            self.__minigames[minigames.index([self.parent.lastMinigame, False])][1]=True #Change completed to True in minigames array
+            self.parent.isMinigameCompleted=False #Set back to False
+            self.parent.lastMinigame=None # set back to None
 
     def update(self):
         if self.state == RUNNING:
@@ -37,10 +46,11 @@ class GoodGuyGame(Minigame):
             if tag == ".votingHub":
                 self.parent.wifi.sendRequest("startVote")
             elif tag == self.__target_station:
-                mini = random.choice(self.__minigames)
-                if mini is DownloadGame and self.parent.DownloadGameCompleted:
-                    mini = UploadGame
-                self.parent.currentMiniGame = mini(self.parent)
+                while True:#Loop until break(until an uncompleted minigame is chosen)
+                    self.target_minigame = random.choice(self.__minigames)#Choose random minigame
+                    if target_minigame[1]==False:#if minigame is not completed
+                        break#stop loop
+                self.parent.currentMiniGame = target_minigame[0](self.parent)# Set currentMinigame to the mingame chosen
             else:
                 self.parent.screen.drawText("GOTO: " + str(self.__target_station),0,0)
         else:
