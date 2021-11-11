@@ -11,6 +11,7 @@ class DownloadGame(Minigame):
         self.timer = TimerHelper()
         self.timer.set(1000)
         self.rfid = False
+
         pass
 
     def update(self):
@@ -27,7 +28,9 @@ class DownloadGame(Minigame):
 
                 if self.progress >= 100:
                     self.parent.wifi.sendRequest("minigameComplete?badgeUID=" + self.parent.badgeUID)
-                    self.parent.gotoGoodGuyGame()
+                    self.parent.DownloadGameCompleted = True
+                    self.parent.gotoIdleGame()
+
 
         else:
             self.parent.screen.drawText("Keep Scanning", 0, 0)

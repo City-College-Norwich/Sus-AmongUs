@@ -45,6 +45,7 @@ class App:
         self.isRunning = True
         self.keep_alive_timer = TimerHelper()
         self.state = self.STARTING
+        self.DownloadGameCompleted = False
 
     def run(self):
         self.keep_alive_timer.set(KEEP_ALIVE_TIMEOUT)
@@ -67,8 +68,9 @@ class App:
     
 
     def gotoIdleGame(self):
-        self.team = self.wifi.sendRequest("isImposter?uid="+self.badgeUID)
-        if self.team == "False":
+        team = self.wifi.sendRequest("isImposter?uid="+str(self.badgeUID))
+        team = "False" if team is None else team
+        if team == "False":
             self.currentMiniGame = GoodGuyGame(self)
         else:
             self.currentMiniGame = ImposterGame(self)
