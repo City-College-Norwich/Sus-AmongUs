@@ -45,6 +45,7 @@ class App:
         self.isRunning = True
         self.keep_alive_timer = TimerHelper()
         self.state = self.STARTING
+        self.DownloadGameCompleted = False
 
     def run(self):
         self.keep_alive_timer.set(KEEP_ALIVE_TIMEOUT)
