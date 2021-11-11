@@ -40,6 +40,9 @@ class App:
         self.buttons = Buttons.Buttons()
 
         self.currentMiniGame = StartupGame(self)
+        self.isMinigameCompleted = False
+        self.lastMinigame = None
+
 
         self.badgeUID = None
         self.isRunning = True
