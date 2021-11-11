@@ -93,13 +93,16 @@ class Model:
 
         return json.dumps(alerts)
 
-    def killPlayer(self, badgeUID):
-        self.players[badgeUID][1] = False
-        if self.players[badgeUID][0] == "Imposter":
-            self.imposterCount -= 1
-        else:
-            self.crewmateCount -= 1
-        return "ok"
+    def killPlayer(self, selfUID,victimUID):
+        killer = self.players[selfUID]
+        victim = self.players[victimUID]
+        if killer[1] == True and victim[1] == True:
+            if killer[0] == "Imposter" and victim[0] == "Crewmate":
+                self.players[victimUID][1] = False
+                self.crewmateCount -= 1
+                return "ok"
+        return "error"
+
 
     def startVote(self):
         self.totalVote = 0
