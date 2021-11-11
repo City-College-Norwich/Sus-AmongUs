@@ -70,7 +70,7 @@ def test_app_keepAlive():
     app = App()
 
     app.wifi.sendRequest = MagicMock()
-    app.wifi.sendRequest.return_value = json.dumps(list({"GameStarted","VotingStarted"}))
+    app.wifi.sendRequest.return_value = json.dumps(["GameStarted","VotingStarted"])
 
     app.keep_alive_timer.set = MagicMock()
 
