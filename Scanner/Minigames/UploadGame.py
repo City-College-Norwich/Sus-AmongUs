@@ -26,8 +26,8 @@ class UploadGame(Minigame):
 
                 if self.progress >= 100:
                     self.parent.wifi.sendRequest("minigameComplete?badgeUID=" + self.parent.badgeUID)
-                    self.parent.DownloadGameCompleted = False
-                    self.parent.gotoIdleGame()
+                    self.parent.isMinigameCompleted = True
+                    self.parent.lastMinigame = UploadGame
 
             else:
                 self.parent.screen.drawText("Error: Download Task not complete", 0, 0)

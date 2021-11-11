@@ -18,4 +18,6 @@ class IdBadge(Minigame):
         if tag == 'card':  # TODO- get format of id card data.
             self.parent.screen.drawText('Card Scanned', 0, 0)
             self.parent.wifi.sendRequest('minigameComplete?badgeUID=' + self.parent.badgeUID)
-            self.parent.GoodGuyGame()
+            self.parent.isMinigameCompleted = True #So GoodGuyGame knows a minigame was completed
+            self.parent.lastMinigame = IdBadge #So GoodGuyGame knows what minigame was completed
+            self.parent.gotoGoodGuyGame()
