@@ -67,8 +67,9 @@ class App:
     
 
     def gotoIdleGame(self):
-        self.team = self.wifi.sendRequest("isImposter?uid="+self.badgeUID)
-        if self.team == "False":
+        team = self.wifi.sendRequest("isImposter?uid="+str(self.badgeUID))
+        team = "False" if team is None else team
+        if team == "False":
             self.currentMiniGame = GoodGuyGame(self)
         else:
             self.currentMiniGame = ImposterGame(self)
