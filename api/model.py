@@ -130,7 +130,7 @@ class Model:
         self.players[badgeUID][2] = str(self.playerTotalVote)
         self.totalVote += 1
         if self.totalVote == (self.crewmateCount + self.imposterCount):
-            return Model.endVote()
+            return self.endVote()
         return "ok"
 
     def endVote(self):
@@ -144,7 +144,7 @@ class Model:
         sorted(voteArray, key=lambda x: x[1], reverse=True)
         playerID = voteArray[0][0]
         self.voting = False
-        return Model.killPlayer(playerID)
+        return self.killPlayer(playerID)
         #To Add: The player ejected will need to be returned and consequently printed to the screen of every scanner.
         
     def isAlive(self, badgeUID):
