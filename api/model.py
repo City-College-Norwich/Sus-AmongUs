@@ -137,7 +137,7 @@ class Model:
         voteArray = []
         for key in self.players:
             addPlayer = []
-            if self.players[key][1] == False:
+            if self.players[key][1] == True:
                 addPlayer.append(key)
                 addPlayer.append(self.players[key][2])
                 voteArray.append(addPlayer)
