@@ -70,7 +70,7 @@ class Model:
         return "Okay"
 
     def keepAlive(self):
-        alerts = {}
+        alerts = {"Voting": False}
         if self.state == GAME_RUNNING:
             alerts["GameRunning"] = True
             if self.sabotaged:
