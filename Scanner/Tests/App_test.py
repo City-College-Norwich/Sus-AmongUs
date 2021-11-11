@@ -81,7 +81,7 @@ def test_app_keepAlive():
     app.keepAlive()
 
     try:
-        app.currentMiniGame.alertsFromServer.assert_called_with({"GameStarted", "VotingStarted"})
+        app.currentMiniGame.alertsFromServer.assert_called_with(set(["GameStarted", "VotingStarted"]))
         app.keep_alive_timer.set.assert_called_with(KEEP_ALIVE_TIMEOUT)
     except AssertionError as e:
         assert e == 0
