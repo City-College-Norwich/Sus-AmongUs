@@ -31,9 +31,10 @@ class Model:
         self.maxImposters = 1
 
         self.sabotaged = False
-        self.sabotage_time = 0
         self.sabotage_type = 0
-        self.time = TimerHelper()
+        self.sabotage_timer = TimerHelper()
+        self.sabotage_participants = set()
+
         self.playerTotalVote = 0
         self.totalVote = 0
         self.voting = False
@@ -69,22 +70,28 @@ class Model:
         return "Okay"
 
     def keepAlive(self):
-        alerts = set()
+        alerts = {}
         if self.state == GAME_RUNNING:
-            alerts.add("GameStarted")
+            alerts["GameRunning"] = True
             if self.sabotaged:
-                alerts.add("Sabotaged")
+                alerts["Sabotaged"] = self.sabotage_type
+                if self.sabotage_type == 1:
+                    alerts["SabotagedStation"] = self.sabotaged_station
+            
+                if self.sabotage_timer.check():
+                    self.state = IMPOSTER_WIN
+
             elif self.voting == True:
-                alerts.add("Voting")
+                alerts["Voting"] = True
 
             if self.imposterCount == 0:
                 self.state = CREWMATE_WIN
-                alerts.add("Crewmates_Win")
+                alerts["Winner_Decided"] = "Crewmates"
             elif self.crewmateCount == self.imposterCount:
                 self.state = IMPOSTER_WIN
-                alerts.add("Imposter_Win")
+                alerts["Winner_Decided"] = "Imposters"
 
-        return json.dumps(list(alerts))
+        return json.dumps(alerts)
 
     def killPlayer(self, badgeUID):
         self.players[badgeUID][1] = False
@@ -116,15 +123,20 @@ class Model:
     def sabotage(self, sabotageType):
         self.sabotaged = True
         self.sabotage_type = sabotageType
+        self.sabotage_timer.set(60000)
+        if self.sabotage_type == 1:
+            self.sabotaged_station = self.requestStation()
 
-    def getSabotageType(self):
-        return self.sabotage_type
-
-    def sabotageTimeout(self):
-        self.state = IMPOSTER_WIN
-
-    def sabotageCompleted(self):
-        self.sabotaged = False
+    def sabotageCompleted(self,badgeUID):
+        # handling sabotage 1 logic
+        if self.sabotage_type == 1:
+            if badgeUID in self.sabotage_participants:
+                pass
+            else:
+                self.sabotage_participants.add(badgeUID)
+                if len(self.sabotage_participants) == 2:
+                    self.sabotaged = False
+                    self.sabotage_participants = set()
 
     def voteTally(self, badgeUID, myUID):
         self.playerTotalVote = int(self.players[badgeUID][2]) + 1
