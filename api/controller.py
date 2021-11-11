@@ -40,7 +40,7 @@ def keepAlive():
 @app.route("/killPlayer")
 def killPlayer():
     args = request.args
-    return model.killPlayer(args["badgeUID"])
+    return model.killPlayer(args["myUID"], args["victimUID"])
 
 
 @app.route("/startVote")
