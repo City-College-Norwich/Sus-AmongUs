@@ -140,7 +140,7 @@ class Model:
             if self.players[key][1] == False:
                 addPlayer.append(key)
                 addPlayer.append(self.players[key][2])
-            voteArray.append(addPlayer)
+                voteArray.append(addPlayer)
         sorted(voteArray, key=lambda x: x[1], reverse=True)
         playerID = voteArray[0][0]
         self.voting = False
