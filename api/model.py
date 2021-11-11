@@ -93,16 +93,22 @@ class Model:
 
         return json.dumps(alerts)
 
-    def killPlayer(self, selfUID,victimUID):
+    def killPlayer(self, selfUID, victimUID):
         killer = self.players[selfUID]
         victim = self.players[victimUID]
         if killer[1] == True and victim[1] == True:
             if killer[0] == "Imposter" and victim[0] == "Crewmate":
-                self.players[victimUID][1] = False
-                self.crewmateCount -= 1
+                self.executePlayer(victimUID)
                 return "ok"
         return "error"
 
+    #This function is used to set the killed player to be dead and also removes one from their teams count.
+    def executePlayer(self, victimUID):
+        self.players[victimUID][1] = False
+        if self.players[victimUID][0] == "Crewmate":
+            self.crewmateCount -= 1
+        else:
+            self.imposterCount -= 1
 
     def startVote(self):
         self.totalVote = 0
@@ -159,7 +165,7 @@ class Model:
         sorted(voteArray, key=lambda x: x[1], reverse=True)
         playerID = voteArray[0][0]
         self.voting = False
-        return self.killPlayer(playerID)
+        return self.executePlayer(playerID)
         #To Add: The player ejected will need to be returned and consequently printed to the screen of every scanner.
         
     def isAlive(self, badgeUID):
