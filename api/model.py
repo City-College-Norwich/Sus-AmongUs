@@ -98,8 +98,7 @@ class Model:
         victim = self.players[victimUID]
         if killer[1] == True and victim[1] == True:
             if killer[0] == "Imposter" and victim[0] == "Crewmate":
-                self.executePlayer(victimUID)
-                return "ok"
+                return self.executePlayer(victimUID)
         return "error"
 
     #This function is used to set the killed player to be dead and also removes one from their teams count.
@@ -109,6 +108,7 @@ class Model:
             self.crewmateCount -= 1
         else:
             self.imposterCount -= 1
+        return "ok"
 
     def startVote(self):
         self.totalVote = 0
