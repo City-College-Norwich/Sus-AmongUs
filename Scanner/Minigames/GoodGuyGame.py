@@ -40,7 +40,7 @@ class GoodGuyGame(Minigame):
                 mini = random.choice(self.__minigames)
                 if mini is DownloadGame and self.parent.DownloadGameCompleted:
                     mini = UploadGame
-                self.parent.currentMiniGame = mini()
+                self.parent.currentMiniGame = mini(self.parent)
             else:
                 self.parent.screen.drawText("GOTO: " + str(self.__target_station),0,0)
         else:
