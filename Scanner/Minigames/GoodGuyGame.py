@@ -21,7 +21,7 @@ class GoodGuyGame(Minigame):
         self.state = RUNNING
         
         # update bellow set with minigames
-        self.__minigames = [IdBadge, ReactionGame, DownloadGame, UploadGame, RecordTemperatureGame]
+        self.__minigames = [IdBadge, ReactionGame, DownloadGame, RecordTemperatureGame]
         self.__target_station = self.parent.wifi.sendRequest("requestStation")
 
     def update(self):
@@ -37,7 +37,10 @@ class GoodGuyGame(Minigame):
             if tag == ".votingHub":
                 self.parent.wifi.sendRequest("startVote")
             elif tag == self.__target_station:
-                self.parent.currentMiniGame = random.choice(self.__minigames)(self.parent)
+                mini = random.choice(self.__minigames)
+                if mini is DownloadGame and self.parent.DownloadGameCompleted:
+                    mini = UploadGame
+                self.parent.currentMiniGame = mini(self.parent)
             else:
                 self.parent.screen.drawText("GOTO: " + str(self.__target_station),0,0)
         else:
