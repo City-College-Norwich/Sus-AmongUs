@@ -15,6 +15,11 @@ import Wifi
 from TimerHelper import TimerHelper
 from Minigames.StartupGame import StartupGame
 from Minigames.GoodGuyGame import GoodGuyGame
+from Minigames.Sabotage1 import Sabotage1
+from Minigames.ImposterGame import ImposterGame
+
+from Minigames.VotingGame import VotingGame
+
 
 KEEP_ALIVE_TIMEOUT = 500  # timeout in ms
 
@@ -22,6 +27,12 @@ KEEP_ALIVE_TIMEOUT = 500  # timeout in ms
 class App:
     STARTING = 0
     RUNNING = 1
+    VOTING = 2
+    CREWMATE_WIN = 3
+    IMPOSTOR_WIN = 4
+
+
+
     def __init__(self):
         self.rfid = Rfid.Rfid(self)
         self.screen = Screen.Screen()
@@ -49,11 +60,24 @@ class App:
 
     def keepAlive(self):
         if self.keep_alive_timer.check():
-
-            alerts = set(json.loads(self.wifi.sendRequest("keepAlive")))
+            alerts = json.loads(self.wifi.sendRequest("keepAlive"))
 
             self.currentMiniGame.alertsFromServer(alerts)
             self.keep_alive_timer.set(KEEP_ALIVE_TIMEOUT)
     
-    def gotoGoodGuyGame(self):
-        self.currentMiniGame = GoodGuyGame(self)
+
+    def gotoIdleGame(self):
+        self.team = self.wifi.sendRequest("isImposter?uid="+self.badgeUID)
+        if self.team == "False":
+            self.currentMiniGame = GoodGuyGame(self)
+        else:
+            self.currentMiniGame = ImposterGame(self)
+
+    def gotoSabotageGame1(self,sabotagedStation):
+        self.currentMiniGame = Sabotage1(self,sabotagedStation)
+    
+    def gotoVotingGame(self):
+        self.state = self.VOTING
+        self.currentMiniGame = VotingGame(self)
+
+

@@ -37,16 +37,15 @@ def keepAlive():
     return model.keepAlive()
   
 
-@app.route("/killCrewmate")
-def killCrewmate():
+@app.route("/killPlayer")
+def killPlayer():
     args = request.args
-    return model.killCrewmate(args["badgeUID"])
+    return model.killPlayer(args["badgeUID"])
 
 
-@app.route("/deadBodyFound")
-def deadBodyFound():
-    args = request.args
-    return model.deadbodyfound(args["badgeUID"])
+@app.route("/startVote")
+def startVote():
+    return model.startVote()
 
 
 @app.route("/registerUser")
@@ -76,10 +75,31 @@ def sabotageCompleted():
     return model.sabotageCompleted()
 
 
+@app.route("/voteTally")
+def voteTally():
+    args = request.args
+    return model.voteTally(args["badgeUID"], args["myUID"])
+
 @app.route("/isAlive")
 def isAlive():
     args = request.args
-    return model.isAlive(args['badgeUID'])
+    return model.isAlive(args["badgeUID"])
 
+
+
+@app.route("/isImposter")
+def isImposter():
+    args = request.args
+    return model.isImposter(args['uid'])
+
+
+@app.route("/AutoDownloader/GetFileList")
+def getFileList():
+    return model.getFileList()
+
+@app.route("/AutoDownloader/GetFile")
+def getFile():
+    args = request.args
+    return model.getFile(args['fileName'])
 
 if __name__ == '__main__': app.run(host='0.0.0.0')

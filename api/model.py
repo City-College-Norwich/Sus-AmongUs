@@ -1,6 +1,7 @@
 import random
 import csv
 import json
+import os, sys
 
 from TimerHelper import TimerHelper
 
@@ -21,18 +22,22 @@ class Model:
         self.completedMinigames = 0
         self.state = GAME_STARTING
 
-                      # card ID,   team,   alive/dead
-        self.players ={99:['team', True],}
+                      # card ID,   team,   alive/dead, votecounter, voted
+        self.players ={"0x14742558":['crewmate', False, 0, 0]}
 
         self.crewmateCount = 0
         self.imposterCount = 0
 
-        self.maxImposters = 2
+        self.maxImposters = 1
 
         self.sabotaged = False
-        self.sabotage_time = 0
         self.sabotage_type = 0
-        self.time = TimerHelper()
+        self.sabotage_timer = TimerHelper()
+        self.sabotage_participants = set()
+
+        self.playerTotalVote = 0
+        self.totalVote = 0
+        self.voting = False
 
     def getTagName(self, uid):
         if uid in self.uids.keys():            
@@ -40,29 +45,19 @@ class Model:
         else:
             return "No tags found"
             
-
     def startGame(self):
-        i = 0
-        while i < len(self.players):
-            keys = list(self.players.keys())
-
-            if self.imposterCount != self.maxImposters:
-                randomPlayerIndex = random.randint(0, len(self.players) - 1)
-                chosenPlayerUID = keys[randomPlayerIndex]
-                if self.players[chosenPlayerUID][0] != "Imposter":
-                    self.players[chosenPlayerUID][0] = "Imposter"
-                    self.imposterCount += 1
-                else:
-                    print(str(chosenPlayerUID) + " is already a imposter, Itterating again!")
-                    continue
-            else:
-                self.players[keys[i]][0] = "Crewmate"
-                self.crewmateCount += 1
-            i += 1
+        players = list(range(len(self.players.keys())))
+        for i in range(self.maxImposters):
+            imposter = players.pop(random.randint(0, len(players)-1))
+            self.players[self.players.keys()[imposter]][0] = "Imposter"
+            self.imposterCount += 1
+        
+        for crewmate in players:
+            self.players[self.players.keys()[crewmate]][0] = "Crewmate"
+        self.crewmateCount = len(players)
         
         self.state = GAME_RUNNING
         return "okay"
-
       
     def callHomepage(self):
         return "hello"
@@ -75,21 +70,28 @@ class Model:
         return "Okay"
 
     def keepAlive(self):
-        alerts = set()
+        alerts = {}
         if self.state == GAME_RUNNING:
-            alerts.add("GameStarted")
+            alerts["GameRunning"] = True
             if self.sabotaged:
-                alerts.add("Sabotaged")
+                alerts["Sabotaged"] = self.sabotage_type
+                if self.sabotage_type == 1:
+                    alerts["SabotagedStation"] = self.sabotaged_station
+            
+                if self.sabotage_timer.check():
+                    self.state = IMPOSTER_WIN
+
+            elif self.voting == True:
+                alerts["Voting"] = True
 
             if self.imposterCount == 0:
                 self.state = CREWMATE_WIN
-                alerts.add("Crewmates_Win")
+                alerts["Winner_Decided"] = "Crewmates"
             elif self.crewmateCount == self.imposterCount:
                 self.state = IMPOSTER_WIN
-                alerts.add("Imposter_Win")
+                alerts["Winner_Decided"] = "Imposters"
 
-        return json.dumps(list(alerts))
-
+        return json.dumps(alerts)
 
     def killPlayer(self, badgeUID):
         self.players[badgeUID][1] = False
@@ -97,35 +99,95 @@ class Model:
             self.imposterCount -= 1
         else:
             self.crewmateCount -= 1
+        return "ok"
 
-
-    def deadbodyfound(self, badgeUID):
-        # split the playerId into the cmd (on the left) and the actual playerId# (on the right)
-
-        if self.players[badgeUID][1] == False:
-            startVote() #This needs creating first
-
+    def startVote(self):
+        self.totalVote = 0
+        i = 0
+        while i < len(self.players):
+            keys = self.players.keys()
+            self.players[keys[i]][2] = 0
+            self.players[keys[i]][3] = 0
+            i+=1
+        self.voting = True
+        return "ok"
+        
     def registerUser(self,badgeUID):
         if badgeUID in self.players.keys(): 
             return "User is already Registered!"
             
-        self.players[badgeUID] = ["team", True]
+        self.players[badgeUID] = ["team", True, 0, 0]
+        self.uids[badgeUID] = "playerId"
         return "Okay"
 
     def sabotage(self, sabotageType):
         self.sabotaged = True
         self.sabotage_type = sabotageType
+        self.sabotage_timer.set(60000)
+        if self.sabotage_type == 1:
+            self.sabotaged_station = self.requestStation()
 
-    def getSabotageType(self):
-        return self.sabotage_type
+    def sabotageCompleted(self,badgeUID):
+        # handling sabotage 1 logic
+        if self.sabotage_type == 1:
+            if badgeUID in self.sabotage_participants:
+                pass
+            else:
+                self.sabotage_participants.add(badgeUID)
+                if len(self.sabotage_participants) == 2:
+                    self.sabotaged = False
+                    self.sabotage_participants = set()
 
-    def sabotageTimeout(self):
-        self.state = IMPOSTER_WIN
-
-    def sabotageCompleted(self):
-        self.sabotaged = False
-
+    def voteTally(self, badgeUID, myUID):
+        self.playerTotalVote = int(self.players[badgeUID][2]) + 1
+        self.players[badgeUID][2] = str(self.playerTotalVote)
+        self.players[myUID][3] = 1
+        self.totalVote += 1
+        return "ok"
+        
     def isAlive(self, badgeUID):
         if self.players[badgeUID][1]:
             return "yes"
         return "no"
+
+    
+    def isImposter(self, uid):
+        if self.players[uid][0] == "Imposter":
+            return "True"
+        return "False"
+       
+
+
+    fileList = [
+        "App.py", 
+        "Buttons.py", 
+        "Rfid.py", 
+        "Screen.py", 
+        "TimerHelper.py", 
+        "Wifi.py",
+        "boot.py",
+        "Minigames/DownloadGame.py",
+        "Minigames/GoodGuyGame.py",
+        "Minigames/IdBadge.py",
+        "Minigames/ImposterGame.py",
+        "Minigames/Minigame.py",
+        "Minigames/ReactionGame.py",
+        "Minigames/RecordTemperatureGame.py",
+        "Minigames/Sabotage1.py",
+        "Minigames/StartupGame.py",
+        "Minigames/UploadGame.py",
+        "Minigames/VotingGame.py"]
+
+    def getFileList(self):
+        return json.dumps(self.fileList)
+
+    def getFile(self, fileName):
+        currentdir = os.path.dirname(os.path.realpath(__file__))
+        parentdir = os.path.dirname(currentdir)
+        scannerdir = os.path.join(parentdir, "Scanner")
+
+        if fileName in self.fileList:
+            with open(os.path.join(scannerdir, fileName), "r") as f:
+                file = f.read()
+            return file
+        return ""

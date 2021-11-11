@@ -15,10 +15,12 @@ class DownloadGame(Minigame):
 
     def update(self):
         self.rfid = self.parent.rfid.doRead()
+        self.parent.screen.drawText("Download Game", 0, 0)
         if self.rfid:
             if self.timer.check():
-                self.progress_width = self.progress_width+10
-                self.progress = self.progress+10
+                self.progress_width += random.choice(range(5, 16))
+                self.progress = self.progress_width
+                self.parent.screen.drawText("Keep Scanning", 0, 0)
                 self.parent.screen.drawRectangle(10, 20, self.progress_width, 15)
                 self.parent.screen.drawText(str(self.progress) + "%", 50, 45)
                 self.timer.set(1000)

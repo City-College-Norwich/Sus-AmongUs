@@ -5,22 +5,30 @@ class Minigame:
     def update(self):
         pass
 
-    def alertsFromServer(self, alerts):
-        if 'GameStarted' in alerts and self.parent.state == self.parent.STARTING:
 
-            self.parent.gotoGoodGuyGame()
+    def alertsFromServer(self, alerts):
+        if 'GameRunning' in alerts and self.parent.state == self.parent.STARTING:
+            self.parent.gotoIdleGame()
             self.parent.state = self.parent.RUNNING
 
-        if 'Crewmate_Win' in alerts:
-            self.parent.gotoGoodGuyGame()
-            self.parent.currentMiniGame.state = 1  # Crewmate win
+        if 'Winner_Decided' in alerts:
+            winner = alerts['Winner_Decided']
+            if winner == "Crewmates":
+                self.parent.gotoIdleGame()
+                self.parent.currentMiniGame.state = 1  # Crewmate win
+            else:
+                self.parent.gotoIdleGame()
+                self.parent.currentMiniGame.state = 2  # Impostor win
 
-        elif "Impostor_Win" in alerts:
-            self.parent.gotoGoodGuyGame()
-            self.parent.currentMiniGame.state = 2  # Impostor win
 
         if 'Sabotaged' in alerts:
-            sabotage_type = self.parent.wifi.send_request("getSabotageType")
+            sabotage_type = alerts['Sabotaged']
+            if sabotage_type == 1:
+                sabotagedStation = alerts['SabotagedStation']
+                self.parent.currentMiniGame = self.parent.gotoSabotageGame1(sabotagedStation)
+
+        if 'Voting' in alerts and self.parent.state == self.parent.RUNNING:
+            self.parent.gotoVotingGame()
 
             #TODO: REDO!
             # if sabotage_type == 1:
