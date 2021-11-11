@@ -22,8 +22,8 @@ class Model:
         self.completedMinigames = 0
         self.state = GAME_STARTING
 
-                      # card ID,   team,   alive/dead, votecounter
-        self.players ={"0x14742558":['crewmate', False, 0]}
+                      # card ID:   [team,   alive/dead, votecounter]
+        self.players ={}
 
         self.crewmateCount = 0
         self.imposterCount = 0
