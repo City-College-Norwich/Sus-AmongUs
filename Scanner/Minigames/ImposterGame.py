@@ -32,7 +32,7 @@ class ImposterGame(Minigame):
                         if self.parent.wifi.sendRequest("isAlive?badgeUID=" + uid) == "no":
                             self.parent.wifi.sendRequest("startVote")
                     
-            if tag == ".votingHub":
+            if tag == ".votingHub" and self.parent.wifi.sendRequest("isAlive?badgeUID=" + self.parent.badgeUID)=='yes':
                 self.parent.wifi.sendRequest("startVote")
            
 

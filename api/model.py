@@ -22,8 +22,8 @@ class Model:
         self.completedMinigames = 0
         self.state = GAME_STARTING
 
-                      # card ID,   team,   alive/dead, votecounter, voted
-        self.players ={"0x14742558":['crewmate', False, 0, 0]}
+                      # card ID,   team,   alive/dead, votecounter
+        self.players ={"0x14742558":['crewmate', False, 0]}
 
         self.crewmateCount = 0
         self.imposterCount = 0
@@ -100,7 +100,6 @@ class Model:
         while i < len(self.players):
             keys = self.players.keys()
             self.players[keys[i]][2] = 0
-            self.players[keys[i]][3] = 0
             i+=1
         self.voting = True
         return "ok"
@@ -126,12 +125,27 @@ class Model:
     def sabotageCompleted(self):
         self.sabotaged = False
 
-    def voteTally(self, badgeUID, myUID):
+    def voteTally(self, badgeUID):
         self.playerTotalVote = int(self.players[badgeUID][2]) + 1
         self.players[badgeUID][2] = str(self.playerTotalVote)
-        self.players[myUID][3] = 1
         self.totalVote += 1
+        if self.totalVote == (self.crewmateCount + self.imposterCount):
+            return Model.endVote()
         return "ok"
+
+    def endVote(self):
+        voteArray = []
+        for key in self.players:
+            addPlayer = []
+            if self.players[key][1] == False:
+                addPlayer.append(key)
+                addPlayer.append(self.players[key][2])
+            voteArray.append(addPlayer)
+        sorted(voteArray, key=lambda x: x[1], reverse=True)
+        playerID = voteArray[0][0]
+        self.voting = False
+        return Model.killPlayer(playerID)
+        #To Add: The player ejected will need to be returned and consequently printed to the screen of every scanner.
         
     def isAlive(self, badgeUID):
         if self.players[badgeUID][1]:
