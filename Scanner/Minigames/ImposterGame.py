@@ -8,6 +8,7 @@ class ImposterGame(Minigame):
         Minigame.__init__(self, parent)
         self.timer = TimerHelper()
         self.timer.set(60000)
+        self.parent.screen.drawText("Imposter", 0, 0)
     
     def update(self):
         if self.timer.check():
