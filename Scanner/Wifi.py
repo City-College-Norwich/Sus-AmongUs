@@ -79,3 +79,6 @@ class Wifi:
 
     def voteTimeEnd(self):
         return self._sendRequest("voteTimeEnd")
+
+    def keepAlive(self):
+        return self._sendRequest("keepAlive")

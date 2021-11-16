@@ -62,7 +62,7 @@ class App:
 
     def keepAlive(self):
         if self.keep_alive_timer.check():
-            alerts = json.loads(self.wifi.sendRequest("keepAlive"))
+            alerts = json.loads(self.wifi.keepAlive())
 
             self.currentMiniGame.alertsFromServer(alerts)
             self.keep_alive_timer.set(KEEP_ALIVE_TIMEOUT)

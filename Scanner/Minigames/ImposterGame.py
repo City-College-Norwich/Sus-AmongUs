@@ -31,7 +31,7 @@ class ImposterGame(Minigame):
                 if tag == 'playerId':
                     if self.parent.wifi.isAlive(self.parent.badgeUID):
                         if uid != self.parent.badgeUID and self.parent.wifi.isAlive(uid):
-                        self.parent.wifi.sendRequest("killPlayer?myUID="+ self.parent.badgeUID + "&victimUID=" + uid)
+                            self.parent.wifi.sendRequest("killPlayer?myUID="+ self.parent.badgeUID + "&victimUID=" + uid)
                     elif uid==self.parent.badgeUID:
                         self.parent.screen.drawText("are you ok?")
                     else:
