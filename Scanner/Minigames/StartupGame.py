@@ -17,11 +17,11 @@ class StartupGame(Minigame):
         uid, tag = self.parent.rfid.doRead(True)
         
         if tag == ".main":
-            self.parent.wifi.sendRequest('StartGame')
+            self.parent.wifi.startGame()
 
         elif self.parent.badgeUID is None and tag is not None:
             self.parent.badgeUID = uid
-            self.parent.wifi.sendRequest('registerUser?badgeUID='+self.parent.badgeUID)
+            self.parent.wifi.registerUser(self.parent.badgeUID)
             self.StartGameState = True
 
         if self.StartGameState == True:

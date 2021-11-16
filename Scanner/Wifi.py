@@ -29,12 +29,47 @@ class Wifi:
                 print("Connecting...")
                 self.parent.screen.drawText("Connecting", 0, 0)
                 self.parent.screen.draw()
+    
     def sendRequest(self, message):
+        class DepricatedException(Exception):
+            pass
+        try:
+            raise DepricatedException("This function 'sendRequest' is Depricated please use the other general purpose functions outlined in WiFi.py",1.9)
+        except Exception as e:
+            print (repr(e))
+
+    # Interal usage ONLY!
+    def _sendRequest(self, message):
         response = requests.get(self.URL+ message)
         print(self.URL+ message)
         text = response.text
         print(text)
         response.close()
         return(text)
+        
+    def isAlive(self, tagID):
+        if(self._sendRequest("isAlive?badgeUID=" + tagID) == "yes"):
+            return True
+        else:
+            return False
 
-    
+    def completeMinigame(self, tagID):
+        return self._sendRequest("minigameComplete?badgeUID=" + tagID)
+
+    def startVoteing(self):
+        self._sendRequest("startVote")
+
+    def requestNewStation(self):
+        self._sendRequest("requestStation")
+
+    def sendSabotage(self, type):
+        return self._sendRequest("sabotage?sabotageType=" + type)
+
+    def registerUser(self, tagID):
+        return self._sendRequest("registerUser?badgeUID=" + tagID)
+
+    def startGame(self):
+        return self._sendRequest('StartGame')
+
+    def voteTally(self, badgeUID, myUID):
+        return self._sendRequest("voteTally?badgeUID="+badgeUID+"&myUID="+myUID)
