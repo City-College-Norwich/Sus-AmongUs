@@ -43,9 +43,11 @@ class ImposterGame(Minigame):
            
 
         elif self.parent.state == self.parent.CREWMATE_WIN:
-            self.parent.screen.drawText("Game Over! Crewmates Has won!",0,0)
+            while not any(self.parent.buttons.getPressedButtons()):
+                self.parent.screen.drawText("Game Over! Crewmates Has won!",0,0)
         elif self.parent.state == self.parent.IMPOSTOR_WIN:
-            self.parent.screen.drawText("Game Over! Impostors Has won!",0,0)
+            while not any(self.parent.buttons.getPressedButtons()):
+                self.parent.screen.drawText("Game Over! Impostors Has won!",0,0)
 
 
 
