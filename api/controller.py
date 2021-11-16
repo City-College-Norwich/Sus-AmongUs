@@ -13,7 +13,13 @@ def home():
 
 @app.route("/StartGame")
 def startGame():
-    return model.startGame()
+    res = "000"
+    try:
+        res = model.startGame()
+    except(ValueError):
+        return "500: Value Error"
+    except:
+        return "500: N/A"   
 
 @app.route("/requestStation")
 def requestStation():

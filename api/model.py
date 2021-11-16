@@ -65,7 +65,8 @@ class Model:
     def callHomepage(self):#network test 
         return "hello"
 
-    def requestStation(self):#chooses a random staton
+    # Responds with a random station
+    def requestStation(self):
         return "station" + str(random.choice(range(1, 6)))
 
     def minigameComplete(self, scannerId):#adds to completed minigame for crewmate 
@@ -74,27 +75,32 @@ class Model:
 
     def keepAlive(self):#loop for alerts 
         alerts = {}
-        if self.state == GAME_RUNNING:
-            alerts["GameRunning"] = True
-            if self.sabotaged:
-                alerts["Sabotaged"] = self.sabotage_type#where it checks for sabotage
-                if self.sabotage_type == 1:
-                    alerts["SabotagedStation"] = self.sabotaged_station
-            
-                if self.sabotage_timer.check():# ends game if timer runs out 
+        try:
+
+            if self.state == GAME_RUNNING:
+                alerts["GameRunning"] = True
+                if self.sabotaged:
+                    alerts["Sabotaged"] = self.sabotage_type#where it checks for sabotage
+                    if self.sabotage_type == 1:
+                        alerts["SabotagedStation"] = self.sabotaged_station
+                
+                    if self.sabotage_timer.check():# ends game if timer runs out 
+                        self.state = IMPOSTER_WIN
+
+                elif self.voting == True:#starts vote
+                    alerts["Voting"] = True
+
+                if self.imposterCount == 0:#win states 
+                    self.state = CREWMATE_WIN
+                    alerts["Winner_Decided"] = "Crewmates"
+                elif self.crewmateCount <= self.imposterCount:
                     self.state = IMPOSTER_WIN
+                    alerts["Winner_Decided"] = "Imposters"
+            return json.dumps(alerts)
+        except Exception as e:
+            print(e)
+            return "500"
 
-            elif self.voting == True:#starts vote
-                alerts["Voting"] = True
-
-            if self.imposterCount == 0:#win states 
-                self.state = CREWMATE_WIN
-                alerts["Winner_Decided"] = "Crewmates"
-            elif self.crewmateCount == self.imposterCount:
-                self.state = IMPOSTER_WIN
-                alerts["Winner_Decided"] = "Imposters"
-
-        return json.dumps(alerts)
 
     def killPlayer(self, selfUID, victimUID):# defines murder 
         killer = self.players[selfUID]
