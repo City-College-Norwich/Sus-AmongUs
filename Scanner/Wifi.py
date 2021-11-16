@@ -48,7 +48,7 @@ class Wifi:
         return(text)
         
     def isAlive(self, tagID):
-        if(self._sendRequest("isAlive?badgeUID=" + tagID) == "yes"):
+        if self._sendRequest("isAlive?badgeUID=" + tagID) == "yes":
             return True
         else:
             return False
@@ -99,4 +99,4 @@ class Wifi:
         return self._sendRequest("AutoDownloader/GetFileList")
 
     def getFile(self, filename):
-        return self._sendRequest("AutoDownloader/GetFile?filename="+filename)
+        return self._sendRequest("AutoDownloader/GetFile?fileName="+filename)
