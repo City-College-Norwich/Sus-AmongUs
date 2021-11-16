@@ -27,7 +27,7 @@ class DownloadGame(Minigame):
                 self.timer.set(1000)
 
                 if self.progress >= 100:
-                    self.parent.wifi.sendRequest("minigameComplete?badgeUID=" + self.parent.badgeUID)
+                    self.parent.wifi.completeMinigame(self.parent.badgeUID)
                     self.parent.isMinigameCompleted = True
                     self.parent.lastMinigame = DownloadGame
                     self.parent.gotoGoodGuyGame()

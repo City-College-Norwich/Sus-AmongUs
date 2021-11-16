@@ -23,7 +23,7 @@ class GoodGuyGame(Minigame):
         # update bellow set with minigames
         #[MINIGAME-NAME, COMPLETED?] True=Completed, False=Not completed
         self.__minigames = [[IdBadge, False], [ReactionGame, False], [DownloadGame, False], [UploadGame, False], [RecordTemperatureGame, False]]
-        self.__target_station = self.parent.wifi.sendRequest("requestStation")
+        self.__target_station = self.parent.wifi.requestStation()
 
         if self.parent.isMinigameCompleted==True:#Was minigame completed?
         #if statement could be:
@@ -38,13 +38,16 @@ class GoodGuyGame(Minigame):
             uid, tag = self.parent.rfid.doRead(True)
 
             isAlive = self.parent.wifi.sendRequest("isAlive?badgeUID=" + self.parent.badgeUID)=='yes'
-            # Check if the user scanned is dead, and if so, start the voting process
+
             if isAlive:
-                if tag  == 'playerId':
-                    if self.parent.wifi.sendRequest("isAlive?badgeUID=" + uid) == "no":
-                        self.parent.wifi.sendRequest("startVote")
-                if tag == ".votingHub":
-                    self.parent.wifi.sendRequest("startVote")
+              if tag  == 'playerId':
+                  if self.parent.wifi.isAlive(self.parent.badgeUID) == "yes":  
+                      if not self.parent.wifi.isAlive(uid):
+                          self.parent.wifi.startVoting()
+
+              if tag == ".votingHub":
+                  self.parent.wifi.startVoting()
+
             elif tag == self.__target_station:
                 while True:#Loop until break(until an uncompleted minigame is chosen)
                     self.target_minigame = random.choice(self.__minigames)#Choose random minigame

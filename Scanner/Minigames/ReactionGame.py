@@ -40,7 +40,7 @@ class ReactionGame(Minigame):
         if self.can_press_button:
             buttons = self.parent.buttons.getPressedButtons()
             if buttons[0] == 1:
-                self.parent.wifi.sendRequest("minigameComplete?badgeUID=" + self.parent.badgeUID)
+                self.parent.wifi.completeMinigame(self.parent.badgeUID)
                 self.parent.isMinigameCompleted = True
                 self.parent.lastMinigame = ReactionGame
                 self.parent.gotoGoodGuyGame()

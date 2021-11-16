@@ -14,11 +14,11 @@ class ImposterGame(Minigame):
         if self.timer.check():
             buttons = self.parent.buttons.getPressedButtons()
             if buttons[0] == 1:
-                self.wifi.sendRequest("sabotage?sabotageType=1")
+                self.wifi.sendSabotage("1")
             elif buttons[1] == 1:
-                self.wifi.sendRequest("sabotage?sabotageType=2")
+                self.wifi.sendSabotage("2")
             elif buttons[2] == 1:
-                self.wifi.sendRequest("sabotage?sabotageType=3")
+                self.wifi.sendSabotage("3")
 
 
         if self.parent.state ==self.parent.RUNNING:
@@ -29,17 +29,17 @@ class ImposterGame(Minigame):
             isAlive = self.parent.wifi.sendRequest("isAlive?badgeUID=" + self.parent.badgeUID) == "yes";
             if isAlive:
                 if tag == 'playerId':
-                    targetAlive = self.parent.wifi.sendRequest("isAlive?badgeUID=" + uid) == 'yes';
-                    if uid != self.parent.badgeUID and targetAlive:
+                    if self.parent.wifi.isAlive(self.parent.badgeUID):
+                        if uid != self.parent.badgeUID and self.parent.wifi.isAlive(uid):
                         self.parent.wifi.sendRequest("killPlayer?myUID="+ self.parent.badgeUID + "&victimUID=" + uid)
                     elif uid==self.parent.badgeUID:
                         self.parent.screen.drawText("are you ok?")
                     else:
-                        if not targetAlive:
-                            self.parent.wifi.sendRequest("startVote")
-                if tag == ".votingHub":
-                    self.parent.wifi.sendRequest("startVote")
-
+                        if not self.parent.wifi.isAlive(uid):
+                            self.parent.wifi.startVoting()
+                                            
+            if tag == ".votingHub":
+                self.parent.wifi.startVoting()
            
 
         elif self.parent.state == self.parent.CREWMATE_WIN:
