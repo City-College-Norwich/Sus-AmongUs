@@ -32,11 +32,11 @@ class ImposterGame(Minigame):
                         self.parent.screen.drawText("are you ok?")
                     else:
                         if not self.parent.wifi.isAlive(uid):
-                            self.parent.wifi.startVoteing()
+                            self.parent.wifi.startVoting()
                         
                     
             if tag == ".votingHub":
-                self.parent.wifi.startVoteing()
+                self.parent.wifi.startVoting()
            
 
         elif self.parent.state == self.parent.CREWMATE_WIN:

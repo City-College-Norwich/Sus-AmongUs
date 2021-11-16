@@ -56,7 +56,7 @@ class Wifi:
     def completeMinigame(self, tagID):
         return self._sendRequest("minigameComplete?badgeUID=" + tagID)
 
-    def startVoteing(self):
+    def startVoting(self):
         self._sendRequest("startVote")
 
     def requestStation(self):
