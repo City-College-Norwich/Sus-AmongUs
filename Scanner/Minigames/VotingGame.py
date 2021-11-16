@@ -13,7 +13,7 @@ class VotingGame(Minigame):
         uid,tag = self.parent.rfid.doRead(True)
         if tag is not None and tag[:8] == 'playerId' and self.voted == False:
             if self.parent.wifi.sendRequest("isAlive?badgeUID=" + self.parent.badgeUID)=='yes':
-                self.parent.wifi.sendRequest("voteTally?badgeUID="+uid)
+                self.parent.wifi.sendRequest("voteTally?badgeUID={}&myUID={}".format(uid, self.parent.badgeUID))
             self.voted = True
 
     def alertsFromServer(self, alerts):

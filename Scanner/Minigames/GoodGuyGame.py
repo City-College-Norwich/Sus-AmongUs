@@ -29,7 +29,7 @@ class GoodGuyGame(Minigame):
         #if statement could be:
         #if self.parent.lastMinigame!=None:
         #then could remove the isMinigameCompleted variable.
-            self.__minigames[minigames.index([self.parent.lastMinigame, False])][1]=True #Change completed to True in minigames array
+            self.__minigames[self.__minigames.index([self.parent.lastMinigame, False])][1]=True #Change completed to True in minigames array
             self.parent.isMinigameCompleted=False #Set back to False
             self.parent.lastMinigame=None # set back to None
 
@@ -48,9 +48,9 @@ class GoodGuyGame(Minigame):
             elif tag == self.__target_station:
                 while True:#Loop until break(until an uncompleted minigame is chosen)
                     self.target_minigame = random.choice(self.__minigames)#Choose random minigame
-                    if target_minigame[1]==False:#if minigame is not completed
+                    if self.target_minigame[1]==False:#if minigame is not completed
                         break#stop loop
-                self.parent.currentMiniGame = target_minigame[0](self.parent)# Set currentMinigame to the mingame chosen
+                self.parent.currentMiniGame = self.target_minigame[0](self.parent)# Set currentMinigame to the mingame chosen
             else:
                 self.parent.screen.drawText("GOTO: " + str(self.__target_station),0,0)
         else:

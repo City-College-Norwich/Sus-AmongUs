@@ -78,7 +78,7 @@ def sabotageCompleted():
 @app.route("/voteTally")
 def voteTally():
     args = request.args
-    return model.voteTally(args["badgeUID"])
+    return model.voteTally(args["badgeUID"], args["myUID"])
 
 @app.route("/isAlive")
 def isAlive():

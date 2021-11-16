@@ -25,7 +25,7 @@ class Model:
         self.completedMinigames = 0 #how many games the player has completed 
         self.state = GAME_STARTING
 
-                      # card ID:   [team,   alive/dead, votecounter]
+                      # card ID:   [team,   alive/dead, votecounter, hasVoted]
         self.players ={}
 
         self.crewmateCount = 0 # total count of current crewmates in a game
@@ -115,11 +115,11 @@ class Model:
 
     def startVote(self):#starts voting game 
         self.totalVote = 0
-        i = 0
-        while i < len(self.players):
-            keys = self.players.keys()
-            self.players[keys[i]][2] = 0
-            i+=1
+        
+        for key in self.players.keys():
+            self.players[key][2] = 0
+            self.players[key][3] = 0
+
         self.voting = True
         return "ok"
         
@@ -149,9 +149,10 @@ class Model:
                     self.sabotaged = False
                     self.sabotage_participants = set()
 
-    def voteTally(self, badgeUID):
+    def voteTally(self, badgeUID, myUID):
         self.playerTotalVote = int(self.players[badgeUID][2]) + 1
         self.players[badgeUID][2] = str(self.playerTotalVote)
+        self.players[myUID][3] = 1
         self.totalVote += 1
         if self.totalVote == (self.crewmateCount + self.imposterCount):
             return self.endVote()
