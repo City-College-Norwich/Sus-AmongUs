@@ -16,36 +16,39 @@ class Model:
 
         with open('RFIDMap.csv', mode='r') as csvfile:
             reader = csv.reader(csvfile)
-            self.uids = {row[0]: row[1] for row in reader}
+            self.uids = {row[0]: row[1] for row in reader} #creates csv file containing players 
 
-        self.totalMinigames = 10
-        self.completedMinigames = 0
+        #    '''
+        #   {this is what i shere: this is here}
+        #  '''
+        self.totalMinigames = 6 #how many games a player has 
+        self.completedMinigames = 0 #how many games the player has completed 
         self.state = GAME_STARTING
 
                       # card ID:   [team,   alive/dead, votecounter]
         self.players ={}
 
-        self.crewmateCount = 0
-        self.imposterCount = 0
+        self.crewmateCount = 0 # total count of current crewmates in a game
+        self.imposterCount = 0 # total number of current imposters in a game
 
         self.maxImposters = 1
 
-        self.sabotaged = False
+        self.sabotaged = False#these reffer to things to help with saboutages , this one is the alert 
         self.sabotage_type = 0
         self.sabotage_timer = TimerHelper()
         self.sabotage_participants = set()
 
-        self.playerTotalVote = 0
+        self.playerTotalVote = 0#base values for voting game 
         self.totalVote = 0
         self.voting = False
 
-    def getTagName(self, uid):
+    def getTagName(self, uid):#use to find badge id of player 
         if uid in self.uids.keys():            
             return self.uids[uid] 
         else:
             return "No tags found"
             
-    def startGame(self):
+    def startGame(self):#takes game into active and starts up (this needs to be affected for lobby)
         players = list(range(len(self.players.keys())))
         for i in range(self.maxImposters):
             imposter = players.pop(random.randint(0, len(players)-1))
@@ -59,32 +62,32 @@ class Model:
         self.state = GAME_RUNNING
         return "okay"
       
-    def callHomepage(self):
+    def callHomepage(self):#network test 
         return "hello"
 
-    def requestStation(self):
+    def requestStation(self):#chooses a random staton
         return "station" + str(random.choice(range(1, 6)))
 
-    def minigameComplete(self, scannerId):
+    def minigameComplete(self, scannerId):#adds to completed minigame for crewmate 
         self.completedMinigames += 1
         return "Okay"
 
-    def keepAlive(self):
-        alerts = {"Voting": False}
+    def keepAlive(self):#loop for alerts 
+        alerts = {}
         if self.state == GAME_RUNNING:
             alerts["GameRunning"] = True
             if self.sabotaged:
-                alerts["Sabotaged"] = self.sabotage_type
+                alerts["Sabotaged"] = self.sabotage_type#where it checks for sabotage
                 if self.sabotage_type == 1:
                     alerts["SabotagedStation"] = self.sabotaged_station
             
-                if self.sabotage_timer.check():
+                if self.sabotage_timer.check():# ends game if timer runs out 
                     self.state = IMPOSTER_WIN
 
-            elif self.voting == True:
+            elif self.voting == True:#starts vote
                 alerts["Voting"] = True
 
-            if self.imposterCount == 0:
+            if self.imposterCount == 0:#win states 
                 self.state = CREWMATE_WIN
                 alerts["Winner_Decided"] = "Crewmates"
             elif self.crewmateCount == self.imposterCount:
@@ -93,7 +96,7 @@ class Model:
 
         return json.dumps(alerts)
 
-    def killPlayer(self, selfUID, victimUID):
+    def killPlayer(self, selfUID, victimUID):# defines murder 
         killer = self.players[selfUID]
         victim = self.players[victimUID]
         if killer[1] == True and victim[1] == True:
@@ -110,7 +113,7 @@ class Model:
             self.imposterCount -= 1
         return "ok"
 
-    def startVote(self):
+    def startVote(self):#starts voting game 
         self.totalVote = 0
         i = 0
         while i < len(self.players):
@@ -120,7 +123,7 @@ class Model:
         self.voting = True
         return "ok"
         
-    def registerUser(self,badgeUID):
+    def registerUser(self,badgeUID):#this is where players are assigned 
         if badgeUID in self.players.keys(): 
             return "User is already Registered!"
             
@@ -128,14 +131,14 @@ class Model:
         self.uids[badgeUID] = "playerId"
         return "Okay"
 
-    def sabotage(self, sabotageType):
+    def sabotage(self, sabotageType):#defines basic sabotage value (second one needs to be made for player reset as the limit is a static number not a timer) 
         self.sabotaged = True
         self.sabotage_type = sabotageType
         self.sabotage_timer.set(60000)
         if self.sabotage_type == 1:
             self.sabotaged_station = self.requestStation()
 
-    def sabotageCompleted(self,badgeUID):
+    def sabotageCompleted(self,badgeUID):#makes it so one person cant act as two people in the sbotage game 
         # handling sabotage 1 logic
         if self.sabotage_type == 1:
             if badgeUID in self.sabotage_participants:
@@ -168,20 +171,20 @@ class Model:
         return self.executePlayer(playerID)
         #To Add: The player ejected will need to be returned and consequently printed to the screen of every scanner.
         
-    def isAlive(self, badgeUID):
+    def isAlive(self, badgeUID):#checks to see if player is alive 
         if self.players[badgeUID][1]:
             return "yes"
         return "no"
 
     
-    def isImposter(self, uid):
+    def isImposter(self, uid):#checks if player is imposter 
         if self.players[uid][0] == "Imposter":
             return "True"
         return "False"
        
 
 
-    fileList = [
+    fileList = [#list of relevent files 
         "App.py", 
         "Buttons.py", 
         "Rfid.py", 
@@ -201,15 +204,15 @@ class Model:
         "Minigames/UploadGame.py",
         "Minigames/VotingGame.py"]
 
-    def getFileList(self):
+    def getFileList(self):#gets list of files 
         return json.dumps(self.fileList)
 
-    def getFile(self, fileName):
+    def getFile(self, fileName):# gets the name of a file 
         currentdir = os.path.dirname(os.path.realpath(__file__))
         parentdir = os.path.dirname(currentdir)
         scannerdir = os.path.join(parentdir, "Scanner")
 
-        if fileName in self.fileList:
+        if fileName in self.fileList:#returns file through network
             with open(os.path.join(scannerdir, fileName), "r") as f:
                 file = f.read()
             return file
