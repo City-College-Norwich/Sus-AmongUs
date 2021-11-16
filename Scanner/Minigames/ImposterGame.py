@@ -26,12 +26,12 @@ class ImposterGame(Minigame):
 
             uid, tag = self.parent.rfid.doRead(True)
             
-            isAlive = self.parent.wifi.sendRequest("isAlive?badgeUID=" + self.parent.badgeUID) == "yes";
+            isAlive = self.parent.wifi.isAlive(self.parent.badgeUID) == "yes"
             if isAlive:
                 if tag == 'playerId':
                     if self.parent.wifi.isAlive(self.parent.badgeUID):
                         if uid != self.parent.badgeUID and self.parent.wifi.isAlive(uid):
-                            self.parent.wifi.sendRequest("killPlayer?myUID="+ self.parent.badgeUID + "&victimUID=" + uid)
+                            self.parent.wifi.killPlayer(self.parent.badgeUID, uid)
                     elif uid==self.parent.badgeUID:
                         self.parent.screen.drawText("are you ok?")
                     else:

@@ -85,3 +85,15 @@ class Wifi:
 
     def AutoDownloader(self):
         return self._sendRequest("AutoDownloader/GetFileList")
+
+    def getFile(self, fileName):
+        return self._sendRequest("AutoDownloader/GetFile?fileName=" + fileName)
+
+    def getTagName(self, uid):
+        return self._sendRequest("getTagName?uid=" + uid)
+
+    def killPlayer(self, myUID, victimUID):
+        return self._sendRequest("killPlayer?myUID={}&victimUID{}".format(myUID, victimUID))
+
+    def isImposter(self, uid):
+        return self._sendRequest("isImposter?uid="+uid)
