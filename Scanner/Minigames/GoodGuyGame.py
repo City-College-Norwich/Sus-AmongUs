@@ -28,14 +28,14 @@ class GoodGuyGame(Minigame):
         if self.state == RUNNING:
             uid, tag = self.parent.rfid.doRead(True)
 
+            isAlive = self.parent.wifi.sendRequest("isAlive?badgeUID=" + self.parent.badgeUID)=='yes'
             # Check if the user scanned is dead, and if so, start the voting process
-            if tag  == 'playerId' and self.parent.wifi.sendRequest("isAlive?badgeUID=" + self.parent.badgeUID)=='yes':
-                if self.parent.wifi.sendRequest("isAlive?badgeUID=" + self.parent.badgeUID) == "yes":  
+            if isAlive:
+                if tag  == 'playerId':
                     if self.parent.wifi.sendRequest("isAlive?badgeUID=" + uid) == "no":
                         self.parent.wifi.sendRequest("startVote")
-
-            if tag == ".votingHub" and self.parent.wifi.sendRequest("isAlive?badgeUID=" + self.parent.badgeUID)=='yes':
-                self.parent.wifi.sendRequest("startVote")
+                if tag == ".votingHub":
+                    self.parent.wifi.sendRequest("startVote")
             elif tag == self.__target_station:
                 mini = random.choice(self.__minigames)
                 if mini is DownloadGame and self.parent.DownloadGameCompleted:
