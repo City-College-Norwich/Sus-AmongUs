@@ -37,7 +37,7 @@ class GoodGuyGame(Minigame):
         if self.state == RUNNING:
             uid, tag = self.parent.rfid.doRead(True)
 
-            isAlive = self.parent.wifi.sendRequest("isAlive?badgeUID=" + self.parent.badgeUID)=='yes'
+            isAlive = self.parent.wifi.isAlive(self.parent.badgeUID) == 'yes'
 
             if isAlive:
               if tag  == 'playerId':

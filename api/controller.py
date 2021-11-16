@@ -102,4 +102,12 @@ def getFile():
     args = request.args
     return model.getFile(args['fileName'])
 
+@app.route("/initiateVote")
+def initiateVote():
+    return model.initiateVote()
+
+@app.route("/voteTimeEnd")
+def voteTimeEnd():
+    return model.voteTimeEnd()
+
 if __name__ == '__main__': app.run(host='0.0.0.0')
