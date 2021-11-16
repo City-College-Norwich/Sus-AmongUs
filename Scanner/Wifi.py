@@ -59,7 +59,7 @@ class Wifi:
     def startVoteing(self):
         self._sendRequest("startVote")
 
-    def requestNewStation(self):
+    def requestStation(self):
         self._sendRequest("requestStation")
 
     def sendSabotage(self, type):
