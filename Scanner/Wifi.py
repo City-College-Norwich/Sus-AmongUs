@@ -39,7 +39,7 @@ class Wifi:
             print (repr(e))
 
     # Interal usage ONLY!
-    def _sendRequest(self, message):
+    def __sendRequest(self, message):
         response = requests.get(self.URL+ message)
         print(self.URL+ message)
         text = response.text
@@ -48,28 +48,28 @@ class Wifi:
         return(text)
         
     def isAlive(self, tagID):
-        if(self._sendRequest("isAlive?badgeUID=" + tagID) == "yes"):
+        if(self.__sendRequest("isAlive?badgeUID=" + tagID) == "yes"):
             return True
         else:
             return False
 
     def completeMinigame(self, tagID):
-        return self._sendRequest("minigameComplete?badgeUID=" + tagID)
+        return self.__sendRequest("minigameComplete?badgeUID=" + tagID)
 
     def startVoting(self):
-        self._sendRequest("startVote")
+        self.__sendRequest("startVote")
 
     def requestStation(self):
-        self._sendRequest("requestStation")
+        self.__sendRequest("requestStation")
 
     def sendSabotage(self, type):
-        return self._sendRequest("sabotage?sabotageType=" + type)
+        return self.__sendRequest("sabotage?sabotageType=" + type)
 
     def registerUser(self, tagID):
-        return self._sendRequest("registerUser?badgeUID=" + tagID)
+        return self.__sendRequest("registerUser?badgeUID=" + tagID)
 
     def startGame(self):
-        return self._sendRequest('StartGame')
+        return self.__sendRequest('StartGame')
 
     def voteTally(self, badgeUID, myUID):
-        return self._sendRequest("voteTally?badgeUID="+badgeUID+"&myUID="+myUID)
+        return self.__sendRequest("voteTally?badgeUID="+badgeUID+"&myUID="+myUID)
