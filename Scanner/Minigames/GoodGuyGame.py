@@ -41,10 +41,10 @@ class GoodGuyGame(Minigame):
             if tag  == 'playerId':
                 if self.parent.wifi.isAlive(self.parent.badgeUID) == "yes":  
                     if not self.parent.wifi.isAlive(uid):
-                        self.parent.wifi.startVoteing()
+                        self.parent.wifi.startVoting()
 
             if tag == ".votingHub":
-                self.parent.wifi.startVoteing()
+                self.parent.wifi.startVoting()
             elif tag == self.__target_station:
                 while True:#Loop until break(until an uncompleted minigame is chosen)
                     self.target_minigame = random.choice(self.__minigames)#Choose random minigame
