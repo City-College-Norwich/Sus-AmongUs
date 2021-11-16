@@ -115,7 +115,7 @@ class Model:
 
     def startVote(self):#starts voting game 
         self.totalVote = 0
-        
+
         for key in self.players.keys():
             self.players[key][2] = 0
             self.players[key][3] = 0
@@ -157,6 +157,7 @@ class Model:
         if self.totalVote == (self.crewmateCount + self.imposterCount):
             return self.endVote()
         return "ok"
+        
 
     def endVote(self):
         voteArray = []
