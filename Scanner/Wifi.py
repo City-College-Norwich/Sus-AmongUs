@@ -82,3 +82,6 @@ class Wifi:
 
     def keepAlive(self):
         return self._sendRequest("keepAlive")
+
+    def AutoDownloader(self):
+        return self._sendRequest("AutoDownloader/GetFileList")

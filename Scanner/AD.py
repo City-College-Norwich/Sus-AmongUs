@@ -29,7 +29,7 @@ def walk(path):
 def dl():        
     wifi = Wifi(DummyParent())
 
-    newFiles = wifi.sendRequest("AutoDownloader/GetFileList")
+    newFiles = wifi.AutoDownloader()
     success = False
 
     try:
