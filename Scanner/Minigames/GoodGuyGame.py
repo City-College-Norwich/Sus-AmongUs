@@ -25,6 +25,7 @@ class GoodGuyGame(Minigame):
         self.__minigames = [[IdBadge, False], [ReactionGame, False], [DownloadGame, False], [UploadGame, False], [RecordTemperatureGame, False]]
         self.__target_station = self.parent.wifi.requestStation()
         
+        self.skipCooldown = TimeHelper()
 
         if self.parent.isMinigameCompleted==True:#Was minigame completed?
         #if statement could be:
@@ -65,8 +66,8 @@ class GoodGuyGame(Minigame):
             buttons = self.parent.buttons.getPressedButtons()
             if buttons[0] == 1:
                 pass
-            elif buttons[1] == 1:
-                self.__target_station = self.parent.wifi.skipStation(self.__target_station)
+            elif buttons[1] == 1 and self.skipCooldown.check():
+                self.__target_station = self.parent.wifi.skipStation(self.__target_station,self.skipCooldown)
             elif buttons[2] == 1:
                 pass
             else:
