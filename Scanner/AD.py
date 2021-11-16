@@ -29,7 +29,7 @@ def walk(path):
 def dl():        
     wifi = Wifi(DummyParent())
 
-    newFiles = wifi.AutoDownloader()
+    newFiles = wifi.getFileList()
     success = False
 
     try:
@@ -55,7 +55,7 @@ def dl():
         print ("------------")
         for fileName in newFiles:
             print ("Creating: " + fileName)
-            file = wifi.sendRequest("AutoDownloader/GetFile?fileName=" + fileName)
+            file = wifi.getFile(fileName)
             if file != "":
                 with open(fileName, 'w') as f:
                     f.write(file)
