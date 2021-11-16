@@ -27,7 +27,7 @@ class Minigame:
                 sabotagedStation = alerts['SabotagedStation']
                 self.parent.currentMiniGame = self.parent.gotoSabotageGame1(sabotagedStation)
 
-        if 'Voting' in alerts and self.parent.state == self.parent.RUNNING:
+        if 'Voting' in alerts and alerts['Voting'] and self.parent.state == self.parent.RUNNING:
             self.parent.gotoVotingGame()
 
             #TODO: REDO!

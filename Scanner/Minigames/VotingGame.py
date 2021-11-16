@@ -15,3 +15,8 @@ class VotingGame(Minigame):
             if self.parent.wifi.isAlive(self.parent.badgeUID):
                 self.parent.wifi.voteTally(uid, self.parent.badgeUID)
             self.voted = True
+
+    def alertsFromServer(self, alerts):
+        Minigame.alertsFromServer(self, alerts)
+        if alerts["Voting"] == False:
+            self.parent.gotoIdleGame()
