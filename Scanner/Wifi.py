@@ -86,9 +86,6 @@ class Wifi:
     def AutoDownloader(self):
         return self._sendRequest("AutoDownloader/GetFileList")
 
-    def getFile(self, fileName):
-        return self._sendRequest("AutoDownloader/GetFile?fileName=" + fileName)
-
     def getTagName(self, uid):
         return self._sendRequest("getTagName?uid=" + uid)
 
@@ -97,3 +94,9 @@ class Wifi:
 
     def isImposter(self, uid):
         return self._sendRequest("isImposter?uid="+uid)
+
+    def getFileList(self):
+        return self._sendRequest("AutoDownloader/GetFileList")
+
+    def getFile(self, filename):
+        return self._sendRequest("AutoDownloader/GetFile?filename="+filename)
