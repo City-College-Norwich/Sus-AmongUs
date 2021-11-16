@@ -73,3 +73,9 @@ class Wifi:
 
     def voteTally(self, badgeUID, myUID):
         return self._sendRequest("voteTally?badgeUID="+badgeUID+"&myUID="+myUID)
+
+    def initiateVote(self):
+        return self._sendRequest("initiateVote")
+
+    def voteTimeEnd(self):
+        return self._sendRequest("voteTimeEnd")

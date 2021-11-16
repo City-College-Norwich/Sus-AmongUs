@@ -41,6 +41,7 @@ class Model:
         self.playerTotalVote = 0#base values for voting game 
         self.totalVote = 0
         self.voting = False
+        self.initiateVoteCounter = 0
 
     def getTagName(self, uid):#use to find badge id of player 
         if uid in self.uids.keys():            
@@ -85,7 +86,9 @@ class Model:
                     self.state = IMPOSTER_WIN
 
             elif self.voting == True:#starts vote
-                alerts["Voting"] = True
+                alerts["Start_Voting"] = True
+                if self.initiateVoteCounter == self.imposterCount + self.crewmateCount:
+                    alerts["Initiate_Voting"] = True
 
             if self.imposterCount == 0:#win states 
                 self.state = CREWMATE_WIN
@@ -115,6 +118,7 @@ class Model:
 
     def startVote(self):#starts voting game 
         self.totalVote = 0
+        self.initiateVoteCounter = 0
 
         for key in self.players.keys():
             self.players[key][2] = 0
@@ -122,6 +126,13 @@ class Model:
 
         self.voting = True
         return "ok"
+
+    def initiateVote(self): #Ensure everyone is ready to vote. Further verification could be added.
+        self.initiateVoteCounter += 1
+        return "ok"
+
+    def voteTimeEnd(self): #If the voting timer is up then skip straight to end voting
+        return self.endVote()
         
     def registerUser(self,badgeUID):#this is where players are assigned 
         if badgeUID in self.players.keys(): 
