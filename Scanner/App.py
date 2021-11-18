@@ -16,6 +16,7 @@ from TimerHelper import TimerHelper
 from Minigames.StartupGame import StartupGame
 from Minigames.GoodGuyGame import GoodGuyGame
 from Minigames.Sabotage1 import Sabotage1
+from Minigames.Sabotage3 import Sabotage3
 from Minigames.ImposterGame import ImposterGame
 
 from Minigames.VotingGame import VotingGame
@@ -78,6 +79,9 @@ class App:
 
     def gotoSabotageGame1(self,sabotagedStation):
         self.currentMiniGame = Sabotage1(self,sabotagedStation)
+
+    def gotoSabotageGame3(self,sabotagedStation):
+        self.currentMiniGame = Sabotage3(self,sabotagedStation)
     
     def gotoVotingGame(self):
         self.state = self.VOTING
