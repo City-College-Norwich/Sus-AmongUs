@@ -23,7 +23,7 @@ class GoodGuyGame(Minigame):
         # update bellow set with minigames
         #[MINIGAME-NAME, COMPLETED?] True=Completed, False=Not completed
         self.__minigames = [[IdBadge, False], [ReactionGame, False], [DownloadGame, False], [UploadGame, False], [RecordTemperatureGame, False]]
-        self.__target_station = self.parent.wifi.requestStation()
+        self.__target_station = self.parent.wifi.requestStation(tagID)
 
         if self.parent.isMinigameCompleted==True:#Was minigame completed?
         #if statement could be:
