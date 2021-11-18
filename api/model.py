@@ -78,7 +78,7 @@ class Model:
         if self.state == GAME_RUNNING:
             alerts["GameRunning"] = True
             if self.sabotaged:
-                alerts["Sabotaged"] = self.sabotage_type#where it checks for sabotage
+                alerts["Sabotaged"] = self.sabotage_type #where it checks for sabotage
                 if self.sabotage_type == 1:
                     alerts["SabotagedStation"] = self.sabotaged_station
             
@@ -127,7 +127,7 @@ class Model:
         self.voting = True
         return "ok"
 
-    def initiateVote(self): #Ensure everyone is ready to vote. Further verification could be added.
+    def initiateVote(self): #Ensure everyone is ready to vote. Further verification needs to be added.
         self.initiateVoteCounter += 1
         return "ok"
 
