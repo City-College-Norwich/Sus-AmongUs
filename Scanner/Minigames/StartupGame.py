@@ -11,6 +11,7 @@ class StartupGame(Minigame):
         print("Initiate StartupGame")
     
         # Tell player to scan badge
+        self.parent.screen.clear()
         self.parent.screen.drawText('Scan Card', 0, 0)
         
     def update(self):
@@ -25,5 +26,6 @@ class StartupGame(Minigame):
             self.StartGameState = True
 
         if self.StartGameState == True:
+            self.parent.screen.clear()
             self.parent.screen.drawText("Scan start game tag", 10, 10)
 

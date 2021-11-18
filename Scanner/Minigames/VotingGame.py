@@ -4,6 +4,7 @@ from TimerHelper import *
 class VotingGame(Minigame):
     def __init__(self, parent):
         Minigame.__init__(self, parent)
+        self.parent.screen.clear()
         self.parent.screen.drawText("Voting Started", 0, 0)
         self.parent.screen.drawText("Go to Voting Room ", 0, 20)
         self.parent.screen.drawText("Scan Vote tag ", 0, 40)
@@ -22,6 +23,7 @@ class VotingGame(Minigame):
         else:
             if self.timer.check():
                 self.parent.wifi.voteTimeEnd()
+                self.parent.screen.clear()
             self.parent.screen.drawText("Voting", 0, 0)
             self.parent.screen.drawText("Scan Player tag ", 0, 20)
             if tag is not None and tag[:8] == 'playerId' and self.voted == False:
