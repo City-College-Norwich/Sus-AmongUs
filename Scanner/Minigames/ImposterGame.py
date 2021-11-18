@@ -14,11 +14,11 @@ class ImposterGame(Minigame):
         if self.timer.check():
             buttons = self.parent.buttons.getPressedButtons()
             if buttons[0] == 1:
-                self.wifi.sendSabotage("1")
+                self.wifi.createSabotage("1")
             elif buttons[1] == 1:
-                self.wifi.sendSabotage("2")
+                self.wifi.createSabotage("2")
             elif buttons[2] == 1:
-                self.wifi.sendSabotage("3")
+                self.wifi.createSabotage("3")
 
 
         if self.parent.state ==self.parent.RUNNING:

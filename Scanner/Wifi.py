@@ -62,8 +62,11 @@ class Wifi:
     def requestStation(self):
         self._sendRequest("requestStation")
 
-    def sendSabotage(self, type):
+    def createSabotage(self, type):
         return self._sendRequest("sabotage?sabotageType=" + type)
+
+    def completeSabotage(self,badgeUID):
+        return self._sendRequest("sabotageCompleted?badgeUID=" + badgeUID)
 
     def registerUser(self, tagID):
         return self._sendRequest("registerUser?badgeUID=" + tagID)
@@ -100,3 +103,4 @@ class Wifi:
 
     def getFile(self, filename):
         return self._sendRequest("AutoDownloader/GetFile?fileName="+filename)
+    

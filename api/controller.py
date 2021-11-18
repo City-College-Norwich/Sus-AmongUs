@@ -72,7 +72,8 @@ def sabotageTimeout():
 
 @app.route("/sabotageCompleted")
 def sabotageCompleted():
-    return model.sabotageCompleted()
+    args = request.args
+    return model.sabotageCompleted(args["badgeUID"])
 
 
 @app.route("/voteTally")

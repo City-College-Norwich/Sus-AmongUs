@@ -24,7 +24,7 @@ class RecordTemperatureGame(Minigame):
             self.parent.wifi.completeMinigame(self.parent.badgeUID)
             self.parent.isMinigameCompleted = True
             self.parent.lastMinigame = RecordTemperature
-            self.parent.gotoGoodGuyGame()
+            self.parent.gotoIdleGame()
         else:
             if self.time.check():
                 buttons = self.parent.buttons.getPressedButtons()

@@ -1,7 +1,8 @@
 class Minigame:
+    
     def __init__(self, parent):
         self.parent = parent
-
+        self.sabotageOccured = False
     def update(self):
         pass
 
@@ -22,13 +23,18 @@ class Minigame:
 
 
         if 'Sabotaged' in alerts:
+            self.sabotageOccured = True
             sabotage_type = alerts['Sabotaged']
             if sabotage_type == 1:
                 sabotagedStation = alerts['SabotagedStation']
                 self.parent.currentMiniGame = self.parent.gotoSabotageGame1(sabotagedStation)
-            elif sabatage_type == 3:
+            elif sabotage_type == 3:
                 sabotagedStation = alerts['SabotagedStation']
                 self.parent.currentMiniGame = self.parent.gotoSabotageGame3(sabotagedStation)
+                
+        elif self.sabotageOccured == True:
+            self.sabotageOccured = False
+            self.parent.gotoIdleGame()
 
         if 'Start_Voting' in alerts and self.parent.state == self.parent.RUNNING:
             self.parent.gotoVotingGame()

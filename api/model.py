@@ -167,8 +167,8 @@ class Model:
                 if len(self.sabotage_participants) == 2:
                     self.sabotaged = False
                     self.sabotage_participants = set()
-        elif self.sabotage == 3:
-            self.sabotage = False
+        elif self.sabotage_type == 3:
+            self.sabotaged = False
 
     def voteTally(self, badgeUID, myUID):
         self.playerTotalVote = int(self.players[badgeUID][2]) + 1
