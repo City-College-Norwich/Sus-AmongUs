@@ -80,7 +80,7 @@ class App:
     def gotoSabotageStationGame(self, sabotageType,station):
         if sabotageType == 1:
             self.currentMiniGame = Sabotage1(self,station)
-        if sabotageType == 3:
+        elif sabotageType == 3:
             self.currentMiniGame = Sabotage3(self,station)
     
     def gotoVotingGame(self):
