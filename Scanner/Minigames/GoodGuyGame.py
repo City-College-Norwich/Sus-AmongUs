@@ -48,14 +48,14 @@ class GoodGuyGame(Minigame):
               if tag == ".votingHub":
                   self.parent.wifi.startVoting()
 
-            elif tag == self.__target_station:
-                while True:#Loop until break(until an uncompleted minigame is chosen)
-                    self.target_minigame = random.choice(self.__minigames)#Choose random minigame
-                    if self.target_minigame[1]==False:#if minigame is not completed
-                        break#stop loop
-                self.parent.currentMiniGame = self.target_minigame[0](self.parent)# Set currentMinigame to the mingame chosen
-            else:
-                self.parent.screen.drawText("GOTO: " + str(self.__target_station),0,0)
+                elif tag == self.__target_station:
+                    while True:#Loop until break(until an uncompleted minigame is chosen)
+                        self.target_minigame = random.choice(self.__minigames)#Choose random minigame
+                        if self.target_minigame[1]==False:#if minigame is not completed
+                            break#stop loop
+                    self.parent.currentMiniGame = self.target_minigame[0](self.parent)# Set currentMinigame to the mingame chosen
+                else:
+                    self.parent.screen.drawText("GOTO: " + str(self.__target_station),0,0)
         else:
             if self.state == CREWMATE_WIN:
                 while not any(self.parent.buttons.getPressedButtons()):
