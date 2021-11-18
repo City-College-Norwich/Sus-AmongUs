@@ -23,7 +23,7 @@ class GoodGuyGame(Minigame):
         # update bellow set with minigames
         #[MINIGAME-NAME, COMPLETED?] True=Completed, False=Not completed
         self.__minigames = [[IdBadge, False], [ReactionGame, False], [DownloadGame, False], [UploadGame, False], [RecordTemperatureGame, False]]
-        self.__target_station = self.parent.wifi.requestStation()
+        self.__target_station = self.parent.wifi.requestStation(self.parent.badgeUID)
 
         if self.parent.isMinigameCompleted==True:#Was minigame completed?
         #if statement could be:
@@ -43,17 +43,18 @@ class GoodGuyGame(Minigame):
                 if tag == 'playerId':
                     if not self.parent.wifi.isAlive(uid):
                         self.parent.wifi.startVoting()
+                        
                 elif tag == ".votingHub":
                     self.parent.wifi.startVoting()
 
-            elif tag == self.__target_station:
-                while True:#Loop until break(until an uncompleted minigame is chosen)
-                    self.target_minigame = random.choice(self.__minigames)#Choose random minigame
-                    if self.target_minigame[1]==False:#if minigame is not completed
-                        break#stop loop
-                self.parent.currentMiniGame = self.target_minigame[0](self.parent)# Set currentMinigame to the mingame chosen
-            else:
-                self.parent.screen.drawText("GOTO: " + str(self.__target_station),0,0)
+                elif tag == self.__target_station:
+                    while True:#Loop until break(until an uncompleted minigame is chosen)
+                        self.target_minigame = random.choice(self.__minigames)#Choose random minigame
+                        if self.target_minigame[1]==False:#if minigame is not completed
+                            break#stop loop
+                    self.parent.currentMiniGame = self.target_minigame[0](self.parent)# Set currentMinigame to the mingame chosen
+                else:
+                    self.parent.screen.drawText("GOTO: " + str(self.__target_station),0,0)
         else:
             if self.state == CREWMATE_WIN:
                 while not any(self.parent.buttons.getPressedButtons()):
