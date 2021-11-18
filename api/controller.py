@@ -59,20 +59,10 @@ def sabotage():
     args = request.args
     return model.sabotage(args["sabotageType"])
 
-
-@app.route("/getSabotageType")
-def getSabotageType():
-    return model.sabotage_type()
-
-
-@app.route("/sabotageTimeout")
-def sabotageTimeout():
-    return model.sabotageTimeout()
-
-
 @app.route("/sabotageCompleted")
 def sabotageCompleted():
-    return model.sabotageCompleted()
+    args = request.args
+    return model.sabotageCompleted(args["badgeUID"])
 
 
 @app.route("/voteTally")

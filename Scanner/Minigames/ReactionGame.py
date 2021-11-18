@@ -43,4 +43,4 @@ class ReactionGame(Minigame):
                 self.parent.wifi.completeMinigame(self.parent.badgeUID)
                 self.parent.isMinigameCompleted = True
                 self.parent.lastMinigame = ReactionGame
-                self.parent.gotoGoodGuyGame()
+                self.parent.gotoIdleGame()
