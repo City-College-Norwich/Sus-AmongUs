@@ -85,12 +85,12 @@ class Model:
                 if self.sabotage_timer.check():# ends game if timer runs out 
                     self.state = IMPOSTER_WIN
 
-            elif self.voting == True:#starts vote
+            elif self.voting == True: #starts vote
                 alerts["Start_Voting"] = True
                 if self.initiateVoteCounter == self.imposterCount + self.crewmateCount:
                     alerts["Initiate_Voting"] = True
 
-            if self.imposterCount == 0:#win states 
+            if self.imposterCount == 0: #win states 
                 self.state = CREWMATE_WIN
                 alerts["Winner_Decided"] = "Crewmates"
             elif self.crewmateCount == self.imposterCount:
@@ -143,11 +143,19 @@ class Model:
         return "Okay"
 
     def sabotage(self, sabotageType):#defines basic sabotage value (second one needs to be made for player reset as the limit is a static number not a timer) 
-        self.sabotaged = True
-        self.sabotage_type = sabotageType
-        self.sabotage_timer.set(60000)
-        if self.sabotage_type == 1:
-            self.sabotaged_station = self.requestStation()
+        if self.sabotaged == True:
+            pass
+        else:
+            self.sabotaged = True
+            self.sabotage_type = sabotageType
+            if self.sabotage_type == 1:
+                self.sabotaged_station = self.requestStation()
+                self.sabotage_timer.set(60000)
+            elif self.sabotage_type == 3:
+                self.sabotaged_station = self.requestStation()
+                self.sabotage_timer.set(90000)
+
+
 
     def sabotageCompleted(self,badgeUID):#makes it so one person cant act as two people in the sbotage game 
         # handling sabotage 1 logic
@@ -159,6 +167,8 @@ class Model:
                 if len(self.sabotage_participants) == 2:
                     self.sabotaged = False
                     self.sabotage_participants = set()
+        elif self.sabotage_type == 3:
+            self.sabotaged = False
 
     def voteTally(self, badgeUID, myUID):
         self.playerTotalVote = int(self.players[badgeUID][2]) + 1

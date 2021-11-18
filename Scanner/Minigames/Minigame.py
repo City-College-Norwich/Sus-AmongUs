@@ -10,6 +10,7 @@ __docformat__ = 'restructuredtext'
 
 
 class Minigame:
+  
     """
     This is a class intended to be an abstract base for all minigames
 
@@ -23,6 +24,7 @@ class Minigame:
     The alertsFromServer() method should not be overridden unless you know what you are doing
 
     """
+
     def __init__(self, parent):
         """
         Initialize a Minigame object; sets parent object
@@ -30,7 +32,7 @@ class Minigame:
         :param App parent:
         """
         self.parent = parent
-
+        self.sabotageOccured = False
     def update(self):
         """
         Cause an update to the Minigame objects state
@@ -60,10 +62,15 @@ class Minigame:
 
 
         if 'Sabotaged' in alerts:
+            self.sabotageOccured = True
             sabotage_type = alerts['Sabotaged']
-            if sabotage_type == 1:
+            if sabotage_type == 1 or sabotage_type == 3:
                 sabotagedStation = alerts['SabotagedStation']
-                self.parent.currentMiniGame = self.parent.gotoSabotageGame1(sabotagedStation)
+                self.parent.currentMiniGame = self.parent.gotoSabotageStationGame(sabotage_type,sabotagedStation)
+                
+        elif self.sabotageOccured == True:
+            self.sabotageOccured = False
+            self.parent.gotoIdleGame()
 
         if 'Start_Voting' in alerts and self.parent.state == self.parent.RUNNING:
             self.parent.gotoVotingGame()
