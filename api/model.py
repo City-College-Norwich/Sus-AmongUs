@@ -85,12 +85,12 @@ class Model:
                 if self.sabotage_timer.check():# ends game if timer runs out 
                     self.state = IMPOSTER_WIN
 
-            elif self.voting == True:#starts vote
+            elif self.voting == True: #starts vote
                 alerts["Start_Voting"] = True
                 if self.initiateVoteCounter == self.imposterCount + self.crewmateCount:
                     alerts["Initiate_Voting"] = True
 
-            if self.imposterCount == 0:#win states 
+            if self.imposterCount == 0: #win states 
                 self.state = CREWMATE_WIN
                 alerts["Winner_Decided"] = "Crewmates"
             elif self.crewmateCount == self.imposterCount:
