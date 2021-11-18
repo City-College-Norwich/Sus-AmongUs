@@ -48,7 +48,7 @@ class Wifi:
         return(text)
         
     def isAlive(self, tagID):
-        if(self._sendRequest("isAlive?badgeUID=" + tagID) == "yes"):
+        if self._sendRequest("isAlive?badgeUID=" + tagID) == "yes":
             return True
         else:
             return False
@@ -73,3 +73,30 @@ class Wifi:
 
     def voteTally(self, badgeUID, myUID):
         return self._sendRequest("voteTally?badgeUID="+badgeUID+"&myUID="+myUID)
+
+    def initiateVote(self):
+        return self._sendRequest("initiateVote")
+
+    def voteTimeEnd(self):
+        return self._sendRequest("voteTimeEnd")
+
+    def keepAlive(self):
+        return self._sendRequest("keepAlive")
+
+    def AutoDownloader(self):
+        return self._sendRequest("AutoDownloader/GetFileList")
+
+    def getTagName(self, uid):
+        return self._sendRequest("getTagName?uid=" + uid)
+
+    def killPlayer(self, myUID, victimUID):
+        return self._sendRequest("killPlayer?myUID={}&victimUID{}".format(myUID, victimUID))
+
+    def isImposter(self, uid):
+        return self._sendRequest("isImposter?uid="+uid)
+
+    def getFileList(self):
+        return self._sendRequest("AutoDownloader/GetFileList")
+
+    def getFile(self, filename):
+        return self._sendRequest("AutoDownloader/GetFile?fileName="+filename)

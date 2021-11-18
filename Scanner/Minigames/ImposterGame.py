@@ -8,6 +8,7 @@ class ImposterGame(Minigame):
         Minigame.__init__(self, parent)
         self.timer = TimerHelper()
         self.timer.set(60000)
+        self.parent.screen.drawText("Imposter", 0, 0)
     
     def update(self):
         if self.timer.check():
@@ -24,25 +25,29 @@ class ImposterGame(Minigame):
            
 
             uid, tag = self.parent.rfid.doRead(True)
-            if tag == 'playerId':
-                if self.parent.wifi.isAlive(self.parent.badgeUID):
-                    if uid != self.parent.badgeUID and self.parent.wifi.isAlive(uid):
-                        self.parent.wifi.sendRequest("killPlayer?myUID="+ self.parent.badgeUID + "&victimUID=" + uid)
+            
+            isAlive = self.parent.wifi.isAlive(self.parent.badgeUID) == "yes"
+            if isAlive:
+                if tag == 'playerId':
+                    if self.parent.wifi.isAlive(self.parent.badgeUID):
+                        if uid != self.parent.badgeUID and self.parent.wifi.isAlive(uid):
+                            self.parent.wifi.killPlayer(self.parent.badgeUID, uid)
                     elif uid==self.parent.badgeUID:
                         self.parent.screen.drawText("are you ok?")
                     else:
                         if not self.parent.wifi.isAlive(uid):
                             self.parent.wifi.startVoting()
-                        
-                    
+                                            
             if tag == ".votingHub":
                 self.parent.wifi.startVoting()
            
 
         elif self.parent.state == self.parent.CREWMATE_WIN:
-            self.parent.screen.drawText("Game Over! Crewmates Has won!",0,0)
+            while not any(self.parent.buttons.getPressedButtons()):
+                self.parent.screen.drawText("Game Over! Crewmates Has won!",0,0)
         elif self.parent.state == self.parent.IMPOSTOR_WIN:
-            self.parent.screen.drawText("Game Over! Impostors Has won!",0,0)
+            while not any(self.parent.buttons.getPressedButtons()):
+                self.parent.screen.drawText("Game Over! Impostors Has won!",0,0)
 
 
 

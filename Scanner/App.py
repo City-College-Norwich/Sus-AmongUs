@@ -62,14 +62,14 @@ class App:
 
     def keepAlive(self):
         if self.keep_alive_timer.check():
-            alerts = json.loads(self.wifi.sendRequest("keepAlive"))
+            alerts = json.loads(self.wifi.keepAlive())
 
             self.currentMiniGame.alertsFromServer(alerts)
             self.keep_alive_timer.set(KEEP_ALIVE_TIMEOUT)
     
 
     def gotoIdleGame(self):
-        team = self.wifi.sendRequest("isImposter?uid="+str(self.badgeUID))
+        team = self.wifi.isImposter(self.badgeUID)
         team = "False" if team is None else team
         if team == "False":
             self.currentMiniGame = GoodGuyGame(self)

@@ -25,8 +25,8 @@ class Model:
         self.completedMinigames = 0 #how many games the player has completed 
         self.state = GAME_STARTING
 
-                      # card ID,   team,   alive/dead, votecounter, voted
-        self.players ={"0x14742558":['crewmate', False, 0, 0]}
+                      # card ID:   [team,   alive/dead, votecounter, hasVoted]
+        self.players ={}
 
         self.crewmateCount = 0 # total count of current crewmates in a game
         self.imposterCount = 0 # total number of current imposters in a game
@@ -41,6 +41,7 @@ class Model:
         self.playerTotalVote = 0#base values for voting game 
         self.totalVote = 0
         self.voting = False
+        self.initiateVoteCounter = 0
 
     def getTagName(self, uid):#use to find badge id of player 
         if uid in self.uids.keys():            
@@ -85,7 +86,9 @@ class Model:
                     self.state = IMPOSTER_WIN
 
             elif self.voting == True:#starts vote
-                alerts["Voting"] = True
+                alerts["Start_Voting"] = True
+                if self.initiateVoteCounter == self.imposterCount + self.crewmateCount:
+                    alerts["Initiate_Voting"] = True
 
             if self.imposterCount == 0:#win states 
                 self.state = CREWMATE_WIN
@@ -96,27 +99,40 @@ class Model:
 
         return json.dumps(alerts)
 
-    def killPlayer(self, selfUID,victimUID):# defines murder 
+    def killPlayer(self, selfUID, victimUID):# defines murder 
         killer = self.players[selfUID]
         victim = self.players[victimUID]
         if killer[1] == True and victim[1] == True:
             if killer[0] == "Imposter" and victim[0] == "Crewmate":
-                self.players[victimUID][1] = False
-                self.crewmateCount -= 1
-                return "ok"
+                return self.executePlayer(victimUID)
         return "error"
 
+    #This function is used to set the killed player to be dead and also removes one from their teams count.
+    def executePlayer(self, victimUID):
+        self.players[victimUID][1] = False
+        if self.players[victimUID][0] == "Crewmate":
+            self.crewmateCount -= 1
+        else:
+            self.imposterCount -= 1
+        return "ok"
 
     def startVote(self):#starts voting game 
         self.totalVote = 0
-        i = 0
-        while i < len(self.players):
-            keys = self.players.keys()
-            self.players[keys[i]][2] = 0
-            self.players[keys[i]][3] = 0
-            i+=1
+        self.initiateVoteCounter = 0
+
+        for key in self.players.keys():
+            self.players[key][2] = 0
+            self.players[key][3] = 0
+
         self.voting = True
         return "ok"
+
+    def initiateVote(self): #Ensure everyone is ready to vote. Further verification could be added.
+        self.initiateVoteCounter += 1
+        return "ok"
+
+    def voteTimeEnd(self): #If the voting timer is up then skip straight to end voting
+        return self.endVote()
         
     def registerUser(self,badgeUID):#this is where players are assigned 
         if badgeUID in self.players.keys(): 
@@ -149,7 +165,24 @@ class Model:
         self.players[badgeUID][2] = str(self.playerTotalVote)
         self.players[myUID][3] = 1
         self.totalVote += 1
+        if self.totalVote == (self.crewmateCount + self.imposterCount):
+            return self.endVote()
         return "ok"
+        
+
+    def endVote(self):
+        voteArray = []
+        for key in self.players:
+            addPlayer = []
+            if self.players[key][1] == True:
+                addPlayer.append(key)
+                addPlayer.append(self.players[key][2])
+                voteArray.append(addPlayer)
+        sorted(voteArray, key=lambda x: x[1], reverse=True)
+        playerID = voteArray[0][0]
+        self.voting = False
+        return self.executePlayer(playerID)
+        #To Add: The player ejected will need to be returned and consequently printed to the screen of every scanner.
         
     def isAlive(self, badgeUID):#checks to see if player is alive 
         if self.players[badgeUID][1]:
