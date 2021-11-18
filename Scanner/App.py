@@ -77,11 +77,11 @@ class App:
         else:
             self.currentMiniGame = ImposterGame(self)
 
-    def gotoSabotageGame1(self,sabotagedStation):
-        self.currentMiniGame = Sabotage1(self,sabotagedStation)
-
-    def gotoSabotageGame3(self,sabotagedStation):
-        self.currentMiniGame = Sabotage3(self,sabotagedStation)
+    def gotoSabotageStationGame(self, sabotageType,station):
+        if sabotageType == 1:
+            self.currentMiniGame = Sabotage1(self,station)
+        if sabotageType == 3:
+            self.currentMiniGame = Sabotage3(self,station)
     
     def gotoVotingGame(self):
         self.state = self.VOTING
