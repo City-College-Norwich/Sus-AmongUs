@@ -58,6 +58,19 @@ class Wifi:
 
     def startVoting(self):
         self._sendRequest("startVote")
+    
+    def startEmergency(self):
+        if self._sendRequest("checkVoteCooldown"):
+            voteType='meeting'
+            self._sendRequest("setVoteType?type=voteType")
+            self._sendRequest("startVote")
+        else:
+            return 'on cooldown'
+    
+    def startReportBody(self):
+        voteType='report'
+        self._sendRequest("setVoteType?type=voteType")
+        self._sendRequest("startVote")
 
     def requestStation(self):
         self._sendRequest("requestStation")
