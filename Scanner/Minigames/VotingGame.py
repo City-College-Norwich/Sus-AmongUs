@@ -33,6 +33,5 @@ class VotingGame(Minigame):
         Minigame.alertsFromServer(self, alerts)
         if "Start_Voting" not in alerts:
             self.parent.gotoIdleGame()
-        else:
-            if "Initiate_Voting" in alerts:
-                self.InitiateVoting = True
+        elif "Initiate_Voting" in alerts:
+            self.InitiateVoting = True
