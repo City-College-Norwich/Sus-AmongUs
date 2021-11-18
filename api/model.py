@@ -184,7 +184,7 @@ class Model:
         if voteArray[0][1] != voteArray[1][1]:
             return self.executePlayer(playerID)
         if voteArray[0][1] != voteArray[1][1]:
-                self.parent.screen.drawText("Draw")
+            self.parent.screen.drawText("Draw")
         #To Add: The player ejected will need to be returned and consequently printed to the screen of every scanner.
         
     def isAlive(self, badgeUID):#checks to see if player is alive 
