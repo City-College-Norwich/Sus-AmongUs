@@ -56,11 +56,13 @@ class Wifi:
     def completeMinigame(self, tagID):
         return self._sendRequest("minigameComplete?badgeUID=" + tagID)
 
-    def startVoting(self):
+    def startVoting(self, tagID):
         self._sendRequest("startVote")
+        return self._sendRequest("startVote?badgeUID=" + tagID)
 
-    def requestStation(self):
+    def requestStation(self, tagID):
         self._sendRequest("requestStation")
+        return self._sendRequest("sabotage?badgeUID=" + tagID)
 
     def sendSabotage(self, type):
         return self._sendRequest("sabotage?sabotageType=" + type)
