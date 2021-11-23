@@ -42,6 +42,10 @@ class Model:
         self.totalVote = 0
         self.voting = False
         self.initiateVoteCounter = 0
+        
+        self.VOTECOOLDOWN_AMOUNT = 20000
+        self.voteCooldown = TimerHelper()
+        self.voteType=None
 
     def getTagName(self, uid):#use to find badge id of player 
         if uid in self.uids.keys():            
@@ -127,6 +131,10 @@ class Model:
         self.voting = True
         return "ok"
 
+    def voteType(type):
+        self.voteType = type
+        return "ok"
+
     def initiateVote(self): #Ensure everyone is ready to vote. Further verification needs to be added.
         self.initiateVoteCounter += 1
         return "ok"
@@ -191,6 +199,10 @@ class Model:
         sorted(voteArray, key=lambda x: x[1], reverse=True)
         playerID = voteArray[0][0]
         self.voting = False
+
+        if self.voteType=='meeting':
+            self.voteCooldown.set(self.VOTECOOLDOWN_AMOUNT)
+
         if voteArray[0][1] != voteArray[1][1]:
             return self.executePlayer(playerID)
         if voteArray[0][1] != voteArray[1][1]:

@@ -57,8 +57,24 @@ class Wifi:
     def completeMinigame(self, tagID):
         return self._sendRequest("minigameComplete?badgeUID=" + tagID)
 
-    def startVoting(self, tagID):
-        return self._sendRequest("startVote?badgeUID=" + tagID)
+
+    def startVoting(self):
+        self._sendRequest("startVote")
+    
+    def startEmergency(self):
+        #Add screen output
+        if self._sendRequest("checkVoteCooldown"):#if cooldown is over
+            voteType='meeting'
+            self._sendRequest("setVoteType?type=" + voteType)#so the server knows a vote has started from emergency meeting
+            self._sendRequest("startVote")
+        else:
+            return 'on cooldown'
+    
+    def startReportBody(self):
+        #Add screen output
+        voteType='report'
+        self._sendRequest("setVoteType?type=" + voteType)#so the server knows a vote has started from dead body reported
+        self._sendRequest("startVote")
 
     def requestStation(self, tagID):
         return self._sendRequest("requestStation?badgeUID=" + tagID)
