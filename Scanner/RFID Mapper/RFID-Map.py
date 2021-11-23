@@ -1,3 +1,14 @@
+"""
+A utility script for mapping RFID UIDs to human readable names and storing the map as a csv file
+
+The script reads a tags UID, checking if the tag is ok then requests a name from the user,
+this will override any previously set names.
+
+The script can be stopped by using an interrupt such as CTRL + C
+"""
+
+__docformat__ = 'restructuredtext'
+
 import MFRC522_CrowPi
 import csv
 import os.path
@@ -20,7 +31,8 @@ while True:
         (status,uid) = rdr.MFRC522_Anticoll()
         if status == rdr.MI_OK:
             RFIDMap = {}
-            
+            uid = "0x%02x%02x%02x%02x" % (uid[0], uid[1], uid[2], uid[3])
+
             with open(FILE_PATH, mode='r') as csvfile:
                 reader = csv.reader(csvfile)
                 RFIDMap = {row[0]: row[1] for row in reader}

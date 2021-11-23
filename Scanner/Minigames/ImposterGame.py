@@ -1,49 +1,56 @@
 from Minigames.Minigame import Minigame
-from TimeHelper import TimeHelper
+from TimerHelper import TimerHelper
 import random
-
-RUNNING = 0
-CREWMATE_WIN = 1
-IMPOSTOR_WIN = 2
 
 
 class ImposterGame(Minigame):
     def __init__(self, parent):
         Minigame.__init__(self, parent)
-        self.timer = TimeHelper()
-        self.cooldown = self.timer.set(60000)
+        self.timer = TimerHelper()
+        self.timer.set(60000)
+        self.parent.screen.clear()
+        self.parent.screen.drawText("Imposter", 0, 0)
     
     def update(self):
-        if self.timer.check() == self.cooldown:
+        if self.timer.check():
             buttons = self.parent.buttons.getPressedButtons()
             if buttons[0] == 1:
-                self.wifi.sendRequest("sabotage?sabotageType=1")
+                self.wifi.createSabotage("1")
             elif buttons[1] == 1:
-                self.wifi.sendRequest("sabotage?sabotageType=2")
+                self.wifi.createSabotage("2")
             elif buttons[2] == 1:
-                self.wifi.sendRequest("sabotage?sabotageType=3")
+                self.wifi.createSabotage("3")
 
 
-        if self.state == RUNNING:
+        if self.parent.state ==self.parent.RUNNING:
            
-            targetRfidTag = self.parent.rfid.do_read()
-            # check if the first 7 characters == playerId
-            # if yes, then split at the colon and get the playerId number (just like in model)
-            # send that playerId in the sendRequest
 
-            #targetRfidTag = 'playerId:12'
-            if targetRfidTag[:8] == 'playerId':
-                playerId = targetRfidTag.split(':')
-                self.parent.wifi.sendRequest("deadBodyFound?playerId="+playerId[1])
-            if targetRfidTag == self.__target_station:
-                self.parent.currentMiniGame = random.choice(self.__minigames.__init__())
-            else:
-                self.parent.screen.display_text("GOTO: " + str(self.__target_station))
+            uid, tag = self.parent.rfid.doRead(True)
+            
+            isAlive = self.parent.wifi.isAlive(self.parent.badgeUID)
+            if isAlive:
+                if tag == 'playerId':
+                    uidIsAlive = self.parent.wifi.isAlive(uid)
+                    if uid != self.parent.badgeUID and uidIsAlive:
+                        self.parent.wifi.killPlayer(self.parent.badgeUID, uid)
+                    elif uid==self.parent.badgeUID:
+                        
+                        self.parent.screen.drawText("are you ok?")
+                    elif not uidIsAlive:
+                        self.parent.wifi.startVoting()                     
+                elif tag == ".votingHub":
+                    self.parent.wifi.startVoting()
+           
 
-        elif self.state == CREWMATE_WIN:
-            self.parent.screen.display_text("Game Over! Crewmates Has won!")
-        elif self.state == IMPOSTOR_WIN:
-            self.parent.screen.display_text("Game Over! Impostors Has won!")
+        elif self.parent.state == self.parent.CREWMATE_WIN:
+            while not any(self.parent.buttons.getPressedButtons()):
+                
+                self.parent.screen.drawText("Game Over! Crewmates Has won!",0,0)
+        elif self.parent.state == self.parent.IMPOSTOR_WIN:
+            while not any(self.parent.buttons.getPressedButtons()):
+                
+                self.parent.screen.drawText("Game Over! Impostors Has won!",0,0)
+
 
 
     def alertsFromServer(self, alerts):
