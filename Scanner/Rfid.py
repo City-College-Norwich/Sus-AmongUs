@@ -40,12 +40,11 @@ class Rfid:
                 if stat == self.rdr.OK:
                     uid = "0x%02x%02x%02x%02x" % (raw_uid[0], raw_uid[1], raw_uid[2], raw_uid[3])
 
-                    if returnUID == True:
-                        self.name = self.parent.wifi.sendRequest('getTagName?uid=' + uid)
+                    self.name = self.parent.wifi.getTagName(uid)
+                    if returnUID == True:                        
                         return uid, self.name
                     
                     else:
-                        self.name = self.parent.wifi.sendRequest('getTagName?uid=' + uid)
                         return self.name
 
 

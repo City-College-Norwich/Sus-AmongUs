@@ -38,40 +38,65 @@ def keepAlive():
     return model.keepAlive()
   
 
-@app.route("/deadBodyFound")
-def deadBodyFound():
-    return model.deadbodyfound(request.args["playerId"])
+  @app.route("/killPlayer")
+def killPlayer():
+    args = request.args
+    return model.killPlayer(args["myUID"], args["victimUID"])
 
-  
-@app.route("/askForID")
-def askForID():
-    return model.askForID()
 
-  
+@app.route("/startVote")
+def startVote():
+    return model.startVote()
+
 @app.route("/registerUser")
 def registerUser():
     args = request.args
-    return model.registerUser(args["scannerId"], args["uid"])
+    return model.registerUser(args["badgeUID"])
 
   
 @app.route("/sabotage")
 def sabotage():
     return model.sabotage(request.args["sabotageType"])
 
-
-@app.route("/getSabotageType")
-def getSabotageType():
-    return model.sabotage_type()
-
-
-@app.route("/sabotageTimeout")
-def sabotageTimeout():
-    return model.sabotageTimeout()
-
-
 @app.route("/sabotageCompleted")
 def sabotageCompleted():
-    return model.sabotageCompleted()
+    args = request.args
+    return model.sabotageCompleted(args["badgeUID"])
 
+
+@app.route("/voteTally")
+def voteTally():
+    args = request.args
+    return model.voteTally(args["badgeUID"], args["myUID"])
+
+@app.route("/isAlive")
+def isAlive():
+    args = request.args
+    return model.isAlive(args["badgeUID"])
+
+
+
+@app.route("/isImposter")
+def isImposter():
+    args = request.args
+    return model.isImposter(args['uid'])
+
+
+@app.route("/AutoDownloader/GetFileList")
+def getFileList():
+    return model.getFileList()
+
+@app.route("/AutoDownloader/GetFile")
+def getFile():
+    args = request.args
+    return model.getFile(args['fileName'])
+
+@app.route("/initiateVote")
+def initiateVote():
+    return model.initiateVote()
+
+@app.route("/voteTimeEnd")
+def voteTimeEnd():
+    return model.voteTimeEnd()
 
 if __name__ == '__main__': app.run(host='0.0.0.0')
