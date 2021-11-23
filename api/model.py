@@ -207,6 +207,10 @@ class Model:
         if self.players[uid][0] == "Imposter":
             return "True"
         return "False"
+
+
+    def getPlayers(self):
+        return json.dumps(self.players)
        
 
 

@@ -1,3 +1,4 @@
+import json
 import time
 
 import network
@@ -103,4 +104,7 @@ class Wifi:
 
     def getFile(self, filename):
         return self._sendRequest("AutoDownloader/GetFile?fileName="+filename)
+
+    def getPlayers(self):
+        return json.loads(self._sendRequest("getPlayers"))
     
