@@ -78,6 +78,5 @@ class Wifi:
         while True:
             newStation = self.requestStation()
             if newStation!=lastStation:
-                break
-        cooldown.set(60000)
-        return newStation
+                cooldown.set(60000)
+                return newStation
