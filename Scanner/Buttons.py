@@ -1,13 +1,3 @@
-import os
-mode = os.environ.get("MODE")
-
-DEBUG = False
-if(mode == "DEBUG"):
-    DEBUG = True
-    import DummyLibraries.Pin
-else:
-    from machine import Pin
-
 class Buttons:
 
     def __init__(self):
