@@ -47,6 +47,8 @@ class Model:
         self.voteCooldown = TimerHelper()
         self.voteType=None
 
+        self.meetingsLeft = 3
+
     def getTagName(self, uid):#use to find badge id of player 
         if uid in self.uids.keys():            
             return self.uids[uid] 
@@ -255,3 +257,15 @@ class Model:
                 file = f.read()
             return file
         return ""
+
+
+    def checkVoteLimit():
+        if self.meetingsLeft==0:
+            return False
+        else:
+            return True
+    
+    def useMeeting():
+        self.meetingsLeft-=1
+        return "ok"
+        
