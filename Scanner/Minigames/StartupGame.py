@@ -26,7 +26,7 @@ class StartupGame(Minigame):
             self.StartGameState = True
 
         if self.StartGameState == True:
-            self.parent.screen.clear()
+            
             self.parent.screen.drawText("sus",0,0)
             self.parent.screen.drawText("Scan start game tag", 10, 10)
 

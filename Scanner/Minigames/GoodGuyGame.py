@@ -54,14 +54,14 @@ class GoodGuyGame(Minigame):
                             break#stop loop
                     self.parent.currentMiniGame = self.target_minigame[0](self.parent)# Set currentMinigame to the mingame chosen
                 else:
-                    self.parent.screen.clear()
+                    
                     self.parent.screen.drawText("GOTO: " + str(self.__target_station),0,0)
         else:
             if self.state == CREWMATE_WIN:
                 while not any(self.parent.buttons.getPressedButtons()):
-                    self.parent.screen.clear()
+                    
                     self.parent.screen.drawText("Game Over! Crewmates Has won!")
             elif self.state == IMPOSTOR_WIN:
                 while not any(self.parent.buttons.getPressedButtons()):
-                    self.parent.screen.clear()
+                    
                     self.parent.screen.drawText("Game Over! Impostors Has won!")
