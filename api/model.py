@@ -56,7 +56,7 @@ class Model:
             return "No tags found"
 
     def setMaxMiniGames(self, cnt):
-        totalMinigames = int(cnt)
+        self.totalMinigames = int(cnt)
         return "okay"
         
     def startGame(self):#takes game into active and starts up (this needs to be affected for lobby)
