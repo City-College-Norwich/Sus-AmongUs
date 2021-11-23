@@ -8,6 +8,7 @@ from GoodGuyGame import GoodGuyGame.minigames
 class Sabotage2(Minigame):
 
     def __init__(self, parent):
+        Minigame.__init__(self, parent)
         self.parent = parent
         self.__target_player = random.choice(self.parent.wifi.getPlayers())
         #chooses a random player tag to be used for sabotage.
@@ -17,6 +18,6 @@ class Sabotage2(Minigame):
             self.parent.screen.drawText("Your tasks Have been reset (＾ｖ＾) LOL", 0, 0)
             for x in self.parent.user_minigames_dict:
                 self.parent.user_minigames_dict[x] = False
-                #Sets their tasks back to false, can only ne used once.
+                #Sets their tasks back to false, can only be used once.
 
-
+        self.parent.gotoIdleGame()
