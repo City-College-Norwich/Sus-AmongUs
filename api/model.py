@@ -54,7 +54,11 @@ class Model:
             return self.uids[uid] 
         else:
             return "No tags found"
-            
+
+    def setMaxMiniGames(self, cnt):
+        totalMinigames = int(cnt)
+        return "okay"
+        
     def startGame(self):#takes game into active and starts up (this needs to be affected for lobby)
         players = list(range(len(self.players.keys())))
         for i in range(self.maxImposters):
