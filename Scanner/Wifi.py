@@ -30,7 +30,6 @@ class Wifi:
                 print("Connecting...")
                 self.parent.screen.clear()
                 self.parent.screen.drawText("Connecting", 0, 0)
-                .draw()
     
     def sendRequest(self, message):
         class DepricatedException(Exception):
