@@ -58,9 +58,9 @@ class GoodGuyGame(Minigame):
                 self.parent.screen.drawText("GOTO: " + str(self.__target_station),0,0)
         else:
             if self.state == CREWMATE_WIN:
-                self.parent.screen.drawText("Game Over! Crewmates Has won!")
+                self.parent.screen.drawText("Game Over! Crewmates win!")
             elif self.state == IMPOSTOR_WIN:
-                self.parent.screen.drawText("Game Over! Impostors Has won!")
+                self.parent.screen.drawText("Game Over! Impostors win!")
          
         if self.timer.check():
             buttons = self.parent.buttons.getPressedButtons()
