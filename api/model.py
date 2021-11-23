@@ -165,6 +165,7 @@ class Model:
             elif self.sabotage_type == 3:
                 self.sabotaged_station = self.requestStation()
                 self.sabotage_timer.set(90000)
+        return "ok"
 
 
 
