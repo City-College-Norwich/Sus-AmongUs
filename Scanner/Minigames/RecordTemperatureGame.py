@@ -16,7 +16,7 @@ class RecordTemperatureGame(Minigame):
         self.time.set(500)
 
     def update(self):
-        self.parent.screen.clear()
+        
         self.parent.screen.drawText("Record Temperature Game", 0, 0)
         self.parent.screen.drawText("Log Temperature", 0, 00)
         self.parent.screen.drawText("Current: " + str(self.current_temperature), 0, 10)
