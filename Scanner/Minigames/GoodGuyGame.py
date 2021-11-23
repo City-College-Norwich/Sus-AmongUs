@@ -39,7 +39,7 @@ class GoodGuyGame(Minigame):
                         self.parent.wifi.startVoting()
 
                 elif tag == ".votingHub":
-                    self.parent.wifi.startVoting()
+                    self.parent.wifi.startEmergency()
 
                 elif tag == self.__target_station:
 
