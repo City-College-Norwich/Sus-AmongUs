@@ -102,6 +102,9 @@ class Model:
             elif self.crewmateCount == self.imposterCount:
                 self.state = IMPOSTER_WIN
                 alerts["Winner_Decided"] = "Imposters"
+            if self.totalMinigames == self.completedMinigames:
+                self.state = CREWMATE_WIN
+                alerts["Winner_Decided"] = "Crewmates"
 
         return json.dumps(alerts)
 
