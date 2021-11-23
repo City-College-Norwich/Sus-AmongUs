@@ -8,6 +8,7 @@ class ImposterGame(Minigame):
         Minigame.__init__(self, parent)
         self.timer = TimerHelper()
         self.timer.set(60000)
+        self.parent.screen.clear()
         self.parent.screen.drawText("Imposter", 0, 0)
     
     def update(self):
@@ -33,6 +34,7 @@ class ImposterGame(Minigame):
                     if uid != self.parent.badgeUID and uidIsAlive:
                         self.parent.wifi.killPlayer(self.parent.badgeUID, uid)
                     elif uid==self.parent.badgeUID:
+                        self.parent.screen.clear()
                         self.parent.screen.drawText("are you ok?")
                     elif not uidIsAlive:
                         self.parent.wifi.startVoting()                     
@@ -42,9 +44,11 @@ class ImposterGame(Minigame):
 
         elif self.parent.state == self.parent.CREWMATE_WIN:
             while not any(self.parent.buttons.getPressedButtons()):
+                self.parent.screen.clear()
                 self.parent.screen.drawText("Game Over! Crewmates Has won!",0,0)
         elif self.parent.state == self.parent.IMPOSTOR_WIN:
             while not any(self.parent.buttons.getPressedButtons()):
+                self.parent.screen.clear()
                 self.parent.screen.drawText("Game Over! Impostors Has won!",0,0)
 
 

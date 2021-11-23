@@ -12,9 +12,11 @@ class Sabotage1(Minigame):
 
     def update(self):
         if not self.alreadyScanned:
+            self.parent.screen.clear()
             self.parent.screen.drawText("GOTO: " + self.__target_station, 0, 0)
             if self.parent.rfid.doRead() == self.__target_station:
                 self.parent.wifi.completeSabotage(self.parent.badgeUID)
                 self.alreadyScanned = True
         else:
+            self.parent.screen.clear() 
             self.parent.screen.drawText("Waiting for others to scan " + self.__target_station + "!", 0, 0)
