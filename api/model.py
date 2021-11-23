@@ -240,6 +240,7 @@ class Model:
         "Minigames/ReactionGame.py",
         "Minigames/RecordTemperatureGame.py",
         "Minigames/Sabotage1.py",
+        "Minigames/Sabotage3.py",
         "Minigames/StartupGame.py",
         "Minigames/UploadGame.py",
         "Minigames/VotingGame.py"]
