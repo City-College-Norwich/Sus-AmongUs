@@ -268,3 +268,4 @@ class Model:
     def useMeeting():
         self.meetingsLeft-=1
         return "ok"
+        
