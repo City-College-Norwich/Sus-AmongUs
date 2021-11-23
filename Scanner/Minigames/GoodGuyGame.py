@@ -23,9 +23,11 @@ class GoodGuyGame(Minigame):
         # update bellow set with minigames
         #[MINIGAME-NAME, COMPLETED?] True=Completed, False=Not completed
         self.__minigames = [[IdBadge, False], [ReactionGame, False], [DownloadGame, False], [UploadGame, False], [RecordTemperatureGame, False]]
-        self.__target_station = self.parent.wifi.requestStation()
-        
+       
         self.skipCooldown = TimeHelper()
+
+        self.__target_station = self.parent.wifi.requestStation(self.parent.badgeUID)
+
 
         if self.parent.isMinigameCompleted==True:#Was minigame completed?
         #if statement could be:
@@ -40,30 +42,38 @@ class GoodGuyGame(Minigame):
         if self.state == RUNNING:
             uid, tag = self.parent.rfid.doRead(True)
 
-            # Check if the user scanned is dead, and if so, start the voting process
-            if tag  == 'playerId':
-                if self.parent.wifi.isAlive(self.parent.badgeUID) == "yes":  
+
+            isAlive = self.parent.wifi.isAlive(self.parent.badgeUID)
+
+            if isAlive:
+                if tag == 'playerId':
                     if not self.parent.wifi.isAlive(uid):
                         self.parent.wifi.startVoting()
+                        
+                elif tag == ".votingHub":
+                    self.parent.wifi.startVoting()
 
-            if tag == ".votingHub":
-                self.parent.wifi.startVoting()
-            elif tag == self.__target_station:
-                while True:#Loop until break(until an uncompleted minigame is chosen)
-                    self.target_minigame = random.choice(self.__minigames)#Choose random minigame
-                    if target_minigame[1]==False:#if minigame is not completed
-                        break#stop loop
-                self.parent.currentMiniGame = target_minigame[0](self.parent)# Set currentMinigame to the mingame chosen
-            else:
-                self.parent.screen.drawText("GOTO: " + str(self.__target_station),0,0)
+                elif tag == self.__target_station:
+                    while True:#Loop until break(until an uncompleted minigame is chosen)
+                        self.target_minigame = random.choice(self.__minigames)#Choose random minigame
+                        if self.target_minigame[1]==False:#if minigame is not completed
+                            break#stop loop
+                    self.parent.currentMiniGame = self.target_minigame[0](self.parent)# Set currentMinigame to the mingame chosen
+                else:
+                    self.parent.screen.clear()
+                    self.parent.screen.drawText("GOTO: " + str(self.__target_station),0,0)
         else:
             if self.state == CREWMATE_WIN:
-                self.parent.screen.drawText("Game Over! Crewmates win!")
+                while not any(self.parent.buttons.getPressedButtons()):
+                    self.parent.screen.clear()
+                    self.parent.screen.drawText("Game Over! Crewmates Has won!")
             elif self.state == IMPOSTOR_WIN:
-                self.parent.screen.drawText("Game Over! Impostors win!")
-         
+                while not any(self.parent.buttons.getPressedButtons()):
+                    self.parent.screen.clear()
+                    self.parent.screen.drawText("Game Over! Impostors Has won!")
+                    
         if self.timer.check():
-            buttons = self.parent.buttons.getPressedButtons()
+                buttons = self.parent.buttons.getPressedButtons()
             if buttons[0] == 1:
                 pass
             elif buttons[1] == 1 and self.skipCooldown.check():

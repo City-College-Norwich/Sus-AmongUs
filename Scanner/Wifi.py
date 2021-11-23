@@ -21,14 +21,15 @@ class Wifi:
         while True:
             if self.wlan.isconnected():
                 print("Connected to: " + self.SSID)
+                self.parent.screen.clear()
                 self.parent.screen.drawText("Connected", 0, 0)
                 self.parent.screen.draw()
                 return
             else:
                 time.sleep_ms(500)
                 print("Connecting...")
+                self.parent.screen.clear()
                 self.parent.screen.drawText("Connecting", 0, 0)
-                self.parent.screen.draw()
     
     def sendRequest(self, message):
         class DepricatedException(Exception):
@@ -48,7 +49,7 @@ class Wifi:
         return(text)
         
     def isAlive(self, tagID):
-        if(self._sendRequest("isAlive?badgeUID=" + tagID) == "yes"):
+        if self._sendRequest("isAlive?badgeUID=" + tagID) == "yes":
             return True
         else:
             return False
@@ -56,14 +57,33 @@ class Wifi:
     def completeMinigame(self, tagID):
         return self._sendRequest("minigameComplete?badgeUID=" + tagID)
 
+
     def startVoting(self):
         self._sendRequest("startVote")
+    
+    def startEmergency(self):
+        #Add screen output
+        if self._sendRequest("checkVoteCooldown"):#if cooldown is over
+            voteType='meeting'
+            self._sendRequest("setVoteType?type=" + voteType)#so the server knows a vote has started from emergency meeting
+            self._sendRequest("startVote")
+        else:
+            return 'on cooldown'
+    
+    def startReportBody(self):
+        #Add screen output
+        voteType='report'
+        self._sendRequest("setVoteType?type=" + voteType)#so the server knows a vote has started from dead body reported
+        self._sendRequest("startVote")
 
-    def requestStation(self):
-        self._sendRequest("requestStation")
+    def requestStation(self, tagID):
+        return self._sendRequest("requestStation?badgeUID=" + tagID)
 
-    def sendSabotage(self, type):
+    def createSabotage(self, type):
         return self._sendRequest("sabotage?sabotageType=" + type)
+
+    def completeSabotage(self,badgeUID):
+        return self._sendRequest("sabotageCompleted?badgeUID=" + badgeUID)
 
     def registerUser(self, tagID):
         return self._sendRequest("registerUser?badgeUID=" + tagID)
@@ -80,3 +100,30 @@ class Wifi:
             if newStation!=lastStation:
                 cooldown.set(60000)
                 return newStation
+
+    def initiateVote(self):
+        return self._sendRequest("initiateVote")
+
+    def voteTimeEnd(self):
+        return self._sendRequest("voteTimeEnd")
+
+    def keepAlive(self):
+        return self._sendRequest("keepAlive")
+
+    def AutoDownloader(self):
+        return self._sendRequest("AutoDownloader/GetFileList")
+
+    def getTagName(self, uid):
+        return self._sendRequest("getTagName?uid=" + uid)
+
+    def killPlayer(self, myUID, victimUID):
+        return self._sendRequest("killPlayer?myUID={}&victimUID{}".format(myUID, victimUID))
+
+    def isImposter(self, uid):
+        return self._sendRequest("isImposter?uid="+uid)
+
+    def getFileList(self):
+        return self._sendRequest("AutoDownloader/GetFileList")
+
+    def getFile(self, filename):
+        return self._sendRequest("AutoDownloader/GetFile?fileName="+filename)

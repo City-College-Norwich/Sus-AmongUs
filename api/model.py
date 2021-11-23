@@ -41,6 +41,11 @@ class Model:
         self.playerTotalVote = 0#base values for voting game 
         self.totalVote = 0
         self.voting = False
+        self.initiateVoteCounter = 0
+        
+        self.VOTECOOLDOWN_AMOUNT = 20000
+        self.voteCooldown = TimerHelper()
+        self.voteType=None
 
     def getTagName(self, uid):#use to find badge id of player 
         if uid in self.uids.keys():            
@@ -77,17 +82,19 @@ class Model:
         if self.state == GAME_RUNNING:
             alerts["GameRunning"] = True
             if self.sabotaged:
-                alerts["Sabotaged"] = self.sabotage_type#where it checks for sabotage
+                alerts["Sabotaged"] = self.sabotage_type #where it checks for sabotage
                 if self.sabotage_type == 1:
                     alerts["SabotagedStation"] = self.sabotaged_station
             
                 if self.sabotage_timer.check():# ends game if timer runs out 
                     self.state = IMPOSTER_WIN
 
-            elif self.voting == True:#starts vote
-                alerts["Voting"] = True
+            elif self.voting == True: #starts vote
+                alerts["Start_Voting"] = True
+                if self.initiateVoteCounter == self.imposterCount + self.crewmateCount:
+                    alerts["Initiate_Voting"] = True
 
-            if self.imposterCount == 0:#win states 
+            if self.imposterCount == 0: #win states 
                 self.state = CREWMATE_WIN
                 alerts["Winner_Decided"] = "Crewmates"
             elif self.crewmateCount == self.imposterCount:
@@ -115,6 +122,7 @@ class Model:
 
     def startVote(self):#starts voting game 
         self.totalVote = 0
+        self.initiateVoteCounter = 0
 
         for key in self.players.keys():
             self.players[key][2] = 0
@@ -122,6 +130,17 @@ class Model:
 
         self.voting = True
         return "ok"
+
+    def voteType(type):
+        self.voteType = type
+        return "ok"
+
+    def initiateVote(self): #Ensure everyone is ready to vote. Further verification needs to be added.
+        self.initiateVoteCounter += 1
+        return "ok"
+
+    def voteTimeEnd(self): #If the voting timer is up then skip straight to end voting
+        return self.endVote()
         
     def registerUser(self,badgeUID):#this is where players are assigned 
         if badgeUID in self.players.keys(): 
@@ -132,11 +151,19 @@ class Model:
         return "Okay"
 
     def sabotage(self, sabotageType):#defines basic sabotage value (second one needs to be made for player reset as the limit is a static number not a timer) 
-        self.sabotaged = True
-        self.sabotage_type = sabotageType
-        self.sabotage_timer.set(60000)
-        if self.sabotage_type == 1:
-            self.sabotaged_station = self.requestStation()
+        if self.sabotaged == True:
+            pass
+        else:
+            self.sabotaged = True
+            self.sabotage_type = sabotageType
+            if self.sabotage_type == 1:
+                self.sabotaged_station = self.requestStation()
+                self.sabotage_timer.set(60000)
+            elif self.sabotage_type == 3:
+                self.sabotaged_station = self.requestStation()
+                self.sabotage_timer.set(90000)
+
+
 
     def sabotageCompleted(self,badgeUID):#makes it so one person cant act as two people in the sbotage game 
         # handling sabotage 1 logic
@@ -148,6 +175,8 @@ class Model:
                 if len(self.sabotage_participants) == 2:
                     self.sabotaged = False
                     self.sabotage_participants = set()
+        elif self.sabotage_type == 3:
+            self.sabotaged = False
 
     def voteTally(self, badgeUID, myUID):
         self.playerTotalVote = int(self.players[badgeUID][2]) + 1
@@ -170,8 +199,15 @@ class Model:
         sorted(voteArray, key=lambda x: x[1], reverse=True)
         playerID = voteArray[0][0]
         self.voting = False
-        return self.executePlayer(playerID)
-        #To Add: The player ejected will need to be returned and consequently printed to the screen of every scanner.
+
+        if self.voteType=='meeting':
+            self.voteCooldown.set(self.VOTECOOLDOWN_AMOUNT)
+
+        if voteArray[0][1] != voteArray[1][1]:
+            return self.executePlayer(playerID)
+        if voteArray[0][1] != voteArray[1][1]:
+            self.parent.screen.drawText("Draw")
+        #TODO: The player ejected will need to be returned and consequently printed to the screen of every scanner.
         
     def isAlive(self, badgeUID):#checks to see if player is alive 
         if self.players[badgeUID][1]:

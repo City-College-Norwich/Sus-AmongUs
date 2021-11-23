@@ -8,17 +8,18 @@ class ImposterGame(Minigame):
         Minigame.__init__(self, parent)
         self.timer = TimerHelper()
         self.timer.set(60000)
+        self.parent.screen.clear()
         self.parent.screen.drawText("Imposter", 0, 0)
     
     def update(self):
         if self.timer.check():
             buttons = self.parent.buttons.getPressedButtons()
             if buttons[0] == 1:
-                self.wifi.sendSabotage("1")
+                self.wifi.createSabotage("1")
             elif buttons[1] == 1:
-                self.wifi.sendSabotage("2")
+                self.wifi.createSabotage("2")
             elif buttons[2] == 1:
-                self.wifi.sendSabotage("3")
+                self.wifi.createSabotage("3")
 
 
         if self.parent.state ==self.parent.RUNNING:
@@ -26,27 +27,28 @@ class ImposterGame(Minigame):
 
             uid, tag = self.parent.rfid.doRead(True)
             
-            isAlive = self.parent.wifi.sendRequest("isAlive?badgeUID=" + self.parent.badgeUID) == "yes";
+            isAlive = self.parent.wifi.isAlive(self.parent.badgeUID)
             if isAlive:
                 if tag == 'playerId':
-                    if self.parent.wifi.isAlive(self.parent.badgeUID):
-                        if uid != self.parent.badgeUID and self.parent.wifi.isAlive(uid):
-                        self.parent.wifi.sendRequest("killPlayer?myUID="+ self.parent.badgeUID + "&victimUID=" + uid)
+                    uidIsAlive = self.parent.wifi.isAlive(uid)
+                    if uid != self.parent.badgeUID and uidIsAlive:
+                        self.parent.wifi.killPlayer(self.parent.badgeUID, uid)
                     elif uid==self.parent.badgeUID:
+                        self.parent.screen.clear()
                         self.parent.screen.drawText("are you ok?")
-                    else:
-                        if not self.parent.wifi.isAlive(uid):
-                            self.parent.wifi.startVoting()
-                                            
-            if tag == ".votingHub":
-                self.parent.wifi.startVoting()
+                    elif not uidIsAlive:
+                        self.parent.wifi.startVoting()                     
+                elif tag == ".votingHub":
+                    self.parent.wifi.startVoting()
            
 
         elif self.parent.state == self.parent.CREWMATE_WIN:
             while not any(self.parent.buttons.getPressedButtons()):
+                self.parent.screen.clear()
                 self.parent.screen.drawText("Game Over! Crewmates Has won!",0,0)
         elif self.parent.state == self.parent.IMPOSTOR_WIN:
             while not any(self.parent.buttons.getPressedButtons()):
+                self.parent.screen.clear()
                 self.parent.screen.drawText("Game Over! Impostors Has won!",0,0)
 
 

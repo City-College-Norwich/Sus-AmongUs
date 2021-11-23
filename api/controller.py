@@ -59,20 +59,10 @@ def sabotage():
     args = request.args
     return model.sabotage(args["sabotageType"])
 
-
-@app.route("/getSabotageType")
-def getSabotageType():
-    return model.sabotage_type()
-
-
-@app.route("/sabotageTimeout")
-def sabotageTimeout():
-    return model.sabotageTimeout()
-
-
 @app.route("/sabotageCompleted")
 def sabotageCompleted():
-    return model.sabotageCompleted()
+    args = request.args
+    return model.sabotageCompleted(args["badgeUID"])
 
 
 @app.route("/voteTally")
@@ -101,5 +91,13 @@ def getFileList():
 def getFile():
     args = request.args
     return model.getFile(args['fileName'])
+
+@app.route("/initiateVote")
+def initiateVote():
+    return model.initiateVote()
+
+@app.route("/voteTimeEnd")
+def voteTimeEnd():
+    return model.voteTimeEnd()
 
 if __name__ == '__main__': app.run(host='0.0.0.0')
