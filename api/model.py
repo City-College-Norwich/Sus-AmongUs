@@ -133,6 +133,7 @@ class Model:
 
     def voteType(type):
         self.voteType = type
+        return "ok"
 
     def initiateVote(self): #Ensure everyone is ready to vote. Further verification could be added.
         self.initiateVoteCounter += 1
