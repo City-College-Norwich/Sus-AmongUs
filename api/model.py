@@ -90,7 +90,7 @@ class Model:
                     self.state = IMPOSTER_WIN
 
             elif self.voting == True: #starts vote
-                alerts["Start_Voting"] = True
+                alerts["Start_Voting"] = self.voteType # change this elliot!!!!!
                 if self.initiateVoteCounter == self.imposterCount + self.crewmateCount:
                     alerts["Initiate_Voting"] = True
 
@@ -121,6 +121,7 @@ class Model:
         return "ok"
 
     def startVote(self):#starts voting game 
+
         self.totalVote = 0
         self.initiateVoteCounter = 0
 

@@ -73,7 +73,8 @@ class Minigame:
             self.parent.gotoIdleGame()
 
         if 'Start_Voting' in alerts and self.parent.state == self.parent.RUNNING:
-            self.parent.gotoVotingGame()
+            self.vType = alerts['Start_Voting']
+            self.parent.gotoVotingGame(self.vType)
 
             #TODO: REDO!
             # if sabotage_type == 1:

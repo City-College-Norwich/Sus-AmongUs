@@ -48,6 +48,7 @@ class App:
         self.state = self.STARTING
         self.isMinigameCompleted = False
         self.lastMinigame = None
+        self.votingType=None
 
     def run(self):
         self.keep_alive_timer.set(KEEP_ALIVE_TIMEOUT)
@@ -83,8 +84,9 @@ class App:
         elif sabotageType == 3:
             self.currentMiniGame = Sabotage3(self,station)
     
-    def gotoVotingGame(self):
+    def gotoVotingGame(self,type):
         self.state = self.VOTING
+        self.votingType=type
         self.currentMiniGame = VotingGame(self)
 
 
