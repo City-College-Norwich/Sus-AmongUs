@@ -10,6 +10,9 @@ model = Model()
 def home():
     return model.callHomepage()
 
+@app.route
+def setMaxMiniGames():
+    return model.setMaxMiniGames(request.args["count"])
 
 @app.route("/StartGame")
 def startGame():
@@ -22,14 +25,12 @@ def requestStation():
 
 @app.route("/getTagName")
 def getTagName():
-    args = request.args
-    return model.getTagName(args["uid"])
+    return model.getTagName(request.args["uid"])
 
 
 @app.route("/minigameComplete")
 def minigameComplete():
-    args = request.args
-    return model.minigameComplete(args["scannerId"])
+    return model.minigameComplete(request.args["scannerId"])
 
 
 @app.route("/keepAlive")
@@ -39,8 +40,7 @@ def keepAlive():
 
 @app.route("/deadBodyFound")
 def deadBodyFound():
-    args = request.args
-    return model.deadbodyfound(args["playerId"])
+    return model.deadbodyfound(request.args["playerId"])
 
   
 @app.route("/askForID")
@@ -56,8 +56,7 @@ def registerUser():
   
 @app.route("/sabotage")
 def sabotage():
-    args = request.args
-    return model.sabotage(args["sabotageType"])
+    return model.sabotage(request.args["sabotageType"])
 
 
 @app.route("/getSabotageType")

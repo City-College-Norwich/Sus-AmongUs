@@ -43,6 +43,9 @@ class Model:
         else:
             return "No tags found"
             
+    def setMaxMinigames(self, cnt):
+        self.totalMinigames = cnt
+        return "okay"
 
     def startGame(self):
         self.state = GAME_RUNNING
