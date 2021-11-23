@@ -96,6 +96,13 @@ class Wifi:
     def voteTally(self, badgeUID, myUID):
         return self._sendRequest("voteTally?badgeUID="+badgeUID+"&myUID="+myUID)
 
+    def skipStation(self,lastStation,cooldown):
+        while True:
+            newStation = self.requestStation()
+            if newStation!=lastStation:
+                cooldown.set(60000)
+                return newStation
+
     def initiateVote(self):
         return self._sendRequest("initiateVote")
 
@@ -122,4 +129,3 @@ class Wifi:
 
     def getFile(self, filename):
         return self._sendRequest("AutoDownloader/GetFile?fileName="+filename)
-    
