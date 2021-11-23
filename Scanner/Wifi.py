@@ -56,6 +56,7 @@ class Wifi:
     def completeMinigame(self, tagID):
         return self._sendRequest("minigameComplete?badgeUID=" + tagID)
 
+
     def startVoting(self):
         self._sendRequest("startVote")
     
@@ -74,11 +75,14 @@ class Wifi:
         self._sendRequest("setVoteType?type=" + voteType)#so the server knows a vote has started from dead body reported
         self._sendRequest("startVote")
 
-    def requestStation(self):
-        self._sendRequest("requestStation")
+    def requestStation(self, tagID):
+        return self._sendRequest("requestStation?badgeUID=" + tagID)
 
-    def sendSabotage(self, type):
+    def createSabotage(self, type):
         return self._sendRequest("sabotage?sabotageType=" + type)
+
+    def completeSabotage(self,badgeUID):
+        return self._sendRequest("sabotageCompleted?badgeUID=" + badgeUID)
 
     def registerUser(self, tagID):
         return self._sendRequest("registerUser?badgeUID=" + tagID)
@@ -115,3 +119,4 @@ class Wifi:
 
     def getFile(self, filename):
         return self._sendRequest("AutoDownloader/GetFile?fileName="+filename)
+    

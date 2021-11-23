@@ -30,7 +30,7 @@ class DownloadGame(Minigame):
                     self.parent.wifi.completeMinigame(self.parent.badgeUID)
                     self.parent.isMinigameCompleted = True
                     self.parent.lastMinigame = DownloadGame
-                    self.parent.gotoGoodGuyGame()
+                    self.parent.gotoIdleGame()
 
 
         else:

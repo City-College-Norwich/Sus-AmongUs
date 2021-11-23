@@ -20,4 +20,4 @@ class IdBadge(Minigame):
             self.parent.wifi.completeMinigame(self.parent.badgeUID)
             self.parent.isMinigameCompleted = True #So GoodGuyGame knows a minigame was completed
             self.parent.lastMinigame = IdBadge #So GoodGuyGame knows what minigame was completed
-            self.parent.gotoGoodGuyGame()
+            self.parent.gotoIdleGame()
