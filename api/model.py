@@ -47,6 +47,8 @@ class Model:
         self.voteCooldown = TimerHelper()
         self.voteType=None
 
+        self.meetingsLeft = 3
+
     def getTagName(self, uid):#use to find badge id of player 
         if uid in self.uids.keys():            
             return self.uids[uid] 
@@ -90,7 +92,7 @@ class Model:
                     self.state = IMPOSTER_WIN
 
             elif self.voting == True: #starts vote
-                alerts["Start_Voting"] = True
+                alerts["Start_Voting"] = self.voteType # change this elliot!!!!!
                 if self.initiateVoteCounter == self.imposterCount + self.crewmateCount:
                     alerts["Initiate_Voting"] = True
 
@@ -100,6 +102,9 @@ class Model:
             elif self.crewmateCount == self.imposterCount:
                 self.state = IMPOSTER_WIN
                 alerts["Winner_Decided"] = "Imposters"
+            if self.totalMinigames == self.completedMinigames:
+                self.state = CREWMATE_WIN
+                alerts["Winner_Decided"] = "Crewmates"
 
         return json.dumps(alerts)
 
@@ -121,6 +126,7 @@ class Model:
         return "ok"
 
     def startVote(self):#starts voting game 
+
         self.totalVote = 0
         self.initiateVoteCounter = 0
 
@@ -162,6 +168,7 @@ class Model:
             elif self.sabotage_type == 3:
                 self.sabotaged_station = self.requestStation()
                 self.sabotage_timer.set(90000)
+        return "ok"
 
 
 
@@ -238,6 +245,7 @@ class Model:
         "Minigames/ReactionGame.py",
         "Minigames/RecordTemperatureGame.py",
         "Minigames/Sabotage1.py",
+        "Minigames/Sabotage3.py",
         "Minigames/StartupGame.py",
         "Minigames/UploadGame.py",
         "Minigames/VotingGame.py"]
@@ -255,3 +263,15 @@ class Model:
                 file = f.read()
             return file
         return ""
+
+
+    def checkVoteLimit():
+        if self.meetingsLeft==0:
+            return False
+        else:
+            return True
+    
+    def useMeeting():
+        self.meetingsLeft-=1
+        return "ok"
+        
