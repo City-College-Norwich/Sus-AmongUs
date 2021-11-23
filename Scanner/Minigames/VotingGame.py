@@ -33,7 +33,7 @@ class VotingGame(Minigame):
         else:
             if self.timer.check():
                 self.parent.wifi.voteTimeEnd()
-                self.parent.screen.clear()
+                
             self.parent.screen.drawText("Voting", 0, 0)
             self.parent.screen.drawText("Scan Player tag ", 0, 20)
             if tag is not None and tag[:8] == 'playerId' and self.voted == False:

@@ -63,12 +63,14 @@ class Wifi:
     
     def startEmergency(self):
         #Add screen output
-        if self._sendRequest("checkVoteCooldown"):#if cooldown is over
-            voteType='meeting'
-            self._sendRequest("setVoteType?type=" + voteType)#so the server knows a vote has started from emergency meeting
-            self._sendRequest("startVote")
-        else:
-            return 'on cooldown'
+        if self.sendRequest("checkVoteLimit"):
+            if self._sendRequest("checkVoteCooldown"):#if cooldown is over
+                voteType='meeting'
+                self.sendRequest("useMeeting")
+                self._sendRequest("setVoteType?type=" + voteType)#so the server knows a vote has started from emergency meeting
+                self._sendRequest("startVote")
+            else:
+                return 'on cooldown'
     
     def startReportBody(self):
         #Add screen output
