@@ -51,6 +51,7 @@ class App:
         self.state = self.STARTING
         self.isMinigameCompleted = False
         self.lastMinigame = None
+        self.votingType=None
 
         self.user_minigames_dict = {
             DownloadGame: False,
@@ -91,8 +92,10 @@ class App:
         if sabotageType == 1:
             self.currentMiniGame = Sabotage1(self, station)
         elif sabotageType == 3:
-            self.currentMiniGame = Sabotage3(self, station)
+            self.currentMiniGame = Sabotage3(self,station)
+    
+    def gotoVotingGame(self,type):
 
-    def gotoVotingGame(self):
         self.state = self.VOTING
+        self.votingType=type
         self.currentMiniGame = VotingGame(self)
