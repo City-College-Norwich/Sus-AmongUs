@@ -18,7 +18,7 @@ class TimerHelper:
     TimerHelper objects can be made by calling TimerHelper() which then returns the helper object the timer can then
     be managed through this object such as setting start and target times and checking the progress of the timer
 
-    target time are set by the set() method the timer can then be checked by the check()
+    target time is set by the set() method, the timer can then be checked by the check()
     method
     """
 

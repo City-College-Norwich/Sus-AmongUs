@@ -18,7 +18,7 @@ class Screen:
         self.display = ssd1306.SSD1306_I2C(128, 64, i2c)
         self.updateOccurred = False
         
-    def drawText(self, text, x_coordinate, y_coordinate):
+    def drawText(self, text, x_coordinate=0, y_coordinate=0):
         self.clearScreen()
         self.display.text(text, x_coordinate, y_coordinate)
 

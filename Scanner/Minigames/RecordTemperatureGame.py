@@ -16,6 +16,7 @@ class RecordTemperatureGame(Minigame):
         self.time.set(500)
 
     def update(self):
+        
         self.parent.screen.drawText("Record Temperature Game", 0, 0)
         self.parent.screen.drawText("Log Temperature", 0, 00)
         self.parent.screen.drawText("Current: " + str(self.current_temperature), 0, 10)
@@ -24,7 +25,7 @@ class RecordTemperatureGame(Minigame):
             self.parent.wifi.completeMinigame(self.parent.badgeUID)
             self.parent.isMinigameCompleted = True
             self.parent.lastMinigame = RecordTemperature
-            self.parent.gotoGoodGuyGame()
+            self.parent.gotoIdleGame()
         else:
             if self.time.check():
                 buttons = self.parent.buttons.getPressedButtons()

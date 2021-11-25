@@ -7,10 +7,10 @@ from Minigames.DownloadGame import DownloadGame
 from Minigames.UploadGame import UploadGame
 from Minigames.RecordTemperatureGame import RecordTemperatureGame
 
-
 RUNNING = 0
 CREWMATE_WIN = 1
 IMPOSTOR_WIN = 2
+
 
 class GoodGuyGame(Minigame):
 
@@ -19,43 +19,36 @@ class GoodGuyGame(Minigame):
         self.parent = parent
         # Add state variable 
         self.state = RUNNING
-        
-        # update bellow set with minigames
-        #[MINIGAME-NAME, COMPLETED?] True=Completed, False=Not completed
-        self.__minigames = [[IdBadge, False], [ReactionGame, False], [DownloadGame, False], [UploadGame, False], [RecordTemperatureGame, False]]
-        self.__target_station = self.parent.wifi.requestStation()
 
-        if self.parent.isMinigameCompleted==True:#Was minigame completed?
-        #if statement could be:
-        #if self.parent.lastMinigame!=None:
-        #then could remove the isMinigameCompleted variable.
-            self.__minigames[self.__minigames.index([self.parent.lastMinigame, False])][1]=True #Change completed to True in minigames array
-            self.parent.isMinigameCompleted=False #Set back to False
-            self.parent.lastMinigame=None # set back to None
+        self.__target_station = self.parent.wifi.requestStation(self.parent.badgeUID)
+
+        if self.parent.isMinigameCompleted:
+            self.parent.user_minigames_dict[self.parent.lastMinigame] = True
+            self.parent.isMinigameCompleted = False
+            self.parent.lastMinigame = None
 
     def update(self):
         if self.state == RUNNING:
             uid, tag = self.parent.rfid.doRead(True)
 
-            isAlive = self.parent.wifi.isAlive(self.parent.badgeUID) == 'yes'
+            isAlive = self.parent.wifi.isAlive(self.parent.badgeUID)
 
             if isAlive:
-              if tag  == 'playerId':
-                  if self.parent.wifi.isAlive(self.parent.badgeUID) == "yes":  
-                      if not self.parent.wifi.isAlive(uid):
-                          self.parent.wifi.startVoting()
+                if tag == 'playerId':
+                    if not self.parent.wifi.isAlive(uid):
+                        self.parent.wifi.startVoting()
 
-              if tag == ".votingHub":
-                  self.parent.wifi.startVoting()
+                elif tag == ".votingHub":
+                    self.parent.wifi.startEmergency()
 
-            elif tag == self.__target_station:
-                while True:#Loop until break(until an uncompleted minigame is chosen)
-                    self.target_minigame = random.choice(self.__minigames)#Choose random minigame
-                    if self.target_minigame[1]==False:#if minigame is not completed
-                        break#stop loop
-                self.parent.currentMiniGame = self.target_minigame[0](self.parent)# Set currentMinigame to the mingame chosen
-            else:
-                self.parent.screen.drawText("GOTO: " + str(self.__target_station),0,0)
+                elif tag == self.__target_station:
+
+                    self.parent.currentMiniGame = random.choice([game for game in self.parent.user_minigames_dict if self.parent.user_minigames_dict[game]])
+                    # sets current minigame to a random incomplete minigame
+
+                else:
+
+                    self.parent.screen.drawText("GOTO: " + str(self.__target_station), 0, 0)
         else:
             if self.state == CREWMATE_WIN:
                 while not any(self.parent.buttons.getPressedButtons()):
