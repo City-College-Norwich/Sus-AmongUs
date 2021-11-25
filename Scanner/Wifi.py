@@ -22,14 +22,14 @@ class Wifi:
         while True:
             if self.wlan.isconnected():
                 print("Connected to: " + self.SSID)
-                self.parent.screen.clear()
+                
                 self.parent.screen.drawText("Connected", 0, 0)
                 self.parent.screen.draw()
                 return
             else:
                 time.sleep_ms(500)
                 print("Connecting...")
-                self.parent.screen.clear()
+                
                 self.parent.screen.drawText("Connecting", 0, 0)
     
     def sendRequest(self, message):
@@ -64,12 +64,12 @@ class Wifi:
         return "ok"
     
     def startEmergency(self):
-        voteType='meeting'
         if self._sendRequest("checkMeeting"):
             voteType='meeting'
             self._sendRequest("setVoteType?type=" + voteType)#so the server knows a vote has started from emergency meeting
             self._sendRequest("startVote")
         return "ok"
+
     
     def startReportBody(self):
         voteType='report'
@@ -111,7 +111,7 @@ class Wifi:
         return self._sendRequest("getTagName?uid=" + uid)
 
     def killPlayer(self, myUID, victimUID):
-        return self._sendRequest("killPlayer?myUID={}&victimUID{}".format(myUID, victimUID))
+        return self._sendRequest("killPlayer?myUID={}&victimUID={}".format(myUID, victimUID))
 
     def isImposter(self, uid):
         return self._sendRequest("isImposter?uid="+uid)
