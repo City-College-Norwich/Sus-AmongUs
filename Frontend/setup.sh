@@ -7,13 +7,12 @@ fi
 
 rootPass = "Pass"
 
-mysql_package=mysql-server-5.6
+mysql_package=mysql-server-8.0
 
 echo "Starting setup."
 apt install php-common libapache2-mod-php php-cli
 echo "Done."
-echo "Setting up MySQL Server 5.6"
-add-apt-repository -y ppa:ondrej/mysql-5.6
+echo "Setting up MySQL Server 8.0"
 apt-get update
 
 # Setup mysql root password
@@ -21,7 +20,7 @@ debconf-set-selections <<< "mysql-server mysql-server/root_password password $ro
 debconf-set-selections <<< "mysql-server mysql-server/root_password_again password $rootPass"
 
 # Install MySQL Server
-apt-get install -qq $mysql_package # -qq implies -y --force-yes
+apt-get install -y --force-yes $mysql_package
 
 echo "Installed."
 
