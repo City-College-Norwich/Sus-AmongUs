@@ -155,8 +155,8 @@ class Model:
     def registerUser(self,badgeUID):#this is where players are assigned 
         if badgeUID in self.players.keys(): 
             return "User is already Registered!"
-        #HERE
-        self.players[badgeUID] = ["team", True, 0, 0]
+        self.playername = len(self.players.keys())+1
+        self.players[badgeUID] = ["team", True, 0, 0, self.playername]
         self.uids[badgeUID] = "playerId"
         return "Okay"
 
