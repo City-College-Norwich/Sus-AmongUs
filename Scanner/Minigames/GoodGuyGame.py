@@ -36,7 +36,7 @@ class GoodGuyGame(Minigame):
             if isAlive:
                 if tag == 'playerId':
                     if not self.parent.wifi.isAlive(uid):
-                        self.parent.wifi.startVoting()
+                        self.parent.wifi.startReportBody()
 
                 elif tag == ".votingHub":
                     self.parent.wifi.startEmergency()
