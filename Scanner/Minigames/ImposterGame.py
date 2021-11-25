@@ -5,6 +5,7 @@ import random
 
 class ImposterGame(Minigame):
     def __init__(self, parent):
+        print ("--- impostergame")
         Minigame.__init__(self, parent)
         self.timer = TimerHelper()
         self.timer.set(120000)
@@ -12,6 +13,7 @@ class ImposterGame(Minigame):
         self.parent.screen.drawText("Imposter", 0, 0)
     
     def update(self):
+        print ("--- impostergame update")
         if self.parent.state == self.parent.RUNNING:
             
             if self.timer.check():
@@ -50,6 +52,7 @@ class ImposterGame(Minigame):
 
 
     def alertsFromServer(self, alerts):
+        print ("--- impostergame alertsFromServer")
         Minigame.alertsFromServer(self, alerts)
         if 'Sabotaged' in alerts:
             #Having the cooldown set here to 120 seconds will allow for the

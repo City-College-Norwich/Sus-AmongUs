@@ -5,8 +5,8 @@ from Scanner.TimerHelper import TimerHelper
 
 
 class Sabotage2(Minigame):
-
     def __init__(self, parent):
+        print ("--- sabotage2")
         Minigame.__init__(self, parent)
         self.parent = parent
         self.__target_player = random.choice(self.parent.wifi.getPlayers())
@@ -19,6 +19,7 @@ class Sabotage2(Minigame):
                 # Sets their tasks back to false, can only be used once.
 
     def update(self):
+        print ("--- update")
         if self.__delay_timer.check():
             self.parent.gotoIdleGame()
         else:

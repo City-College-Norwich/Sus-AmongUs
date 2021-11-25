@@ -7,17 +7,21 @@ import json
 
 class DummyScreen:
     def drawText(self, msg, x, y):
+        print ("--- dummy drawText")
         print ("{}, {}: {}".format(x, y, msg))
     
     def draw(self):
+        print ("--- dummy draw")
         pass
     def clear(self):
+        print ("--- dummy clear")
         pass
     
 class DummyParent:
     screen = DummyScreen()
 
 def walk(path):
+    print ("--- walking")
     files = []
     if path == "/":
         path = ""
@@ -29,6 +33,7 @@ def walk(path):
     return files
 
 def dl():        
+    print ("--- dl")
     wifi = Wifi(DummyParent())
 
     newFiles = wifi.getFileList()

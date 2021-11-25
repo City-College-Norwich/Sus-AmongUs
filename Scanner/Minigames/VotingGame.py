@@ -3,6 +3,7 @@ from TimerHelper import *
 
 class VotingGame(Minigame):
     def __init__(self, parent):
+        print ("--- VotingGame")
         Minigame.__init__(self, parent)
 
         self.parent.screen.clear()
@@ -21,6 +22,7 @@ class VotingGame(Minigame):
         self.timer.set(60000)
 
     def update(self):
+        print ("--- VotingGame update")
         uid,tag = self.parent.rfid.doRead(True)
         if self.InitiateVoting == False:
             if tag == ".votingHub":
@@ -42,6 +44,7 @@ class VotingGame(Minigame):
                 self.voted = True
 
     def alertsFromServer(self, alerts):
+        print ("--- alertsFromServer")
         Minigame.alertsFromServer(self, alerts)
         if "Start_Voting" not in alerts:
             self.parent.gotoIdleGame()

@@ -4,17 +4,17 @@ from Minigames.GoodGuyGame import GoodGuyGame
 
 class StartupGame(Minigame):
     def __init__(self, parent):
+        print ("--- startupgame")
         Minigame.__init__(self, parent)
         self.parent = parent
         self.StartGameState = False
 
-        print("Initiate StartupGame")
-    
         # Tell player to scan badge
         self.parent.screen.clear()
         self.parent.screen.drawText('Scan Your ID', 0, 0)
         
     def update(self):
+        print ("--- startupgame update")
         uid, tag = self.parent.rfid.doRead(True)
         
         if tag == ".main":

@@ -5,6 +5,7 @@ import random
 
 class DownloadGame(Minigame):
     def __init__(self, parent):
+        print ("--- downloadgame")
         Minigame.__init__(self,parent)
         self.parent = parent
         self.progress = 0
@@ -16,6 +17,7 @@ class DownloadGame(Minigame):
         pass
 
     def update(self):
+        print ("--- downloadgame update")
         self.rfid = self.parent.rfid.doRead()
         self.parent.screen.clear()
         self.parent.screen.drawText("Download Game", 0, 0)

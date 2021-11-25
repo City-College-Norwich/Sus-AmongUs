@@ -23,13 +23,15 @@ class TimerHelper:
     """
 
     def __init__(self):
+        print ("--- timerhelper")
         """
         Initialize a TimerHelper object; initialize time objects.
         """
         self.start = TimerHelper.__get_current_time()
         self.targetTime = 0
 
-    def set(self, timeInMS):
+    def set(self, timeInMS):        
+        print ("--- timerHelper set")
         """
         sets the start and target time of the timer
 
@@ -39,6 +41,7 @@ class TimerHelper:
         self.targetTime = timeInMS
 
     def check(self):
+        print ("--- timerhelper check")
         """
         checks whether the timers target time has elapsed
 

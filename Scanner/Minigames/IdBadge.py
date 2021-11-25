@@ -3,16 +3,19 @@ from Minigames.Minigame import Minigame
 
 class IdBadge(Minigame):
     def __init__(self, parent):
+        print ("--- idbadge")
         Minigame.__init__(self, parent)
         self.parent = parent
 
     def update(self):
+        print ("--- idbadge update")
         tag = self.parent.rfid.doRead()
         self.parent.screen.drawText("Id Badge Game", 0, 0)
         self.parent.screen.drawText('Scan Card', 0, 20)
         self.check_card(tag)
 
     def check_card(self, tag):
+        print ("--- idbadge check_card")
         if tag == self.parent.badgeUID:
             self.parent.screen.drawText('Card Scanned', 0, 0)
             self.parent.wifi.completeMinigame(self.parent.badgeUID)

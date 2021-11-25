@@ -13,8 +13,8 @@ IMPOSTOR_WIN = 2
 
 
 class GoodGuyGame(Minigame):
-
     def __init__(self, parent):
+        print ("--- goodguygame")
         Minigame.__init__(self, parent)
         self.parent = parent
         # Add state variable 
@@ -28,6 +28,7 @@ class GoodGuyGame(Minigame):
             self.parent.lastMinigame = None
 
     def update(self):
+        print ("--- goodguygame update")
         if self.state == RUNNING:
             uid, tag = self.parent.rfid.doRead(True)
 

@@ -26,6 +26,7 @@ class Minigame:
     """
 
     def __init__(self, parent):
+        print ("--- minigame init")
         """
         Initialize a Minigame object; sets parent object
 
@@ -34,6 +35,7 @@ class Minigame:
         self.parent = parent
         self.sabotageOccured = False
     def update(self):
+        print ("--- minigame update")
         """
         Cause an update to the Minigame objects state
         """
@@ -41,6 +43,7 @@ class Minigame:
 
 
     def alertsFromServer(self, alerts):
+        print ("--- minigame alertsFromServer")
         """
         Used to pass alerts to the Minigame object for processing, routing, or other interrupts that would otherwise
         be separate from the update loop

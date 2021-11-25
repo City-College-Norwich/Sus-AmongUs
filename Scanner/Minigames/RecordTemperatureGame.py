@@ -6,6 +6,7 @@ from Minigames.Minigame import Minigame
 
 class RecordTemperatureGame(Minigame):
     def __init__(self, parent):
+        print ("--- recordTemperature")
         Minigame.__init__(self, parent)
         self.current_temperature = random.randint(15, 33)
         LowerTemp = random.choice(range(int(round(self.current_temperature/2)), self.current_temperature-5))
@@ -16,7 +17,7 @@ class RecordTemperatureGame(Minigame):
         self.time.set(500)
 
     def update(self):
-        
+        print ("--- recordTemperature update")
         self.parent.screen.drawText("Record Temperature Game", 0, 0)
         self.parent.screen.drawText("Log Temperature", 0, 00)
         self.parent.screen.drawText("Current: " + str(self.current_temperature), 0, 10)

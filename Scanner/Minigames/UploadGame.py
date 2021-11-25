@@ -5,6 +5,7 @@ import random
 
 class UploadGame(Minigame):
     def __init__(self, parent):
+        print ("--- UploadGame")
         Minigame.__init__(self, parent)
         self.progress = 0
         self.progress_width = 0
@@ -14,6 +15,7 @@ class UploadGame(Minigame):
         pass
 
     def update(self):
+        print ("--- uploadgame update")
         self.rfid = self.parent.rfid.doRead()
         self.parent.screen.clear()
         self.parent.screen.drawText("Upload Game", 0, 0)

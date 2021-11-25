@@ -12,6 +12,7 @@ class Wifi:
     URL = "http://192.1.1.1:5000/"
 
     def __init__(self, parent):
+        print ("--- wifi")
         self.parent = parent
         # Initialize wlan object
         self.wlan = network.WLAN(network.STA_IF)
@@ -33,6 +34,7 @@ class Wifi:
                 self.parent.screen.drawText("Connecting", 0, 0)
     
     def sendRequest(self, message):
+        print ("--- sendrequest")
         class DepricatedException(Exception):
             pass
         try:
@@ -42,6 +44,7 @@ class Wifi:
 
     # Interal usage ONLY!
     def _sendRequest(self, message):
+        print ("--- sendrequest")
         response = requests.get(self.URL+ message)
         print(self.URL+ message)
         text = response.text
@@ -50,16 +53,19 @@ class Wifi:
         return(text)
         
     def isAlive(self, tagID):
+        print ("--- wifi isAlive")
         if self._sendRequest("isAlive?badgeUID=" + tagID) == "yes":
             return True
         else:
             return False
 
     def completeMinigame(self, tagID):
+        print ("--- wifi completeMinigame")
         return self._sendRequest("minigameComplete?badgeUID=" + tagID)
 
 
     def startVoting(self):
+        print ("--- wifi startVoting")
         self._sendRequest("startVote")
     
     def startEmergency(self):
@@ -74,56 +80,73 @@ class Wifi:
                 return 'on cooldown'
     
     def startReportBody(self):
+        print ("--- wifi startReportbody")
         #Add screen output
         voteType='report'
         self._sendRequest("setVoteType?type=" + voteType)#so the server knows a vote has started from dead body reported
         self._sendRequest("startVote")
 
     def requestStation(self, tagID):
+        print ("--- wifi requeststation")
         return self._sendRequest("requestStation?badgeUID=" + tagID)
 
     def createSabotage(self, type):
+        print ("--- wifi createsabotage")
         return self._sendRequest("sabotage?sabotageType=" + type)
 
     def completeSabotage(self,badgeUID):
+        print ("--- wifi completeSabotage")
         return self._sendRequest("sabotageCompleted?badgeUID=" + badgeUID)
 
     def registerUser(self, tagID):
+        print ("--- wifi registerUser")
         return self._sendRequest("registerUser?badgeUID=" + tagID)
 
     def startGame(self):
+        print ("--- wifi startGame")
         return self._sendRequest('StartGame')
 
     def voteTally(self, badgeUID, myUID):
+        print ("--- wifi voteTally")
         return self._sendRequest("voteTally?badgeUID="+badgeUID+"&myUID="+myUID)
 
     def initiateVote(self):
+        print ("--- wifi initiateVote")
         return self._sendRequest("initiateVote")
 
     def voteTimeEnd(self):
+        print ("--- wifi voteTimeEnd")
         return self._sendRequest("voteTimeEnd")
 
     def keepAlive(self):
+        print ("--- wifi keepAlive")
         return self._sendRequest("keepAlive")
 
     def AutoDownloader(self):
+        print ("--- wifi AutoDownloader")
         return self._sendRequest("AutoDownloader/GetFileList")
 
     def getTagName(self, uid):
+        print ("--- wifi getTagName")
         return self._sendRequest("getTagName?uid=" + uid)
 
     def killPlayer(self, myUID, victimUID):
+        print ("--- wifi killPlayer")
         return self._sendRequest("killPlayer?myUID={}&victimUID={}".format(myUID, victimUID))
 
     def isImposter(self, uid):
+        print ("--- wifi isImposter")
         return self._sendRequest("isImposter?uid="+uid)
 
     def getFileList(self):
+        print ("--- wifi getFileList")
         return self._sendRequest("AutoDownloader/GetFileList")
 
     def getFile(self, filename):
+        print ("--- wifi getFile")
         return self._sendRequest("AutoDownloader/GetFile?fileName="+filename)
 
     def getPlayers(self):
+        print ("--- wifi getPlayers")
         return json.loads(self._sendRequest("getPlayers"))
     

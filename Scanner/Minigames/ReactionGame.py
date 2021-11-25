@@ -6,6 +6,7 @@ from TimerHelper import *
 
 class ReactionGame(Minigame):
     def __init__(self, parent):
+        print ("--- reactionGame")
         Minigame.__init__(self, parent)
         self.parent = parent
         self.can_press_button = False
@@ -16,7 +17,7 @@ class ReactionGame(Minigame):
         print("ReactionGame")
 
     def update(self):
-        
+        print ("--- reactionGame update")
         self.parent.screen.drawText("Reaction Game", 0, 0)
 
         if self.timer.check():

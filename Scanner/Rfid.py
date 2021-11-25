@@ -5,6 +5,7 @@ from TimerHelper import TimerHelper
 class Rfid:
 
     def __init__(self, parent):
+        print ("--- rfid")
         self.name = None
         self.rdr = mfrc522.MFRC522(26, 27, 14, 33, 25)
         self.timer = TimerHelper()
@@ -18,7 +19,7 @@ class Rfid:
         pass
 
     def doRead(self, returnUID = False):
-
+        print ("--- doread")
         if self.timer.check():
             self.timer.set(100)
             (stat, tag_type) = self.rdr.request(self.rdr.REQIDL)
