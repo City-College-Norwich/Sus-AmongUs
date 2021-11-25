@@ -11,7 +11,7 @@
 </div>
 
 <script>
-  <?php include "../warnings_colours.php"; ?>
+  <?php echo __DIR__; include "./../warning_messages.php"; ?>
   function errorToColour(err) {
     return(errorStats[err]["Colour"] ? errorStats[err]["Colour"] : err);
   }
@@ -60,14 +60,14 @@
   <body class="text-center">  
     <main class="form-signin">
       <form data-bitwarden-watching="1" action="./login_handler.php" method="post" name="Login_Form">
-        <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+        <!-- <h1 class="h3 mb-3 fw-normal">Please sign in</h1> -->
         <div class="form-floating">
-          <input name="email" type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-          <label for="floatingInput">Email address</label>
+          <label for="floatingInput">Username</label>
+          <input name="email" type="text" class="form-control" id="floatingInput" placeholder="Psername">
         </div>
         <div class="form-floating">
-          <input name="password" type="password" class="form-control" id="floatingPassword" placeholder="Password">
           <label for="floatingPassword">Password</label>
+          <input name="password" type="password" class="form-control" id="floatingPassword" placeholder="Password">
         </div>    
         <div class="form-floating">
           <input hidden="True" name="refferer" value="<?php echo $forward; ?>" id="refferer" placeholder="<?php echo $forward; ?>">
@@ -76,7 +76,7 @@
           <label>
             <!-- Its funny because this doesnt have any function as i dont do anything to index this posted data
                 could easily create a cookie with session tokens, But someone else can do that. -->
-            <input type="checkbox" value="remember-me"> Remember me
+            <input type="checkbox" value="remember-me"> Remember me (lol doesnt work)
           </label>
         </div>
         <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>

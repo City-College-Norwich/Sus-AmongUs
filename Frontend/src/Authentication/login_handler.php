@@ -1,13 +1,7 @@
 <?php 
-include "logging.php";
 include "../globals.php";
 include "ipInfo.php";
-
-include "includes/header.php";
 ?>
-<div class="center">
-  <div class="spinner-border" role="status"></div>
-</div>
 
 <?php 
   $refferer = isset($_POST['refferer']) ? $_POST['refferer'] : 'N/A';
@@ -97,10 +91,18 @@ function login($leftSideInput, $hash, $forward) {
     $conn->close();
 }
 
-session_start();
+if(!isset($_COOKIE["PHPSESSID"]))
+{
+  session_start();
+}
 $_SESSION['UserData']['IP'] = getUserIP();
 
 $Username = isset($_POST['email']) ? $_POST['email'] : '';
 $Password = isset($_POST['password']) ? md5($_POST['password']) : '';
 login($Username, $Password, $forward);
+
+//include "includes/header.php";
+
 ?>
+
+
