@@ -272,13 +272,10 @@ class Model:
             return file
         return ""
 
-
-    def checkMeetingLimit(self):
-        if self.meetingsLeft==0:
-            return False
-        else:
+    def checkMeeting(self):
+        if self.meetingCooldown.check() and self.meetingsLeft != 0:
             self.meetingsLeft-=1
             return True
-    
-    def checkMeetingCooldown(self):
-        return self.meetingCooldown.check()
+        else:
+            return False
+            
