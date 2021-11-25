@@ -25,7 +25,7 @@ class VotingGame(Minigame):
         uid,tag = self.parent.rfid.doRead(True)
         if self.InitiateVoting == False:
             if tag == ".votingHub":
-                self.parent.wifi.initiateVote()
+                self.parent.wifi.joinVote()
         else:
             if self.timer.check():
                 self.parent.wifi.voteTimeEnd()

@@ -10,6 +10,14 @@ GAME_RUNNING = 2
 GAME_ENDED = 3
 CREWMATE_WIN = 4
 IMPOSTER_WIN = 5
+class Player:
+    def __init__(self,username):
+        self.alive = True
+        self.team = ""
+        self.joinedVote = False
+        self.hasVoted = False
+        self.votesAgainst = 0
+        self.username = username
 
 class Model:
     def __init__(self):
@@ -38,7 +46,6 @@ class Model:
         self.sabotage_timer = TimerHelper()
         self.sabotage_participants = set()
 
-        self.playerTotalVote = 0#base values for voting game 
         self.totalVote = 0
         self.voting = False
         self.initiateVoteCounter = 0
@@ -63,11 +70,11 @@ class Model:
         players = list(range(len(self.players.keys())))
         for i in range(self.maxImposters):
             imposter = players.pop(random.randint(0, len(players)-1))
-            self.players[self.players.keys()[imposter]][0] = "Imposter"
+            self.players[self.players.keys()[imposter]].team = "Imposter"
             self.imposterCount += 1
         
         for crewmate in players:
-            self.players[self.players.keys()[crewmate]][0] = "Crewmate"
+            self.players[self.players.keys()[crewmate]].team = "Crewmate"
         self.crewmateCount = len(players)
         
         self.state = GAME_RUNNING
@@ -99,45 +106,45 @@ class Model:
                 alerts["Start_Voting"] = self.voteType
                 if self.initiateVoteCounter == self.imposterCount + self.crewmateCount:
                     alerts["Initiate_Voting"] = True
-
-            if self.imposterCount == 0: #win states 
+            
+            if self.imposterCount == 0 or self.totalMinigames == self.completedMinigames: #win states 
                 self.state = CREWMATE_WIN
-                alerts["Winner_Decided"] = "Crewmates"
             elif self.crewmateCount == self.imposterCount:
                 self.state = IMPOSTER_WIN
-                alerts["Winner_Decided"] = "Imposters"
-            if self.totalMinigames == self.completedMinigames:
-                self.state = CREWMATE_WIN
-                alerts["Winner_Decided"] = "Crewmates"
+
+        if self.state == IMPOSTER_WIN:
+            alerts["Winner"] = "Imposters"
+        elif self.state == CREWMATE_WIN:
+            alerts["Winner"] = "Crewmates"
 
         return json.dumps(alerts)
 
     def killPlayer(self, selfUID, victimUID):# defines murder 
         killer = self.players[selfUID]
         victim = self.players[victimUID]
-        if killer[1] == True and victim[1] == True:
-            if killer[0] == "Imposter" and victim[0] == "Crewmate":
+        if killer.alive == True and victim.alive == True:
+            if killer.team == "Imposter" and victim.team == "Crewmate":
                 return self.executePlayer(victimUID)
         return "error"
 
     #This function is used to set the killed player to be dead and also removes one from their teams count.
     def executePlayer(self, victimUID):
-        self.players[victimUID][1] = False
-        if self.players[victimUID][0] == "Crewmate":
+        self.players[victimUID].alive = False
+        if self.players[victimUID].team == "Crewmate":
             self.crewmateCount -= 1
         else:
             self.imposterCount -= 1
         return "ok"
 
-    def startVote(self):#starts voting game 
+    def startVote(self): #starts voting game 
 
         self.totalVote = 0
         self.initiateVoteCounter = 0
 
         for key in self.players.keys():
-            self.players[key][2] = 0
-            self.players[key][3] = 0
-
+            self.players[key].votesAgainst = 0
+            self.players[key].hasVoted = False
+            self.players[key].joinedVote = False
         self.voting = True
         return "ok"
 
@@ -145,7 +152,8 @@ class Model:
         self.voteType = type
         return "ok"
 
-    def initiateVote(self): #Ensure everyone is ready to vote. Further verification needs to be added.
+    def joinVote(self,badgeUID): #Ensure everyone is ready to vote. Further verification needs to be added.
+        self.players[badgeUID].joinedVote = True
         self.initiateVoteCounter += 1
         return "ok"
 
@@ -155,8 +163,8 @@ class Model:
     def registerUser(self,badgeUID):#this is where players are assigned 
         if badgeUID in self.players.keys(): 
             return "User is already Registered!"
-        self.playername = len(self.players.keys())+1
-        self.players[badgeUID] = ["team", True, 0, 0, self.playername]
+
+        self.players[badgeUID] = Player(len(self.players.keys())+1)
         self.uids[badgeUID] = "playerId"
         return "Okay"
 
@@ -190,9 +198,8 @@ class Model:
             self.sabotaged = False
 
     def voteTally(self, badgeUID, myUID):
-        self.playerTotalVote = int(self.players[badgeUID][2]) + 1
-        self.players[badgeUID][2] = str(self.playerTotalVote)
-        self.players[myUID][3] = 1
+        self.players[badgeUID].votesAgainst = self.players[badgeUID].votesAgainst + 1
+        self.players[myUID].hasVoted = 1
         self.totalVote += 1
         if self.totalVote == (self.crewmateCount + self.imposterCount):
             return self.endVote()
@@ -203,9 +210,9 @@ class Model:
         voteArray = []
         for key in self.players:
             addPlayer = []
-            if self.players[key][1] == True:
+            if self.players[key].alive == True:
                 addPlayer.append(key)
-                addPlayer.append(self.players[key][2])
+                addPlayer.append(self.players[key].votesAgainst)
                 voteArray.append(addPlayer)
         sorted(voteArray, key=lambda x: x[1], reverse=True)
         playerID = voteArray[0][0]
@@ -221,7 +228,7 @@ class Model:
         #TODO: The player ejected will need to be returned and consequently printed to the screen of every scanner.
         
     def isAlive(self, badgeUID):#checks to see if player is alive 
-        if self.players[badgeUID][1]:
+        if self.players[badgeUID].alive:
             return "yes"
         return "no"
 

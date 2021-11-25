@@ -96,9 +96,9 @@ def getFile():
     args = request.args
     return model.getFile(args['fileName'])
 
-@app.route("/initiateVote")
-def initiateVote():
-    return model.initiateVote()
+@app.route("/joinVote")
+def joinVote():
+    return model.joinVote()
 
 @app.route("/voteTimeEnd")
 def voteTimeEnd():
