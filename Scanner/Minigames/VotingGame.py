@@ -7,9 +7,9 @@ class VotingGame(Minigame):
 
         self.parent.screen.clear()
         if self.parent.votingType == 'meeting':
-            self.parent.screen.drawText("--Emergency Meeting!--", 0, 0)
+            self.parent.screen.drawText("EmergencyMeeting", 0, 0)
         elif self.parent.votingType == 'report':
-            self.parent.screen.drawText("--Dead Body Reported!--", 0, 0)
+            self.parent.screen.drawText("Body Reported", 0, 0)
         self.parent.screen.drawText("Go to vote room ", 0, 20)
         self.parent.screen.drawText("      and", 0, 30)
         self.parent.screen.drawText(" Scan vote tag ", 0, 40)
