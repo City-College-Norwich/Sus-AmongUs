@@ -25,7 +25,7 @@ class Model:
         self.completedMinigames = 0 #how many games the player has completed 
         self.state = GAME_STARTING
 
-                      # card ID:   [team,   alive/dead, votecounter, hasVoted]
+                      # card ID:   [team,   alive/dead, votecounter, hasVoted, playerID]
         self.players ={}
 
         self.crewmateCount = 0 # total count of current crewmates in a game
@@ -155,8 +155,8 @@ class Model:
     def registerUser(self,badgeUID):#this is where players are assigned 
         if badgeUID in self.players.keys(): 
             return "User is already Registered!"
-            
-        self.players[badgeUID] = ["team", True, 0, 0]
+        self.playername = len(self.players.keys())+1
+        self.players[badgeUID] = ["team", True, 0, 0, self.playername]
         self.uids[badgeUID] = "playerId"
         return "Okay"
 
