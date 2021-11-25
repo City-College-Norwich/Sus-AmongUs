@@ -62,7 +62,7 @@ service mysql restart
 echo "Done."
 
 echo "Setting up sql tables."
-SQL = (cat "./src/setup_users.sql")
+SQL = $( < ./src/setup_users.sql )
 $MYSQL -uroot -p$1 -e "$SQL"
 echo "Done."
 
