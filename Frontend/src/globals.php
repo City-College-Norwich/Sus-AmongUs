@@ -1,4 +1,4 @@
 <?php
-    $debugMode = False;
+    $debugMode = True;
     $forwardThings = True;
 ?>

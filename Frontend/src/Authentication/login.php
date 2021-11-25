@@ -11,7 +11,7 @@
 </div>
 
 <script>
-  <?php echo __DIR__; include "./../warning_messages.php"; ?>
+  <?php include "./../warning_messages.php"; ?>
   function errorToColour(err) {
     return(errorStats[err]["Colour"] ? errorStats[err]["Colour"] : err);
   }

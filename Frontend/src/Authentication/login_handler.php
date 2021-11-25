@@ -1,6 +1,8 @@
 <?php 
 include "../globals.php";
 include "ipInfo.php";
+include "includes/header.php";
+
 ?>
 
 <?php 
@@ -43,42 +45,51 @@ include "ipInfo.php";
   //  All it does it create a invis Form fills it with data and then clicks it,
   //  Its annoying because i cant think of a better way to do it.
   function forwardError($url, $error) {
-        ?> 
-        <script>
-        $('#forwardForm-submit-btn').click();
-        </script>
-        <?php
            echo    '<form method="POST" action="' . $url . '" name="forwardForm" style="display:none">
                         <input name="ERROR" value=' . $error . '>
                         <button type="submit" name="submit" id="forwardForm-submit-btn"></button>
                     </form>';
+                    ?>        <script>
+                    $('#forwardForm-submit-btn').click();
+                    </script><?php
   }
 
 // Simply redirects the user. when errored.
 function forward($url, $error) {
-  echo "forwaring to location: " . $url . "?ERROR=" . $error;
+  echo "<br> forwaring to location: " . $url . "?ERROR=" . $error;
   header("location: " . $url . "?ERROR=" . $error );
 }
 
 function login($leftSideInput, $hash, $forward) {
   echo $hash;
+
+  // This is only here for local testing as we cant install mysql server on the college computers :|
   if(null !== defined("mysqli")) {
     $arr = array("Test"=>"098f6bcd4621d373cade4e832627b4f6");
 
-    //echo ("SQL Isnt installed on the server defaulting to local login array");
+    echo ("SQL Isnt installed on the server defaulting to local login array");
 
     try {
+      echo "<br>" . $leftSideInput;
+      echo "<br>" . $hash;
+      echo "<br>" . $forward;
+      echo "<br>" . $arr[$leftSideInput];
+      echo "<br> dumb person thing" . $calculatedRefferer;
+
       if(isset($arr[$leftSideInput])) {
+        echo "<br> Valid login";
         if($hash == $arr[$leftSideInput]) {
-          $_SESSION['UserData']['Username'] = $row["username"];
+          $_SESSION['UserData']['Username'] = $leftSideInput;
 
           // Probably not needed but maybe handy in future, commenting out for now
           // $_SESSION['UserData']['db_entry'] = $row;
           $_SESSION['UserData']['RANK'] = "Administrator";
-          forward($forward, "LOGIN_SUCCESS");
+          //forwardError($calculatedRefferer, "LOGIN_SUCCESS");
+          echo $forward;
+          return;
         }
       }
-      forward($forward, "LOGIN_FAILED");
+      //forwardError("/", "LOGIN_FAILED");
     } 
     catch (exception $e) {
 
@@ -124,8 +135,6 @@ $_SESSION['UserData']['IP'] = getUserIP();
 $Username = isset($_POST['email']) ? $_POST['email'] : '';
 $Password = isset($_POST['password']) ? md5($_POST['password']) : '';
 login($Username, $Password, $forward);
-
-//include "includes/header.php";
 
 ?>
 
