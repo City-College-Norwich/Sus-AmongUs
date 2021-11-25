@@ -22,14 +22,14 @@ class Wifi:
         while True:
             if self.wlan.isconnected():
                 print("Connected to: " + self.SSID)
-                self.parent.screen.clear()
+                
                 self.parent.screen.drawText("Connected", 0, 0)
                 self.parent.screen.draw()
                 return
             else:
                 time.sleep_ms(500)
                 print("Connecting...")
-                self.parent.screen.clear()
+                
                 self.parent.screen.drawText("Connecting", 0, 0)
     
     def sendRequest(self, message):
@@ -64,10 +64,10 @@ class Wifi:
     
     def startEmergency(self):
         #Add screen output
-        if self.sendRequest("checkVoteLimit"):
+        if self._sendRequest("checkVoteLimit"):
             if self._sendRequest("checkVoteCooldown"):#if cooldown is over
                 voteType='meeting'
-                self.sendRequest("useMeeting")
+                self._sendRequest("useMeeting")
                 self._sendRequest("setVoteType?type=" + voteType)#so the server knows a vote has started from emergency meeting
                 self._sendRequest("startVote")
             else:
