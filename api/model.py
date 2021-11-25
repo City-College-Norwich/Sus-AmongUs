@@ -213,18 +213,10 @@ class Model:
 
         if self.voteType=='meeting':
             self.voteCooldown.set(self.VOTECOOLDOWN_AMOUNT)
-
         if voteArray[0][1] != voteArray[1][1]:
-            self.parent.screen.drawText(self.players[playerID][4] + " Ejected", 0, 0)
-            self.parent.screen.drawText(self.players[playerID][4], 0, 10)
-            if self.players[playerID][0] == "Crewmate":
-                self.parent.screen.drawText("was a crewmate", 0, 20)
-            else:
-                self.parent.screen.drawText("was an imposter", 0, 20)
-            return self.executePlayer(playerID)
+            return self.players[playerID]
         if voteArray[0][1] != voteArray[1][1]:
-            self.parent.screen.drawText("    Draw", 0, 0)
-            self.parent.screen.drawText("Noone ejected", 0, 10)
+            return "draw"
         #TODO: The player ejected will need to be returned and consequently printed to the screen of every scanner.
         
     def isAlive(self, badgeUID):#checks to see if player is alive 
