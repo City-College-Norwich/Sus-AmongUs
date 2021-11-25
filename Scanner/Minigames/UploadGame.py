@@ -1,5 +1,6 @@
 from Minigames.Minigame import Minigame
 from TimerHelper import *
+import random
 
 
 class UploadGame(Minigame):
@@ -14,14 +15,15 @@ class UploadGame(Minigame):
 
     def update(self):
         self.rfid = self.parent.rfid.doRead()
+        self.parent.screen.clear()
+        self.parent.screen.drawText("Upload Game", 0, 0)
         if self.rfid:
             if self.timer.check():
                 self.progress_width += random.choice(range(5, 16))
                 self.progress = self.progress_width
-                self.parent.screen.clear()
-                self.parent.screen.drawText("Keep Scanning", 0, 0)
-                self.parent.screen.drawRectangle(10, 20, self.progress_width, 15)
-                self.parent.screen.drawText(str(self.progress) + "%", 50, 45)
+                self.parent.screen.drawText("Keep Scanning", 0, 10)
+                self.parent.screen.drawRectangle(10, 20, self.progress_width, 25)
+                self.parent.screen.drawText(str(self.progress) + "%", 50, 55)
                 self.timer.set(1000)
 
 
