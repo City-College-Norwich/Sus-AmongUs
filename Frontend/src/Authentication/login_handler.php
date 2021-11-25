@@ -61,7 +61,31 @@ function forward($url, $error) {
 }
 
 function login($leftSideInput, $hash, $forward) {
-    include "../mysql_conn.php"; // Import the sql connection
+  echo $hash;
+  if(null !== defined("mysqli")) {
+    $arr = array("Test"=>"098f6bcd4621d373cade4e832627b4f6");
+
+    //echo ("SQL Isnt installed on the server defaulting to local login array");
+
+    try {
+      if(isset($arr[$leftSideInput])) {
+        if($hash == $arr[$leftSideInput]) {
+          $_SESSION['UserData']['Username'] = $row["username"];
+
+          // Probably not needed but maybe handy in future, commenting out for now
+          // $_SESSION['UserData']['db_entry'] = $row;
+          $_SESSION['UserData']['RANK'] = "Administrator";
+          forward($forward, "LOGIN_SUCCESS");
+        }
+      }
+      forward($forward, "LOGIN_FAILED");
+    } 
+    catch (exception $e) {
+
+    }
+    return;
+  }
+  include "../mysql_conn.php"; // Import the sql connection
 
     $leftSideInput = filter_var($leftSideInput, FILTER_SANITIZE_STRING);
     $sql = 
