@@ -65,12 +65,8 @@ class GoodGuyGame(Minigame):
                     self.parent.screen.drawText("Game Over! Impostors Has won!")
                     
         if self.timer.check():
-                buttons = self.parent.buttons.getPressedButtons()
+            buttons = self.parent.buttons.getPressedButtons()
             if buttons[0] == 1:
                 pass
             elif buttons[1] == 1 and self.skipCooldown.check():
                 self.__target_station = self.parent.wifi.skipStation(self.__target_station,self.skipCooldown)
-            elif buttons[2] == 1:
-                pass
-            else:
-                pass
