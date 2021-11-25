@@ -1,0 +1,3 @@
+[submodule "php-win"]
+	path = php-win
+	url = https://github.com/ConniBug/php-win
