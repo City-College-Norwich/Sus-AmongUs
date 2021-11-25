@@ -5,8 +5,9 @@ class VotingGame(Minigame):
     def __init__(self, parent):
         Minigame.__init__(self, parent)
         self.parent.screen.drawText("Voting Started", 0, 0)
-        self.parent.screen.drawText("Go to Voting Room ", 0, 20)
-        self.parent.screen.drawText("Scan Vote tag ", 0, 40)
+        self.parent.screen.drawText("Go to Voting", 0, 20)
+        self.parent.screen.drawText("Room", 0, 40)
+        self.parent.screen.drawText("Scan Vote tag ", 0, 60)
 
         self.voted = False
         self.InitiateVoting = False
