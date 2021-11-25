@@ -61,21 +61,21 @@ class Wifi:
 
     def startVoting(self):
         self._sendRequest("startVote")
+        return "ok"
     
     def startEmergency(self):
         voteType='meeting'
-        if self._sendRequest("checkMeetingLimit"):
-            if self._sendRequest("checkMeetingCooldown"):#if cooldown is over
-                voteType='meeting'
-                self._sendRequest("setVoteType?type=" + voteType)#so the server knows a vote has started from emergency meeting
-                self._sendRequest("startVote")
-            else:
-                return 'on cooldown'
+        if self._sendRequest("checkMeeting"):
+            voteType='meeting'
+            self._sendRequest("setVoteType?type=" + voteType)#so the server knows a vote has started from emergency meeting
+            self._sendRequest("startVote")
+        return "ok"
     
     def startReportBody(self):
         voteType='report'
         self._sendRequest("setVoteType?type=" + voteType)#so the server knows a vote has started from dead body reported
         self._sendRequest("startVote")
+        return "ok"
 
     def requestStation(self, tagID):
         return self._sendRequest("requestStation?badgeUID=" + tagID)
