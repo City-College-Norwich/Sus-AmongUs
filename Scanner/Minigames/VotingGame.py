@@ -15,9 +15,11 @@ class VotingGame(Minigame):
         '''#Old display text - Not sure if is still needed
         self.parent.screen.clear()
         self.parent.screen.drawText("Voting Started", 0, 0)
-        self.parent.screen.drawText("Go to Voting Room ", 0, 20)
-        self.parent.screen.drawText("Scan Vote tag ", 0, 40)
-        '''
+
+        self.parent.screen.drawText("Go to Voting", 0, 20)
+        self.parent.screen.drawText("Room", 0, 30)
+        self.parent.screen.drawText("Scan Vote tag ", 0, 50)
+
 
         self.voted = False
         self.InitiateVoting = False
