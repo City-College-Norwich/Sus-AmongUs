@@ -215,10 +215,12 @@ class Model:
             self.voteCooldown.set(self.VOTECOOLDOWN_AMOUNT)
 
         if voteArray[0][1] != voteArray[1][1]:
+            self.parent.screen.drawText(self.players[playerID][4] + " Ejected", 0, 0)
+            self.parent.screen.drawText(self.players[playerID][4], 0, 10)
             if self.players[playerID][0] == "Crewmate":
-                self.parent.screen.drawText("Crewmate Ejected", 0, 0)
+                self.parent.screen.drawText("was a crewmate", 0, 20)
             else:
-                self.parent.screen.drawText("Imposter Ejected", 0, 0)
+                self.parent.screen.drawText("was an imposter", 0, 20)
             return self.executePlayer(playerID)
         if voteArray[0][1] != voteArray[1][1]:
             self.parent.screen.drawText("    Draw", 0, 0)
