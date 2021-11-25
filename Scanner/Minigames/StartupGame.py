@@ -21,8 +21,8 @@ class StartupGame(Minigame):
             self.parent.wifi.startGame()
 
         elif self.parent.badgeUID is None and tag is not None:
-            self.parent.badgeUID = uid
             self.parent.wifi.registerUser(self.parent.badgeUID)
+            self.parent.badgeUID = uid
             self.StartGameState = True
 
         if self.StartGameState == True:
