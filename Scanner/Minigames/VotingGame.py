@@ -45,10 +45,8 @@ class VotingGame(Minigame):
                         self.parent.executePlayer(self.player2kill[0])
                         self.parent.screen.drawText(self.player2kill[1][4] + " Ejected", 0, 0)
                         self.parent.screen.drawText(self.player2kill[1][4], 0, 10)
-                        if self.player2kill[1][0] == "Crewmate":
-                            self.parent.screen.drawText("was a crewmate", 0, 20)
-                        else:
-                            self.parent.screen.drawText("was an imposter", 0, 20)
+                        self.parent.screen.drawText("was a " + self.player2kill[1][0], 0, 20)
+
                 elif self.player2kill == "draw":
                     self.parent.screen.drawText("No one Ejected", 0, 0)
                 self.parent.screen.drawText("   -Voting-", 0, 0)
