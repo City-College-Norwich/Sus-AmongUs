@@ -26,8 +26,8 @@ class Model:
         self.completedMinigames = 0  # how many games the player has completed
         self.state = GAME_STARTING
 
-        # card ID:   [team,   alive/dead, votecounter, hasVoted]
-        self.players = {}
+                      # card ID:   [team,   alive/dead, votecounter, hasVoted, playerID]
+        self.players ={}
 
         self.crewmateCount = 0  # total count of current crewmates in a game
         self.imposterCount = 0  # total number of current imposters in a game
@@ -43,11 +43,11 @@ class Model:
         self.totalVote = 0
         self.voting = False
         self.initiateVoteCounter = 0
-
-        self.VOTECOOLDOWN_AMOUNT = 20000
-        self.voteCooldown = TimerHelper()
-        self.voteType = None
         self.TotalVoters = 0
+        self.MEETINGCOOLDOWN_AMOUNT = 20000
+        self.meetingCooldown = TimerHelper()
+        self.voteType=None
+
 
         self.meetingsLeft = 3
 
@@ -90,15 +90,16 @@ class Model:
         if self.state == GAME_RUNNING:
             alerts["GameRunning"] = True
             if self.sabotaged:
-                alerts["Sabotaged"] = self.sabotage_type  # where it checks for sabotage
-                if self.sabotage_type == 1:
+                alerts["Sabotaged"] = self.sabotage_type #where it checks for sabotage
+                if self.sabotage_type == 1 or self.sabotage_type == 3:
                     alerts["SabotagedStation"] = self.sabotaged_station
 
                 if self.sabotage_timer.check():  # ends game if timer runs out
                     self.state = IMPOSTER_WIN
 
-            elif self.voting == True:  # starts vote
-                alerts["Start_Voting"] = self.voteType  # change this elliot!!!!!
+            elif self.voting == True: #starts vote
+                alerts["Start_Voting"] = self.voteType
+
                 if self.initiateVoteCounter == self.imposterCount + self.crewmateCount:
                     alerts["Initiate_Voting"] = True
 
@@ -143,14 +144,7 @@ class Model:
         self.voting = True
         return "ok"
 
-    def voteTimer(self): #Does not start the timer for voting until everyone joins
-        self.TotalVoters = 0
-        if self.rfid == self.parent.rfid.doRead(True):
-            self.TotalVoters += 1
-        else:
-            self.parent.screen.drawText("Scan tag again ", 0, 0)
-
-    def voteType(type):
+    def setVoteType(self, type):
         self.voteType = type
         return "ok"
 
@@ -164,8 +158,8 @@ class Model:
     def registerUser(self, badgeUID):  # this is where players are assigned
         if badgeUID in self.players.keys():
             return "User is already Registered!"
-
-        self.players[badgeUID] = ["team", True, 0, 0]
+        self.playername = len(self.players.keys())+1
+        self.players[badgeUID] = ["team", True, 0, 0, self.playername]
         self.uids[badgeUID] = "playerId"
         return "Okay"
 
@@ -217,9 +211,9 @@ class Model:
         sorted(voteArray, key=lambda x: x[1], reverse=True)
         playerID = voteArray[0][0]
         self.voting = False
-
-        if self.voteType == 'meeting':
-            self.voteCooldown.set(self.VOTECOOLDOWN_AMOUNT)
+        
+        if self.voteType=='meeting':
+            self.meetingCooldown.set(self.MEETINGCOOLDOWN_AMOUNT)
 
         if voteArray[0][1] != voteArray[1][1]:
             return self.executePlayer(playerID)
@@ -236,6 +230,13 @@ class Model:
         if self.players[uid][0] == "Imposter":
             return "True"
         return "False"
+
+
+
+    def getPlayers(self):
+        return json.dumps(self.players)
+       
+
 
     fileList = [  # list of relevent files
         "App.py",
@@ -272,12 +273,11 @@ class Model:
             return file
         return ""
 
-    def checkVoteLimit():
-        if self.meetingsLeft == 0:
-            return False
-        else:
+    def checkMeeting(self):
+        if self.meetingCooldown.check() and self.meetingsLeft != 0:
+            self.meetingsLeft-=1
             return True
+        else:
+            return False
+            
 
-    def useMeeting():
-        self.meetingsLeft -= 1
-        return "ok"

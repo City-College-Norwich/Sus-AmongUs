@@ -1,3 +1,4 @@
+import json
 import time
 
 import network
@@ -21,14 +22,14 @@ class Wifi:
         while True:
             if self.wlan.isconnected():
                 print("Connected to: " + self.SSID)
-                self.parent.screen.clear()
+                
                 self.parent.screen.drawText("Connected", 0, 0)
                 self.parent.screen.draw()
                 return
             else:
                 time.sleep_ms(500)
                 print("Connecting...")
-                self.parent.screen.clear()
+                
                 self.parent.screen.drawText("Connecting", 0, 0)
     
     def sendRequest(self, message):
@@ -60,23 +61,21 @@ class Wifi:
 
     def startVoting(self):
         self._sendRequest("startVote")
+        return "ok"
     
     def startEmergency(self):
-        #Add screen output
-        if self.sendRequest("checkVoteLimit"):
-            if self._sendRequest("checkVoteCooldown"):#if cooldown is over
-                voteType='meeting'
-                self.sendRequest("useMeeting")
-                self._sendRequest("setVoteType?type=" + voteType)#so the server knows a vote has started from emergency meeting
-                self._sendRequest("startVote")
-            else:
-                return 'on cooldown'
+        if self._sendRequest("checkMeeting"):
+            voteType='meeting'
+            self._sendRequest("setVoteType?type=" + voteType)#so the server knows a vote has started from emergency meeting
+            self._sendRequest("startVote")
+        return "ok"
+
     
     def startReportBody(self):
-        #Add screen output
         voteType='report'
         self._sendRequest("setVoteType?type=" + voteType)#so the server knows a vote has started from dead body reported
         self._sendRequest("startVote")
+        return "ok"
 
     def requestStation(self, tagID):
         return self._sendRequest("requestStation?badgeUID=" + tagID)
@@ -112,7 +111,7 @@ class Wifi:
         return self._sendRequest("getTagName?uid=" + uid)
 
     def killPlayer(self, myUID, victimUID):
-        return self._sendRequest("killPlayer?myUID={}&victimUID{}".format(myUID, victimUID))
+        return self._sendRequest("killPlayer?myUID={}&victimUID={}".format(myUID, victimUID))
 
     def isImposter(self, uid):
         return self._sendRequest("isImposter?uid="+uid)
@@ -122,4 +121,7 @@ class Wifi:
 
     def getFile(self, filename):
         return self._sendRequest("AutoDownloader/GetFile?fileName="+filename)
+
+    def getPlayers(self):
+        return json.loads(self._sendRequest("getPlayers"))
     

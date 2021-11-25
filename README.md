@@ -1,6 +1,6 @@
-# Amongst Us
+# Sus
 
-Amongst Us is a python application that can be used to play an in real life clone of hit video game ["Among Us"](https://www.innersloth.com/games/among-us/)
+Sus is a python application that can be used to play an in real life clone of hit video game ["Among Us"](https://www.innersloth.com/games/among-us/)
 
 As far as we were aware there were no solutions already to do this, so we created one.
 

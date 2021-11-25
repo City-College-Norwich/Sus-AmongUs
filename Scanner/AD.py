@@ -11,7 +11,9 @@ class DummyScreen:
     
     def draw(self):
         pass
-
+    def clear(self):
+        pass
+    
 class DummyParent:
     screen = DummyScreen()
 
