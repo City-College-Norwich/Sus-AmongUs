@@ -42,13 +42,23 @@ class Model:
         self.totalVote = 0
         self.voting = False
         self.initiateVoteCounter = 0
+        
+        self.VOTECOOLDOWN_AMOUNT = 20000
+        self.voteCooldown = TimerHelper()
+        self.voteType=None
+
+        self.meetingsLeft = 3
 
     def getTagName(self, uid):#use to find badge id of player 
         if uid in self.uids.keys():            
             return self.uids[uid] 
         else:
             return "No tags found"
-            
+
+    def setMaxMiniGames(self, cnt):
+        self.totalMinigames = int(cnt)
+        return "okay"
+        
     def startGame(self):#takes game into active and starts up (this needs to be affected for lobby)
         players = list(range(len(self.players.keys())))
         for i in range(self.maxImposters):
@@ -86,7 +96,7 @@ class Model:
                     self.state = IMPOSTER_WIN
 
             elif self.voting == True: #starts vote
-                alerts["Start_Voting"] = True
+                alerts["Start_Voting"] = self.voteType # change this elliot!!!!!
                 if self.initiateVoteCounter == self.imposterCount + self.crewmateCount:
                     alerts["Initiate_Voting"] = True
 
@@ -96,6 +106,9 @@ class Model:
             elif self.crewmateCount == self.imposterCount:
                 self.state = IMPOSTER_WIN
                 alerts["Winner_Decided"] = "Imposters"
+            if self.totalMinigames == self.completedMinigames:
+                self.state = CREWMATE_WIN
+                alerts["Winner_Decided"] = "Crewmates"
 
         return json.dumps(alerts)
 
@@ -117,6 +130,7 @@ class Model:
         return "ok"
 
     def startVote(self):#starts voting game 
+
         self.totalVote = 0
         self.initiateVoteCounter = 0
 
@@ -125,6 +139,10 @@ class Model:
             self.players[key][3] = 0
 
         self.voting = True
+        return "ok"
+
+    def voteType(type):
+        self.voteType = type
         return "ok"
 
     def initiateVote(self): #Ensure everyone is ready to vote. Further verification needs to be added.
@@ -154,6 +172,7 @@ class Model:
             elif self.sabotage_type == 3:
                 self.sabotaged_station = self.requestStation()
                 self.sabotage_timer.set(90000)
+        return "ok"
 
 
 
@@ -191,11 +210,15 @@ class Model:
         sorted(voteArray, key=lambda x: x[1], reverse=True)
         playerID = voteArray[0][0]
         self.voting = False
+
+        if self.voteType=='meeting':
+            self.voteCooldown.set(self.VOTECOOLDOWN_AMOUNT)
+
         if voteArray[0][1] != voteArray[1][1]:
             return self.executePlayer(playerID)
         if voteArray[0][1] != voteArray[1][1]:
             self.parent.screen.drawText("Draw")
-        #To Add: The player ejected will need to be returned and consequently printed to the screen of every scanner.
+        #TODO: The player ejected will need to be returned and consequently printed to the screen of every scanner.
         
     def isAlive(self, badgeUID):#checks to see if player is alive 
         if self.players[badgeUID][1]:
@@ -230,6 +253,7 @@ class Model:
         "Minigames/ReactionGame.py",
         "Minigames/RecordTemperatureGame.py",
         "Minigames/Sabotage1.py",
+        "Minigames/Sabotage3.py",
         "Minigames/StartupGame.py",
         "Minigames/UploadGame.py",
         "Minigames/VotingGame.py"]
@@ -247,3 +271,15 @@ class Model:
                 file = f.read()
             return file
         return ""
+
+
+    def checkVoteLimit():
+        if self.meetingsLeft==0:
+            return False
+        else:
+            return True
+    
+    def useMeeting():
+        self.meetingsLeft-=1
+        return "ok"
+        

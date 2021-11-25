@@ -66,14 +66,15 @@ class Minigame:
             sabotage_type = alerts['Sabotaged']
             if sabotage_type == 1 or sabotage_type == 3:
                 sabotagedStation = alerts['SabotagedStation']
-                self.parent.currentMiniGame = self.parent.gotoSabotageStationGame(sabotage_type,sabotagedStation)
+                self.parent.gotoSabotageStationGame(sabotage_type,sabotagedStation)
                 
         elif self.sabotageOccured == True:
             self.sabotageOccured = False
             self.parent.gotoIdleGame()
 
         if 'Start_Voting' in alerts and self.parent.state == self.parent.RUNNING:
-            self.parent.gotoVotingGame()
+            self.vType = alerts['Start_Voting']
+            self.parent.gotoVotingGame(self.vType)
 
             #TODO: REDO!
             # if sabotage_type == 1:

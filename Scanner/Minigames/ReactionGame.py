@@ -13,10 +13,10 @@ class ReactionGame(Minigame):
         self.timer = TimerHelper()
         self.timer.set(time_to_change*1000)
         self.state = False
-        self.parent.screen.drawText("Reaction Test", 0, 0)
         print("ReactionGame")
 
     def update(self):
+        
         self.parent.screen.drawText("Reaction Game", 0, 0)
 
         if self.timer.check():
@@ -29,12 +29,13 @@ class ReactionGame(Minigame):
                 print(2)
                 time_to_change = 2
                 self.timer.set(time_to_change*1000)
+                
                 self.parent.screen.drawRectangle(0, 0, 128, 64)
             else:
                 print(3)
                 time_to_change = random.randint(5, 16)
                 self.timer.set(time_to_change*1000)
-                self.parent.screen.clear()
+                
 
 
         if self.can_press_button:

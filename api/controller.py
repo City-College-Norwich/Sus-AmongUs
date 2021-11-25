@@ -10,6 +10,10 @@ model = Model()
 def home():
     return model.callHomepage()
 
+@app.route("/setMaxMinigames")
+def setMaxMiniGames():
+    return model.setMaxMiniGames(request.args["count"])
+
 
 @app.route("/StartGame")
 def startGame():

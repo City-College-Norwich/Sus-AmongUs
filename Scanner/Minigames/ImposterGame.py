@@ -8,38 +8,34 @@ class ImposterGame(Minigame):
         Minigame.__init__(self, parent)
         self.timer = TimerHelper()
         self.timer.set(60000)
+        self.parent.screen.clear()
         self.parent.screen.drawText("Imposter", 0, 0)
     
     def update(self):
-        if self.timer.check():
-            buttons = self.parent.buttons.getPressedButtons()
-            if buttons[0] == 1:
-                self.wifi.createSabotage("1")
-            elif buttons[1] == 1:
-                self.wifi.createSabotage("2")
-            elif buttons[2] == 1:
-                self.wifi.createSabotage("3")
-
-
-        if self.parent.state ==self.parent.RUNNING:
-           
+        if self.parent.state == self.parent.RUNNING:
+            
+            if self.timer.check():
+                buttons = self.parent.buttons.getPressedButtons()
+                if buttons[0] == 1:
+                    self.parent.wifi.createSabotage("1")
+                elif buttons[1] == 1:
+                    self.parent.wifi.createSabotage("2")
+                elif buttons[2] == 1:
+                    self.parent.wifi.createSabotage("3")
 
             uid, tag = self.parent.rfid.doRead(True)
-            
             isAlive = self.parent.wifi.isAlive(self.parent.badgeUID)
             if isAlive:
                 if tag == 'playerId':
                     uidIsAlive = self.parent.wifi.isAlive(uid)
                     if uid != self.parent.badgeUID and uidIsAlive:
                         self.parent.wifi.killPlayer(self.parent.badgeUID, uid)
-                    elif uid==self.parent.badgeUID:
+                    elif uid == self.parent.badgeUID:
                         self.parent.screen.drawText("are you ok?")
                     elif not uidIsAlive:
                         self.parent.wifi.startVoting()                     
                 elif tag == ".votingHub":
                     self.parent.wifi.startVoting()
-           
-
         elif self.parent.state == self.parent.CREWMATE_WIN:
             while not any(self.parent.buttons.getPressedButtons()):
                 self.parent.screen.drawText("Game Over! Crewmates Has won!",0,0)

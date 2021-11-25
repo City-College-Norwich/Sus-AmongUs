@@ -21,6 +21,11 @@ from Minigames.ImposterGame import ImposterGame
 
 from Minigames.VotingGame import VotingGame
 
+from Minigames.DownloadGame import DownloadGame
+from Minigames.IdBadge import IdBadge
+from Minigames.ReactionGame import ReactionGame
+from Minigames.RecordTemperatureGame import RecordTemperatureGame
+from Minigames.UploadGame import UploadGame
 
 KEEP_ALIVE_TIMEOUT = 500  # timeout in ms
 
@@ -31,8 +36,6 @@ class App:
     VOTING = 2
     CREWMATE_WIN = 3
     IMPOSTOR_WIN = 4
-
-
 
     def __init__(self):
         self.rfid = Rfid.Rfid(self)
@@ -48,6 +51,15 @@ class App:
         self.state = self.STARTING
         self.isMinigameCompleted = False
         self.lastMinigame = None
+        self.votingType=None
+
+        self.user_minigames_dict = {
+            DownloadGame: False,
+            IdBadge: False,
+            ReactionGame: False,
+            RecordTemperatureGame: False,
+            UploadGame: False,
+        }
 
     def run(self):
         self.keep_alive_timer.set(KEEP_ALIVE_TIMEOUT)
@@ -67,9 +79,9 @@ class App:
 
             self.currentMiniGame.alertsFromServer(alerts)
             self.keep_alive_timer.set(KEEP_ALIVE_TIMEOUT)
-    
 
     def gotoIdleGame(self):
+        self.state = self.RUNNING
         team = self.wifi.isImposter(self.badgeUID)
         team = "False" if team is None else team
         if team == "False":
@@ -77,14 +89,13 @@ class App:
         else:
             self.currentMiniGame = ImposterGame(self)
 
-    def gotoSabotageStationGame(self, sabotageType,station):
+    def gotoSabotageStationGame(self, sabotageType, station):
         if sabotageType == 1:
-            self.currentMiniGame = Sabotage1(self,station)
+            self.currentMiniGame = Sabotage1(self, station)
         elif sabotageType == 3:
             self.currentMiniGame = Sabotage3(self,station)
     
-    def gotoVotingGame(self):
+    def gotoVotingGame(self,type):
         self.state = self.VOTING
+        self.votingType=type
         self.currentMiniGame = VotingGame(self)
-
-

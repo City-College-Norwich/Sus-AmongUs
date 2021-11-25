@@ -5,7 +5,7 @@ class IdBadge(Minigame):
     def __init__(self, parent):
         Minigame.__init__(self, parent)
         self.parent = parent
-
+        self.parent.screen.clear()
         self.parent.screen.drawText('Scan Card', 0, 0)
 
     def update(self):

@@ -18,6 +18,7 @@ class UploadGame(Minigame):
             if self.timer.check():
                 self.progress_width += random.choice(range(5, 16))
                 self.progress = self.progress_width
+                self.parent.screen.clear()
                 self.parent.screen.drawText("Keep Scanning", 0, 0)
                 self.parent.screen.drawRectangle(10, 20, self.progress_width, 15)
                 self.parent.screen.drawText(str(self.progress) + "%", 50, 45)
@@ -30,8 +31,10 @@ class UploadGame(Minigame):
                     self.parent.lastMinigame = UploadGame
 
             else:
+                self.parent.screen.clear()
                 self.parent.screen.drawText("Error: Download Task not complete", 0, 0)
         else:
+            self.parent.screen.clear()
             self.parent.screen.drawText("Keep Scanning", 0, 0)
             self.parent.screen.drawRectangle(10, 20, self.progress_width, 15)
             self.parent.screen.drawText(str(self.progress) + "%", 50, 45)

@@ -11,7 +11,8 @@ class StartupGame(Minigame):
         print("Initiate StartupGame")
     
         # Tell player to scan badge
-        self.parent.screen.drawText('Scan Card', 0, 0)
+        self.parent.screen.clear()
+        self.parent.screen.drawText('Scan Your ID', 0, 0)
         
     def update(self):
         uid, tag = self.parent.rfid.doRead(True)
@@ -25,5 +26,7 @@ class StartupGame(Minigame):
             self.StartGameState = True
 
         if self.StartGameState == True:
-            self.parent.screen.drawText("Scan start game tag", 10, 10)
+            
+            
+            self.parent.screen.drawText("Scan start game tag", 0, 0)
 
