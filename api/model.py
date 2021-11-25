@@ -43,8 +43,8 @@ class Model:
         self.voting = False
         self.initiateVoteCounter = 0
         
-        self.VOTECOOLDOWN_AMOUNT = 20000
-        self.voteCooldown = TimerHelper()
+        self.MEETINGCOOLDOWN_AMOUNT = 20000
+        self.meetingCooldown = TimerHelper()
         self.voteType=None
 
         self.meetingsLeft = 3
@@ -96,7 +96,7 @@ class Model:
                     self.state = IMPOSTER_WIN
 
             elif self.voting == True: #starts vote
-                alerts["Start_Voting"] = self.voteType # change this elliot!!!!!
+                alerts["Start_Voting"] = self.voteType
                 if self.initiateVoteCounter == self.imposterCount + self.crewmateCount:
                     alerts["Initiate_Voting"] = True
 
@@ -141,7 +141,7 @@ class Model:
         self.voting = True
         return "ok"
 
-    def voteType(type):
+    def setVoteType(self, type):
         self.voteType = type
         return "ok"
 
@@ -212,7 +212,7 @@ class Model:
         self.voting = False
 
         if self.voteType=='meeting':
-            self.voteCooldown.set(self.VOTECOOLDOWN_AMOUNT)
+            self.meetingCooldown.set(self.MEETINGCOOLDOWN_AMOUNT)
 
         if voteArray[0][1] != voteArray[1][1]:
             return self.executePlayer(playerID)
@@ -273,13 +273,12 @@ class Model:
         return ""
 
 
-    def checkVoteLimit():
+    def checkMeetingLimit(self):
         if self.meetingsLeft==0:
             return False
         else:
+            self.meetingsLeft-=1
             return True
     
-    def useMeeting():
-        self.meetingsLeft-=1
-        return "ok"
-        
+    def checkMeetingCooldown(self):
+        return self.meetingCooldown.check()

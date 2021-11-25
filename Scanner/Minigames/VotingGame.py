@@ -19,7 +19,7 @@ class VotingGame(Minigame):
         self.parent.screen.drawText("Go to Voting", 0, 20)
         self.parent.screen.drawText("Room", 0, 30)
         self.parent.screen.drawText("Scan Vote tag ", 0, 50)
-
+'''
 
         self.voted = False
         self.InitiateVoting = False
