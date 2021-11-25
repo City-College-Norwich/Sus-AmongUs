@@ -12,7 +12,7 @@ class VotingGame(Minigame):
             self.parent.screen.drawText("Dead Body Reported!", 0, 0)
         self.parent.screen.drawText("Go to Voting Room ", 0, 20)
         
-        '''#Old display text - Not sure if is still needed
+        #Old display text - Not sure if is still needed
         self.parent.screen.clear()
         self.parent.screen.drawText("Voting Started", 0, 0)
 
