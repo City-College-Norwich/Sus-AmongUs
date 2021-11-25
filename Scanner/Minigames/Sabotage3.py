@@ -3,7 +3,6 @@ from TimerHelper import TimerHelper
 
 
 class Sabotage3(Minigame):
-
     def __init__(self, parent,sabotagedStation):
         super().__init__(parent)
         self.parent = parent

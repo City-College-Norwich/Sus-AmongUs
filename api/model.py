@@ -89,7 +89,7 @@ class Model:
             alerts["GameRunning"] = True
             if self.sabotaged:
                 alerts["Sabotaged"] = self.sabotage_type #where it checks for sabotage
-                if self.sabotage_type == 1:
+                if self.sabotage_type == 1 or self.sabotage_type == 3:
                     alerts["SabotagedStation"] = self.sabotaged_station
             
                 if self.sabotage_timer.check():# ends game if timer runs out 
