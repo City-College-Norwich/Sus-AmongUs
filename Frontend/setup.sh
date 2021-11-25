@@ -1,5 +1,24 @@
 #!/bin/bash
 
+if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+        echo "RUnning setup on linux-gnu"
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+        echo "RUnning setup on MacOSX"
+elif [[ "$OSTYPE" == "cygwin" ]]; then
+        echo "RUnning setup on Poixor windows virtulisation"
+elif [[ "$OSTYPE" == "msys" ]]; then
+        echo "Running setup on Lightweight shell and GNU utilities compiled for Windows (part of MinGW)"
+        echo "Cant run on this platform."
+        exit
+elif [[ "$OSTYPE" == "win32" ]]; then
+        echo "RUnning setup on win32"
+elif [[ "$OSTYPE" == "freebsd"* ]]; then
+        echo "RUnning setup on FreeBSD"
+else
+        echo "RUnning setup on Unknown"
+fi
+
+
 if [ "$EUID" -ne 0 ]
   then echo "Please run as root."
   exit
