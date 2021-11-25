@@ -10,6 +10,10 @@ model = Model()
 def home():
     return model.callHomepage()
 
+@app.route("/setMaxMinigames")
+def setMaxMiniGames():
+    return model.setMaxMiniGames(request.args["count"])
+
 
 @app.route("/StartGame")
 def startGame():
@@ -99,5 +103,9 @@ def initiateVote():
 @app.route("/voteTimeEnd")
 def voteTimeEnd():
     return model.voteTimeEnd()
+
+@app.route("/getPlayers")
+def getPlayers():
+    return model.getPlayers()
 
 if __name__ == '__main__': app.run(host='0.0.0.0')

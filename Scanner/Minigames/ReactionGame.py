@@ -13,8 +13,6 @@ class ReactionGame(Minigame):
         self.timer = TimerHelper()
         self.timer.set(time_to_change*1000)
         self.state = False
-        self.parent.screen.clear()
-        self.parent.screen.drawText("Reaction Test", 0, 0)
         print("ReactionGame")
 
     def update(self):

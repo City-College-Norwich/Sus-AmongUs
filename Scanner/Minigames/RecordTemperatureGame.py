@@ -10,7 +10,7 @@ class RecordTemperatureGame(Minigame):
         self.current_temperature = random.randint(15, 33)
         LowerTemp = random.choice(range(int(round(self.current_temperature/2)), self.current_temperature-5))
         UpperTemp = random.choice(range(self.current_temperature+5, self.current_temperature*2))
-        self.logged_temperature = random.choice(UpperTemp, LowerTemp)
+        self.logged_temperature = random.choice([UpperTemp, LowerTemp])
 
         self.time = TimerHelper()
         self.time.set(500)

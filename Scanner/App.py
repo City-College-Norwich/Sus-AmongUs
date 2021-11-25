@@ -81,6 +81,7 @@ class App:
             self.keep_alive_timer.set(KEEP_ALIVE_TIMEOUT)
 
     def gotoIdleGame(self):
+        self.state = self.RUNNING
         team = self.wifi.isImposter(self.badgeUID)
         team = "False" if team is None else team
         if team == "False":
@@ -95,7 +96,6 @@ class App:
             self.currentMiniGame = Sabotage3(self,station)
     
     def gotoVotingGame(self,type):
-
         self.state = self.VOTING
         self.votingType=type
         self.currentMiniGame = VotingGame(self)
