@@ -37,9 +37,10 @@ class VotingGame(Minigame):
                 if self.parent.wifi.isAlive(self.parent.badgeUID):
                     self.player2kill = self.parent.wifi.voteTally(uid, self.parent.badgeUID)
                     if self.player2kill != "ok" and self.player2kill != "draw":
-                        self.parent.screen.drawText(self.player2kill[4] + " Ejected", 0, 0)
-                        self.parent.screen.drawText(self.player2kill[4], 0, 10)
-                        if self.player2kill[0] == "Crewmate":
+                        self.parent.executePlayer(self.player2kill[0])
+                        self.parent.screen.drawText(self.player2kill[1][4] + " Ejected", 0, 0)
+                        self.parent.screen.drawText(self.player2kill[1][4], 0, 10)
+                        if self.player2kill[1][0] == "Crewmate":
                             self.parent.screen.drawText("was a crewmate", 0, 20)
                         else:
                             self.parent.screen.drawText("was an imposter", 0, 20)

@@ -214,7 +214,7 @@ class Model:
         if self.voteType=='meeting':
             self.voteCooldown.set(self.VOTECOOLDOWN_AMOUNT)
         if voteArray[0][1] != voteArray[1][1]:
-            return self.players[playerID]
+            return list(playerID,self.players[playerID])
         if voteArray[0][1] != voteArray[1][1]:
             return "draw"
         #TODO: The player ejected will need to be returned and consequently printed to the screen of every scanner.

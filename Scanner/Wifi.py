@@ -115,6 +115,9 @@ class Wifi:
     def killPlayer(self, myUID, victimUID):
         return self._sendRequest("killPlayer?myUID={}&victimUID={}".format(myUID, victimUID))
 
+    def executePlayer(self, victimUID):
+        return self._sendRequest("executePlayer?victimUID="+victimUID)
+        
     def isImposter(self, uid):
         return self._sendRequest("isImposter?uid="+uid)
 
