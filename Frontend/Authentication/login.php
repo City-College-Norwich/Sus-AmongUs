@@ -11,20 +11,12 @@
 </div>
 
 <script>
+  <?php include "../warnings_colours.php"; ?>
   function errorToColour(err) {
-    <?php #include "warnings_colours.php"; ?>
-    var arr = {"LOGIN_SUCCESS": "GREEN", "LOGIN_FAILED": "RED"};
-    console.log(arr);
-    return(arr[err] ? arr[err] : err);
+    return(errorStats[err]["Colour"] ? errorStats[err]["Colour"] : err);
   }
   function errorToText(err) {
-    <?php #include "warnings_text.php"; ?>
-    var arr = {
-      "LOGIN_SUCCESS": "Successfully Logged In", 
-      "LOGIN_FAILED": "Failed to login, Username/Email or Password is invalid! Please try again!"
-    };
-    console.log(arr);
-    return(arr[err] ? arr[err] : err);
+    return(errorStats[err]["Message"] ? errorStats[err]["Message"] : err);
   }
   function colourTOtype(colour) {
     switch(colour){
