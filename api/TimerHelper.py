@@ -28,7 +28,6 @@ class TimerHelper:
         """
         self.start = TimerHelper.__get_current_time()
         self.targetTime = 0
-        pass
 
     def set(self, timeInMS):
         """
@@ -64,7 +63,10 @@ class TimerHelper:
         try:
             tm = time.ticks_ms()
         except AttributeError:
-            tm = time.time()*1000
+            try:
+                tm = time.perf_counter()*1000
+            except AttributeError:
+                tm = time.time()*1000
 
         return tm
 

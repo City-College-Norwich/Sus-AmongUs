@@ -36,7 +36,7 @@ class GoodGuyGame(Minigame):
             if isAlive:
                 if tag == 'playerId':
                     if not self.parent.wifi.isAlive(uid):
-                        self.parent.wifi.startVoting()
+                        self.parent.wifi.startReportBody()
 
                 elif tag == ".votingHub":
                     self.parent.wifi.startEmergency()
@@ -49,6 +49,9 @@ class GoodGuyGame(Minigame):
                 else:
 
                     self.parent.screen.drawText("GOTO: " + str(self.__target_station), 0, 0)
+            else:#if player is dead
+                self.parent.screen.clear()
+                self.parent.screen.drawText("You are dead!", 0, 0)
         else:
             if self.state == CREWMATE_WIN:
                 while not any(self.parent.buttons.getPressedButtons()):
