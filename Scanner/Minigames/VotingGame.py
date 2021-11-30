@@ -24,7 +24,7 @@ class VotingGame(Minigame):
         self.parent.TotalVoters += 1
         if self.InitiateVoting == False:
             if tag == ".votingHub":
-                self.parent.wifi.joinVote()
+                self.parent.wifi.joinVote(self.parent.badgeUID)
         else:
  
             if self.voted==False:
