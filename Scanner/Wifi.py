@@ -99,11 +99,8 @@ class Wifi:
     def voteTally(self, badgeUID, myUID):
         return self._sendRequest("voteTally?badgeUID="+badgeUID+"&myUID="+myUID)
 
-    def initiateVote(self):
-        return self._sendRequest("initiateVote")
-
-    def voteTimeEnd(self):
-        return self._sendRequest("voteTimeEnd")
+    def joinVote(self,badgeUID):
+        return self._sendRequest("joinVote?badgeUID=" + badgeUID)
 
     def keepAlive(self):
         return self._sendRequest("keepAlive")
