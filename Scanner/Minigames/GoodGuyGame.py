@@ -48,7 +48,8 @@ class GoodGuyGame(Minigame):
                 self.parent.screen.drawText("You are dead!", 0, 0)
         else:
             if self.parent.state == self.parent.CREWMATE_WIN:
-                self.parent.screen.drawText("Game Over! Crewmates Has won!", 0, 0)
-
+                team = "Crewmates"
             elif self.parent.state == self.parent.IMPOSTOR_WIN:
-                self.parent.screen.drawText("Game Over! Impostors Has won!", 0, 0)
+                team = "Imposters"
+            self.parent.screen.drawText("Game Over!", 0, 0)
+            self.parent.screen.drawText("Game Over! {} wins".format(team), 0, 0)
