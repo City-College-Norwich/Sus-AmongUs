@@ -108,9 +108,9 @@ class Model:
                 if self.sabotage_type == 1 or self.sabotage_type == 3:
                     alerts["SabotagedStation"] = self.sabotaged_station
 
-                if self.sabotage_timer.check():  # ends game if timer runs out
-                    print ("========= TIMER END ===============")
-                    self.state = IMPOSTER_WIN
+                    if self.sabotage_timer.check():  # ends game if timer runs out
+                        print ("========= TIMER END ===============")
+                        self.state = IMPOSTER_WIN
 
             elif self.voting == True: #starts vote
 
@@ -206,7 +206,6 @@ class Model:
         if self.sabotaged == True:
             pass
         else:
-            self.sabotaged = True
             self.sabotage_type = sabotageType
             if self.sabotage_type == 1:
                 self.sabotaged_station = self.requestStation()
@@ -214,6 +213,7 @@ class Model:
             elif self.sabotage_type == 3:
                 self.sabotaged_station = self.requestStation()
                 self.sabotage_timer.set(90000)
+            self.sabotaged = True
         return "ok"
 
     def sabotageCompleted(self, badgeUID):  # makes it so one person cant act as two people in the sbotage game
