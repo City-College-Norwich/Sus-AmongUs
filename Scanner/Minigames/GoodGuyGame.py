@@ -43,7 +43,7 @@ class GoodGuyGame(Minigame):
 
                 elif tag == self.__target_station:
 
-                    self.parent.currentMiniGame = random.choice([game for game in self.parent.user_minigames_dict if self.parent.user_minigames_dict[game]])
+                    self.parent.currentMiniGame = random.choice([game for game in self.parent.user_minigames_dict if not self.parent.user_minigames_dict[game]])()
                     # sets current minigame to a random incomplete minigame
 
                 else:
