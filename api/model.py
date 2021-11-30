@@ -260,7 +260,7 @@ class Model:
         return "no"
 
     def isImposter(self, uid):  # checks if player is imposter
-        if self.players[uid][0] == "Imposter":
+        if self.players[uid].team == "Imposter":
             return "True"
         return "False"
 
