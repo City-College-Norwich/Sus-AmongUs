@@ -51,8 +51,8 @@ class Minigame:
             self.parent.gotoIdleGame()
             self.parent.state = self.parent.RUNNING
 
-        if 'Winner_Decided' in alerts:
-            winner = alerts['Winner_Decided']
+        if 'Winner' in alerts:
+            winner = alerts['Winner']
             if winner == "Crewmates":
                 self.parent.gotoIdleGame()
                 self.parent.currentMiniGame.state = 1  # Crewmate win
@@ -76,10 +76,4 @@ class Minigame:
             self.vType = alerts['Start_Voting']
             self.parent.gotoVotingGame(self.vType)
 
-            #TODO: REDO!
-            # if sabotage_type == 1:
-            #     self.parent.currentMiniGame = Sabotage1(parent)
-            # elif sabotage_type == 2:
-            #     self.parent.currentMiniGame = Sabotage2(parent)
-            # else:
-            #     self.parent.currentMiniGame = Sabotage3(parent)
+
