@@ -241,7 +241,7 @@ class Model:
             self.voting = False
             self.votingRunning = False
 
-            voteArray ={0: [PlayerSomeone], 2: [someoneelse], 3: [player1]}
+            voteArray ={}
             for player in self.players.values():
                 if player.votesAgainst in voteArray.keys():
                     voteArray[player.votesAgainst].append(player)
