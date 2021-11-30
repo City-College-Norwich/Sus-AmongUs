@@ -157,11 +157,11 @@ class Model:
 
     def registerUser(self, badgeUID):  # this is where players are assigned
         if badgeUID in self.players.keys():
-            return "User is already Registered!"
+            return False #user is already registered
         self.playername = len(self.players.keys())+1
         self.players[badgeUID] = ["team", True, 0, 0, self.playername]
         self.uids[badgeUID] = "playerId"
-        return "Okay"
+        return True # User registered
 
     def sabotage(self,
                  sabotageType):  # defines basic sabotage value (second one needs to be made for player reset as the limit is a static number not a timer)
