@@ -4,7 +4,7 @@ class VotingGame(Minigame):
     def __init__(self, parent):
         Minigame.__init__(self, parent)
 
-        
+        self.parent.screen.clear()
         if self.parent.votingType == 'meeting':
             self.parent.screen.drawText("EmergencyMeeting", 0, 0)
         elif self.parent.votingType == 'report':
