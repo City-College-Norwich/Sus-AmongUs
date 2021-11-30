@@ -52,4 +52,4 @@ class GoodGuyGame(Minigame):
             elif self.parent.state == self.parent.IMPOSTOR_WIN:
                 team = "Imposters"
             self.parent.screen.drawText("Game Over!", 0, 0)
-            self.parent.screen.drawText("Game Over! {} wins".format(team), 0, 0)
+            self.parent.screen.drawText("{} wins".format(team), 0, 20)
