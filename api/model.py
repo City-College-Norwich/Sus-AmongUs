@@ -236,6 +236,7 @@ class Model:
     def endVote(self):
         if self.voting == True:
             self.voting = False
+            self.votingRunning = False
             voteArray = []
             for key in self.players:
                 addPlayer = []
