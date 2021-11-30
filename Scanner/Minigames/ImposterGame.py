@@ -53,11 +53,11 @@ class ImposterGame(Minigame):
 
     def drawGUI(self):
         self.parent.screen.drawText("Imposter", 0, 0)
-        self.parent.screen.drawText("Sabotage:", 0, 10)
-        self.parent.screen.drawText("Buttons 1-3", 0, 20)
-        self.parent.screen.drawText("o", 100, 20)
-        self.parent.screen.drawText("o", 90, 28)
-        self.parent.screen.drawText("o", 110, 28)
+        self.parent.screen.drawText("Sabotage:", 0, 30)
+        self.parent.screen.drawText("Buttons 1-3", 0, 40)
+        self.parent.screen.drawText("o", 100, 10)
+        self.parent.screen.drawText("o", 90, 18)
+        self.parent.screen.drawText("o", 110, 18)
         if self.timer.check():
             self.parent.screen.drawText("Sabotage Ready", 0, 50)
 
