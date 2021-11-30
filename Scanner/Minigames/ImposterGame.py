@@ -7,7 +7,7 @@ class ImposterGame(Minigame):
     def __init__(self, parent):
         Minigame.__init__(self, parent)
         self.timer = TimerHelper()
-        self.timer.set(120000)
+        self.timer.set(60000)
         self.parent.screen.clear()
         self.drawGUI()
         
@@ -50,6 +50,7 @@ class ImposterGame(Minigame):
             self.parent.screen.drawText("Game Over!",0,0)
             self.parent.screen.drawText("Impostors win!", 0, 20)
 
+
     def drawGUI(self):
         self.parent.screen.drawText("Imposter", 0, 0)
         self.parent.screen.drawText("Sabotage:", 0, 10)
@@ -60,11 +61,3 @@ class ImposterGame(Minigame):
         if self.timer.check():
             self.parent.screen.drawText("Sabotage Ready", 0, 50)
 
-
-    def alertsFromServer(self, alerts):
-        Minigame.alertsFromServer(self, alerts)
-        if 'Sabotaged' in alerts:
-            #Having the cooldown set here to 120 seconds will allow for the
-            #60 seconds to complete the sabotage task (Crewmates) and also
-            #the default 60 second cooldown for sabotages
-            self.cooldown(120000)
