@@ -24,6 +24,8 @@ class VotingGame(Minigame):
         if self.InitiateVoting == False:
             if tag == ".votingHub":
                 self.parent.wifi.joinVote(self.parent.badgeUID)
+                self.parent.screen.clear()                
+                self.parent.screen.drawText("   -Voting-", 0, 0)
                 self.parent.screen.drawText("Wait for Vote", 0, 20)
                 self.parent.screen.drawText("to Start", 0, 30)
         else:

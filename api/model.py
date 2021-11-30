@@ -11,13 +11,14 @@ GAME_ENDED = 3
 CREWMATE_WIN = 4
 IMPOSTER_WIN = 5
 class Player:
-    def __init__(self,username):
+    def __init__(self,username, badgeUID):
         self.alive = True
         self.team = ""
         self.joinedVote = False
         self.hasVoted = False
         self.votesAgainst = 0
         self.username = username
+        self.badgeUID = badgeUID
 
 
 class Model:
@@ -119,8 +120,8 @@ class Model:
                         for key in self.players.keys():
                             if not self.players[key].joinedVote:
                                 self.executePlayer(key)
-
-                        self.voting = False
+                        self.votingRunning = True
+                        #self.voting = False
                     else:
                         alerts["Start_Voting"] = self.voteType
                 else:
@@ -195,7 +196,7 @@ class Model:
         if badgeUID in self.players.keys(): 
             return "User is already Registered!"
 
-        self.players[badgeUID] = Player(len(self.players.keys())+1)
+        self.players[badgeUID] = Player(len(self.players.keys())+1, badgeUID)
         self.uids[badgeUID] = "playerId"
         return "True" # User registered
 
@@ -239,21 +240,21 @@ class Model:
         if self.voting == True:
             self.voting = False
             self.votingRunning = False
-            voteArray = []
-            for key in self.players:
-                addPlayer = []
-                if self.players[key].alive == True:
-                    addPlayer.append(key)
-                    addPlayer.append(self.players[key].votesAgainst)
-                    voteArray.append(addPlayer)
-            sorted(voteArray, key=lambda x: x[1], reverse=True)
-            playerID = voteArray[0][0]
-            
-            if self.voteType=='meeting':
-                self.meetingCooldown.set(self.MEETINGCOOLDOWN_AMOUNT)
 
-            if voteArray[0][1] != voteArray[1][1]:
-                return self.executePlayer(playerID)
+            voteArray ={0: [PlayerSomeone], 2: [someoneelse], 3: [player1]}
+            for player in self.players.values():
+                if player.votesAgainst in voteArray.keys():
+                    voteArray[player.votesAgainst].append(player)
+                else:
+                    voteArray[player.votesAgainst] = [player]
+
+            highestVote = sorted(voteArray.keys(), reverse=True)[0]
+            if len(voteArray[highestVote]) > 1:
+                return "Tie"
+
+            player = voteArray[highestVote][0]
+            return self.executePlayer(player.badgeUID)
+
 
         #TODO: The player ejected will need to be returned and consequently printed to the screen of every scanner.
         
