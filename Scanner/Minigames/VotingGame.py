@@ -52,5 +52,8 @@ class VotingGame(Minigame):
         Minigame.alertsFromServer(self, alerts)
         if "Start_Voting" not in alerts:
             self.parent.gotoIdleGame()
+
+        if "Last_Voted" in alerts:
+            self.parent.screen.drawText(alerts[Last_Voted + "ejected"])
         elif "Initiate_Voting" in alerts:
             self.InitiateVoting = True

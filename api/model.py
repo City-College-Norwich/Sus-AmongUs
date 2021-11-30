@@ -59,6 +59,7 @@ class Model:
         self.MEETINGCOOLDOWN_AMOUNT = 20000
         self.meetingCooldown = TimerHelper()
         self.voteType=None
+        self.lastVotedOut = None
 
 
         self.meetingsLeft = 3
@@ -128,6 +129,9 @@ class Model:
                     else:
                         alerts["Start_Voting"] = self.voteType
                         alerts["Initiate_Voting"] = True
+            
+            if self.lastVotedOut != None:
+                alerts["Last_Voted"]=self.lastVotedOut.team()
             
             if self.imposterCount == 0 or self.totalMinigames == self.completedMinigames: #win states 
 
@@ -250,8 +254,9 @@ class Model:
                 self.meetingCooldown.set(self.MEETINGCOOLDOWN_AMOUNT)
                 
         if voteArray[0][1] != voteArray[1][1]:
-            return json.dumps(list(playerID,self.players[playerID]))
-        if voteArray[0][1] != voteArray[1][1]:
+            self.lastVotedOut = self.players(playerID)
+            #return json.dumps(list(playerID,self.players[playerID]))
+        if voteArray[0][1] == voteArray[1][1]:
             return "draw"
 
         #TODO: The player ejected will need to be returned and consequently printed to the screen of every scanner.
