@@ -180,8 +180,10 @@ class Model:
 
 
     def joinVote(self,badgeUID): #Ensure everyone is ready to vote. Further verification needs to be added.
-        self.players[badgeUID].joinedVote = True
+        if self.players[badgeUID].joinedVote:
+            return "error"
 
+        self.players[badgeUID].joinedVote = True
         self.initiateVoteCounter += 1
         if self.initiateVoteCounter == (self.imposterCount + self.crewmateCount):
             if self.votingRunning == False:
@@ -197,11 +199,8 @@ class Model:
         self.uids[badgeUID] = "playerId"
         return "Okay"
 
-    def sabotage(self,
-                 sabotageType):  # defines basic sabotage value (second one needs to be made for player reset as the limit is a static number not a timer)
-        if self.sabotaged == True:
-            pass
-        else:
+    def sabotage(self,sabotageType):  # defines basic sabotage value (second one needs to be made for player reset as the limit is a static number not a timer)
+        if not self.sabotaged:
             self.sabotaged = True
             self.sabotage_type = sabotageType
             if self.sabotage_type == 1:
@@ -226,6 +225,8 @@ class Model:
             self.sabotaged = False
 
     def voteTally(self, badgeUID, myUID):
+        if self.players[myUID].hasVoted:
+            return "error"
         self.players[badgeUID].votesAgainst = self.players[badgeUID].votesAgainst + 1
         self.players[myUID].hasVoted = 1
         self.totalVote += 1
