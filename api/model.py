@@ -41,7 +41,7 @@ class Model:
 
         self.maxImposters = 1
 
-        self.sabotaged = False#these reffer to things to help with saboutages , this one is the alert 
+        self.sabotaged = False #these reffer to things to help with saboutages , this one is the alert 
         self.sabotage_type = 0
         self.sabotage_timer = TimerHelper()
         self.sabotage_participants = set()
@@ -49,7 +49,11 @@ class Model:
         self.totalVote = 0
         self.voting = False
         self.initiateVoteCounter = 0
-        
+
+        self.joinVoteTimer = TimerHelper()
+        self.votingTimer = TimerHelper()
+        self.votingRunning = False
+
         self.MEETINGCOOLDOWN_AMOUNT = 20000
         self.meetingCooldown = TimerHelper()
         self.voteType=None
@@ -70,11 +74,11 @@ class Model:
         players = list(range(len(self.players.keys())))
         for i in range(self.maxImposters):
             imposter = players.pop(random.randint(0, len(players)-1))
-            self.players[self.players.keys()[imposter]].team = "Imposter"
+            self.players[list(self.players.keys())[imposter]].team = "Imposter"
             self.imposterCount += 1
         
         for crewmate in players:
-            self.players[self.players.keys()[crewmate]].team = "Crewmate"
+            self.players[list(self.players.keys())[crewmate]].team = "Crewmate"
         self.crewmateCount = len(players)
         
         self.state = GAME_RUNNING
@@ -103,9 +107,22 @@ class Model:
                     self.state = IMPOSTER_WIN
 
             elif self.voting == True: #starts vote
-                alerts["Start_Voting"] = self.voteType
-                if self.initiateVoteCounter == self.imposterCount + self.crewmateCount:
-                    alerts["Initiate_Voting"] = True
+                if not self.votingRunning:
+                    # if the timer is hit, we will kill every player that hasnt joined the voting process
+                    if self.joinVoteTimer.check():
+                        for key in self.players.keys():
+                            if not self.players[key].joinedVote:
+                                self.executePlayer(key)
+
+                        self.voting = False
+                    else:
+                        alerts["Start_Voting"] = self.voteType
+                else:
+                    if self.votingTimer.check():
+                        self.endVote()
+                    else:
+                        alerts["Start_Voting"] = self.voteType
+                        alerts["Initiate_Voting"] = True
             
             if self.imposterCount == 0 or self.totalMinigames == self.completedMinigames: #win states 
                 self.state = CREWMATE_WIN
@@ -137,14 +154,15 @@ class Model:
         return "ok"
 
     def startVote(self): #starts voting game 
-
         self.totalVote = 0
         self.initiateVoteCounter = 0
-
+        
         for key in self.players.keys():
             self.players[key].votesAgainst = 0
             self.players[key].hasVoted = False
             self.players[key].joinedVote = False
+
+        self.joinVoteTimer.set(60000)
         self.voting = True
         return "ok"
 
@@ -155,10 +173,11 @@ class Model:
     def joinVote(self,badgeUID): #Ensure everyone is ready to vote. Further verification needs to be added.
         self.players[badgeUID].joinedVote = True
         self.initiateVoteCounter += 1
+        if self.initiateVoteCounter == (self.imposterCount + self.crewmateCount):
+            if self.votingRunning == False:
+                self.votingTimer.set(60000)
+                self.votingRunning = True
         return "ok"
-
-    def voteTimeEnd(self): #If the voting timer is up then skip straight to end voting
-        return self.endVote()
         
     def registerUser(self,badgeUID):#this is where players are assigned 
         if badgeUID in self.players.keys(): 
@@ -207,24 +226,24 @@ class Model:
         
 
     def endVote(self):
-        voteArray = []
-        for key in self.players:
-            addPlayer = []
-            if self.players[key].alive == True:
-                addPlayer.append(key)
-                addPlayer.append(self.players[key].votesAgainst)
-                voteArray.append(addPlayer)
-        sorted(voteArray, key=lambda x: x[1], reverse=True)
-        playerID = voteArray[0][0]
-        self.voting = False
+        if self.voting == True:
+            self.voting = False
+            voteArray = []
+            for key in self.players:
+                addPlayer = []
+                if self.players[key].alive == True:
+                    addPlayer.append(key)
+                    addPlayer.append(self.players[key].votesAgainst)
+                    voteArray.append(addPlayer)
+            sorted(voteArray, key=lambda x: x[1], reverse=True)
+            playerID = voteArray[0][0]
+            
+            if self.voteType=='meeting':
+                self.meetingCooldown.set(self.MEETINGCOOLDOWN_AMOUNT)
 
-        if self.voteType=='meeting':
-            self.meetingCooldown.set(self.MEETINGCOOLDOWN_AMOUNT)
+            if voteArray[0][1] != voteArray[1][1]:
+                return self.executePlayer(playerID)
 
-        if voteArray[0][1] != voteArray[1][1]:
-            return self.executePlayer(playerID)
-        if voteArray[0][1] != voteArray[1][1]:
-            self.parent.screen.drawText("Draw")
         #TODO: The player ejected will need to be returned and consequently printed to the screen of every scanner.
         
     def isAlive(self, badgeUID):#checks to see if player is alive 

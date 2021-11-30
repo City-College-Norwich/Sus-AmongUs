@@ -18,8 +18,6 @@ class VotingGame(Minigame):
         self.voted = False
         self.InitiateVoting = False
 
-        self.timer = TimerHelper()
-        self.timer.set(60000)
 
     def update(self):
         uid,tag = self.parent.rfid.doRead(True)
@@ -27,8 +25,7 @@ class VotingGame(Minigame):
             if tag == ".votingHub":
                 self.parent.wifi.joinVote()
         else:
-            if self.timer.check():
-                self.parent.wifi.voteTimeEnd()
+ 
             if self.voted==False:
                 self.parent.screen.clear()
                 self.parent.screen.drawText("   -Voting-", 0, 0)

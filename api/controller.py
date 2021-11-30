@@ -98,11 +98,8 @@ def getFile():
 
 @app.route("/joinVote")
 def joinVote():
-    return model.joinVote()
-
-@app.route("/voteTimeEnd")
-def voteTimeEnd():
-    return model.voteTimeEnd()
+    args = request.args
+    return model.joinVote(args["badgeUID"])
 
 @app.route("/getPlayers")
 def getPlayers():
