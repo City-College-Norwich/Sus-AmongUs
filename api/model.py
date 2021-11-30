@@ -310,8 +310,8 @@ class Model:
     def checkMeeting(self):
         if self.meetingCooldown.check() and self.meetingsLeft != 0:
             self.meetingsLeft-=1
-            return True
+            return "True"
         else:
-            return False
+            return "False"
             
 

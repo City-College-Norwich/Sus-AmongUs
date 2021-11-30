@@ -64,7 +64,7 @@ class Wifi:
         return "ok"
     
     def startEmergency(self):
-        if self._sendRequest("checkMeeting"):
+        if bool(self._sendRequest("checkMeeting")):
             voteType='meeting'
             self._sendRequest("setVoteType?type=" + voteType)#so the server knows a vote has started from emergency meeting
             self._sendRequest("startVote")

@@ -111,4 +111,8 @@ def joinVote():
 def getPlayers():
     return model.getPlayers()
 
+@app.route("/checkMeeting")
+def checkMeeting():
+    return model.checkMeeting()
+    
 if __name__ == '__main__': app.run(host='0.0.0.0')
