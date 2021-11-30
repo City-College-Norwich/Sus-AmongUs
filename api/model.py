@@ -207,6 +207,7 @@ class Model:
             pass
         else:
             self.sabotage_type = sabotageType
+            self.sabotage_timer.set(60000)
             if self.sabotage_type == 1:
                 self.sabotaged_station = self.requestStation()
                 self.sabotage_timer.set(60000)
