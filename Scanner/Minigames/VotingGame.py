@@ -13,8 +13,7 @@ class VotingGame(Minigame):
         self.parent.screen.drawText("      and", 0, 30)
         self.parent.screen.drawText(" Scan vote tag ", 0, 40)
 
-
-        self.voted = False
+        self.voted = False if self.wifi.isAlive(self.parent.badgeUID) else True
         self.InitiateVoting = False
 
 
@@ -26,7 +25,14 @@ class VotingGame(Minigame):
             if tag == ".votingHub":
                 self.parent.wifi.joinVote(self.parent.badgeUID)
         else:
- 
+
+            if not self.wifi.isAlive(self.parent.badgeUID):
+                self.parent.screen.clear()
+                self.parent.screen.drawText("   -Voting-")
+                self.parent.screen.drawText("Please wait for", 0, 20)
+                self.parent.screen.drawText("the others to", 0, 30)
+                self.parent.screen.drawText("finish voting", 0, 40)
+
             if self.voted==False:
                 self.parent.screen.clear()
                 self.parent.screen.drawText("   -Voting-", 0, 0)

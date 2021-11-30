@@ -229,7 +229,7 @@ class Model:
         self.players[badgeUID].votesAgainst = self.players[badgeUID].votesAgainst + 1
         self.players[myUID].hasVoted = 1
         self.totalVote += 1
-        if self.totalVote == (self.crewmateCount + self.imposterCount):
+        if self.totalVote == len([player for player in self.players if self.players[player].alive]):
             return self.endVote()
         return "ok"
 
