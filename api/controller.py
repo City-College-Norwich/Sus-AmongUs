@@ -82,7 +82,10 @@ def isAlive():
     args = request.args
     return model.isAlive(args["badgeUID"])
 
-
+@app.route("/setVoteType")
+def setVoteType():
+    args = request.args
+    return model.setVoteType(args["type"])
 
 @app.route("/isImposter")
 def isImposter():
