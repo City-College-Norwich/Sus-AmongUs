@@ -28,7 +28,7 @@ class StartupGame(Minigame):
             else:
                 self.parent.screen.drawText('User already', 0, 0)
                 self.parent.screen.drawText('registered', 0, 10)
-                self.parent.screen.drawText('Scan different ID', 0, 30)  
+                self.parent.screen.drawText('Use different ID', 0, 30)  
 
         if self.StartGameState == True:
             
