@@ -51,14 +51,14 @@ class Minigame:
             self.parent.gotoIdleGame()
             self.parent.state = self.parent.RUNNING
 
-        if 'Winner' in alerts:
+        if 'Winner' in alerts and self.parent.state == self.parent.RUNNING:
             winner = alerts['Winner']
             if winner == "Crewmates":
                 self.parent.gotoIdleGame()
-                self.parent.currentMiniGame.state = 1  # Crewmate win
+                self.parent.state = self.parent.CREWMATE_WIN  # Crewmate win
             else:
                 self.parent.gotoIdleGame()
-                self.parent.currentMiniGame.state = 2  # Impostor win
+                self.parent.state = self.parent.IMPOSTOR_WIN  # Impostor win
 
 
         if 'Sabotaged' in alerts:
