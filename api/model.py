@@ -216,7 +216,7 @@ class Model:
             self.meetingCooldown.set(self.MEETINGCOOLDOWN_AMOUNT)
 
         if voteArray[0][1] != voteArray[1][1]:
-            return list(playerID,self.players[playerID])
+            return json.dumps(list(playerID,self.players[playerID]))
         if voteArray[0][1] != voteArray[1][1]:
             return "draw"
         # TODO: The player ejected will need to be returned and consequently printed to the screen of every scanner.
