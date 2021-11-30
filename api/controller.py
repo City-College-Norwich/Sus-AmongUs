@@ -10,6 +10,7 @@ model = Model()
 def home():
     return model.callHomepage()
 
+
 @app.route("/setMaxMinigames")
 def setMaxMiniGames():
     return model.setMaxMiniGames(request.args["count"])
@@ -18,6 +19,7 @@ def setMaxMiniGames():
 @app.route("/StartGame")
 def startGame():
     return model.startGame()
+
 
 @app.route("/requestStation")
 def requestStation():
@@ -66,6 +68,7 @@ def sabotage():
     args = request.args
     return model.sabotage(args["sabotageType"])
 
+
 @app.route("/sabotageCompleted")
 def sabotageCompleted():
     args = request.args
@@ -77,11 +80,11 @@ def voteTally():
     args = request.args
     return model.voteTally(args["badgeUID"], args["myUID"])
 
+
 @app.route("/isAlive")
 def isAlive():
     args = request.args
     return model.isAlive(args["badgeUID"])
-
 
 
 @app.route("/isImposter")
@@ -94,18 +97,22 @@ def isImposter():
 def getFileList():
     return model.getFileList()
 
+
 @app.route("/AutoDownloader/GetFile")
 def getFile():
     args = request.args
     return model.getFile(args['fileName'])
+
 
 @app.route("/joinVote")
 def joinVote():
     args = request.args
     return model.joinVote(args["badgeUID"])
 
+
 @app.route("/getPlayers")
 def getPlayers():
     return model.getPlayers()
+
 
 if __name__ == '__main__': app.run(host='0.0.0.0')

@@ -10,58 +10,59 @@ GAME_RUNNING = 2
 GAME_ENDED = 3
 CREWMATE_WIN = 4
 IMPOSTER_WIN = 5
+
 class Player:
+    alive = True
+    team = ""
+    joinedVote = False
+    hasVoted = False
+    votesAgainst = 0
+    username = ""
+
     def __init__(self,username):
-        self.alive = True
-        self.team = ""
-        self.joinedVote = False
-        self.hasVoted = False
-        self.votesAgainst = 0
         self.username = username
 
 
 class Model:
-    def __init__(self):
+    totalStations = 6
 
+    totalMinigames = 6
+    completedMinigames = 0
+    state = GAME_STARTING
+
+
+    # card ID:   [team,   alive/dead, votecounter, hasVoted, playerID]
+    players = {}
+
+    crewmateCount = 0  # total count of current crewmates in a game
+    imposterCount = 0  # total number of current imposters in a game
+
+    maxImposters = 1
+
+    sabotaged = False  # these reffer to things to help with saboutages , this one is the alert
+
+    sabotage_type = 0
+    sabotage_timer = TimerHelper()
+    sabotage_participants = set()
+
+    totalVote = 0
+    voting = False
+    initiateVoteCounter = 0
+
+    joinVoteTimer = TimerHelper()
+    votingTimer = TimerHelper()
+    votingRunning = False
+
+    MEETINGCOOLDOWN_AMOUNT = 20000
+    meetingCooldown = TimerHelper()
+    voteType=None
+
+    meetingsLeft = 3
+    
+    def __init__(self):
         with open('RFIDMap.csv', mode='r') as csvfile:
             reader = csv.reader(csvfile)
             self.uids = {row[0]: row[1] for row in reader}  # creates csv file containing players
-
-        #    '''
-        #   {this is what i shere: this is here}
-        #  '''
-        self.totalMinigames = 6  # how many games a player has
-        self.completedMinigames = 0  # how many games the player has completed
-        self.state = GAME_STARTING
-
-                      # card ID:   [team,   alive/dead, votecounter, hasVoted, playerID]
-        self.players ={}
-
-        self.crewmateCount = 0  # total count of current crewmates in a game
-        self.imposterCount = 0  # total number of current imposters in a game
-
-        self.maxImposters = 1
-
-        self.sabotaged = False  # these reffer to things to help with saboutages , this one is the alert
-
-        self.sabotage_type = 0
-        self.sabotage_timer = TimerHelper()
-        self.sabotage_participants = set()
-
-        self.totalVote = 0
-        self.voting = False
-        self.initiateVoteCounter = 0
-
-        self.joinVoteTimer = TimerHelper()
-        self.votingTimer = TimerHelper()
-        self.votingRunning = False
-
-        self.MEETINGCOOLDOWN_AMOUNT = 20000
-        self.meetingCooldown = TimerHelper()
-        self.voteType=None
-
-
-        self.meetingsLeft = 3
 
     def getTagName(self, uid):  # use to find badge id of player
         if uid in self.uids.keys():
@@ -75,10 +76,11 @@ class Model:
 
     def startGame(self):  # takes game into active and starts up (this needs to be affected for lobby)
         players = list(range(len(self.players.keys())))
-        for i in range(self.maxImposters):
+        self.imposterCount = 0
+
+        for _ in range(self.maxImposters):
             imposter = players.pop(random.randint(0, len(players) - 1))
             self.players[list(self.players.keys())[imposter]].team = "Imposter"
-    
             self.imposterCount += 1
 
         for crewmate in players:
@@ -92,7 +94,7 @@ class Model:
         return "hello"
 
     def requestStation(self):  # chooses a random staton
-        return "station" + str(random.choice(range(1, 6)))
+        return "station" + str(random.choice(range(1, self.totalStations)))
 
     def minigameComplete(self, scannerId):  # adds to completed minigame for crewmate
         self.completedMinigames += 1
@@ -106,19 +108,16 @@ class Model:
                 alerts["Sabotaged"] = self.sabotage_type #where it checks for sabotage
                 if self.sabotage_type == 1 or self.sabotage_type == 3:
                     alerts["SabotagedStation"] = self.sabotaged_station
-
                 if self.sabotage_timer.check():  # ends game if timer runs out
                     self.state = IMPOSTER_WIN
 
-            elif self.voting == True: #starts vote
-
+            elif self.voting == True: # starts vote
                 if not self.votingRunning:
                     # if the timer is hit, we will kill every player that hasnt joined the voting process
                     if self.joinVoteTimer.check():
                         for key in self.players.keys():
                             if not self.players[key].joinedVote:
                                 self.executePlayer(key)
-
                         self.voting = False
                     else:
                         alerts["Start_Voting"] = self.voteType
@@ -128,15 +127,15 @@ class Model:
                     else:
                         alerts["Start_Voting"] = self.voteType
                         alerts["Initiate_Voting"] = True
-            
-            if self.imposterCount == 0 or self.totalMinigames == self.completedMinigames: #win states 
-
+            # win states 
+            if self.imposterCount == 0 or self.totalMinigames == self.completedMinigames: 
                 self.state = CREWMATE_WIN
             elif self.crewmateCount == self.imposterCount:
                 self.state = IMPOSTER_WIN
 
-        if self.state == IMPOSTER_WIN:
+        elif self.state == IMPOSTER_WIN:
             alerts["Winner"] = "Imposters"
+
         elif self.state == CREWMATE_WIN:
             alerts["Winner"] = "Crewmates"
 
@@ -145,8 +144,8 @@ class Model:
     def killPlayer(self, selfUID, victimUID):  # defines murder
         killer = self.players[selfUID]
         victim = self.players[victimUID]
-        if killer.alive == True and victim.alive == True:
-            if killer.team == "Imposter" and victim.team == "Crewmate":
+        if killer.team == "Imposter" and victim.team == "Crewmate":
+            if killer.alive == True and victim.alive == True:
                 return self.executePlayer(victimUID)
         return "error"
 
@@ -159,9 +158,8 @@ class Model:
             self.imposterCount -= 1
         return "ok"
 
-      
-    def startVote(self): #starts voting game 
-
+    #starts voting game 
+    def startVote(self): 
         self.totalVote = 0
         self.initiateVoteCounter = 0
         
@@ -174,12 +172,13 @@ class Model:
         self.voting = True
         return "ok"
 
+
     def setVoteType(self, type):
         self.voteType = type
         return "ok"
 
-
-    def joinVote(self,badgeUID): #Ensure everyone is ready to vote. Further verification needs to be added.
+    #Ensure everyone is ready to vote. Further verification needs to be added.
+    def joinVote(self,badgeUID):
         self.players[badgeUID].joinedVote = True
 
         self.initiateVoteCounter += 1
@@ -189,7 +188,8 @@ class Model:
                 self.votingRunning = True
         return "ok"
      
-    def registerUser(self,badgeUID):#this is where players are assigned 
+    # this is where players are assigned 
+    def registerUser(self,badgeUID):
         if badgeUID in self.players.keys(): 
             return "User is already Registered!"
 
@@ -197,11 +197,8 @@ class Model:
         self.uids[badgeUID] = "playerId"
         return "Okay"
 
-    def sabotage(self,
-                 sabotageType):  # defines basic sabotage value (second one needs to be made for player reset as the limit is a static number not a timer)
-        if self.sabotaged == True:
-            pass
-        else:
+    def sabotage(self, sabotageType):  # defines basic sabotage value (second one needs to be made for player reset as the limit is a static number not a timer)
+        if not self.sabotaged:
             self.sabotaged = True
             self.sabotage_type = sabotageType
             if self.sabotage_type == 1:
@@ -215,9 +212,7 @@ class Model:
     def sabotageCompleted(self, badgeUID):  # makes it so one person cant act as two people in the sbotage game
         # handling sabotage 1 logic
         if self.sabotage_type == 1:
-            if badgeUID in self.sabotage_participants:
-                pass
-            else:
+            if not (badgeUID in self.sabotage_participants):
                 self.sabotage_participants.add(badgeUID)
                 if len(self.sabotage_participants) == 2:
                     self.sabotaged = False
@@ -259,17 +254,16 @@ class Model:
             return "yes"
         return "no"
 
+
     def isImposter(self, uid):  # checks if player is imposter
         if self.players[uid][0] == "Imposter":
             return "True"
         return "False"
 
 
-
     def getPlayers(self):
         return json.dumps(self.players)
        
-
 
     fileList = [  # list of relevent files
         "App.py",
@@ -292,8 +286,10 @@ class Model:
         "Minigames/UploadGame.py",
         "Minigames/VotingGame.py"]
 
+
     def getFileList(self):  # gets list of files
         return json.dumps(self.fileList)
+
 
     def getFile(self, fileName):  # gets the name of a file
         currentdir = os.path.dirname(os.path.realpath(__file__))
@@ -306,11 +302,10 @@ class Model:
             return file
         return ""
 
+
     def checkMeeting(self):
         if self.meetingCooldown.check() and self.meetingsLeft != 0:
             self.meetingsLeft-=1
             return True
         else:
             return False
-            
-

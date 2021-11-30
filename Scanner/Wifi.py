@@ -49,11 +49,13 @@ class Wifi:
         response.close()
         return(text)
         
+
     def isAlive(self, tagID):
         if self._sendRequest("isAlive?badgeUID=" + tagID) == "yes":
             return True
         else:
             return False
+
 
     def completeMinigame(self, tagID):
         return self._sendRequest("minigameComplete?badgeUID=" + tagID)
@@ -62,6 +64,7 @@ class Wifi:
     def startVoting(self):
         self._sendRequest("startVote")
         return "ok"
+    
     
     def startEmergency(self):
         if self._sendRequest("checkMeeting"):
