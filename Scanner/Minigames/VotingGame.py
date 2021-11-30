@@ -1,6 +1,5 @@
 from Minigames.Minigame import Minigame
 from TimerHelper import *
-
 class VotingGame(Minigame):
     def __init__(self, parent):
         Minigame.__init__(self, parent)
@@ -21,6 +20,8 @@ class VotingGame(Minigame):
 
     def update(self):
         uid,tag = self.parent.rfid.doRead(True)
+        self.rfid = self.parent.rfid.doRead()
+        self.parent.TotalVoters += 1
         if self.InitiateVoting == False:
             if tag == ".votingHub":
                 self.parent.wifi.joinVote()

@@ -55,7 +55,10 @@ def startVote():
 @app.route("/registerUser")
 def registerUser():
     args = request.args
-    return model.registerUser(args["badgeUID"])
+    if model.registerUser(args["badgeUID"]) == "":
+        return "False"
+    else:
+        return model.registerUser(args["badgeUID"])
 
   
 @app.route("/sabotage")
