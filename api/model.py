@@ -227,6 +227,7 @@ class Model:
                     self.sabotage_participants = set()
         elif self.sabotage_type == 3:
             self.sabotaged = False
+        return "ok"
 
     def voteTally(self, badgeUID, myUID):
         self.players[badgeUID].votesAgainst = self.players[badgeUID].votesAgainst + 1
