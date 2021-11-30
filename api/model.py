@@ -201,13 +201,11 @@ class Model:
         self.uids[badgeUID] = "playerId"
         return "True" # User registered
 
-    def sabotage(self,
-                 sabotageType):  # defines basic sabotage value (second one needs to be made for player reset as the limit is a static number not a timer)
+    def sabotage(self, sabotageType):  # defines basic sabotage value (second one needs to be made for player reset as the limit is a static number not a timer)
         if self.sabotaged == True:
             pass
         else:
-            self.sabotage_type = sabotageType
-            self.sabotage_timer.set(60000)
+            self.sabotage_type = int(sabotageType)
             if self.sabotage_type == 1:
                 self.sabotaged_station = self.requestStation()
                 self.sabotage_timer.set(60000)
