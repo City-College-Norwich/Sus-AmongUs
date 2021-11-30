@@ -108,6 +108,7 @@ class Model:
                     alerts["SabotagedStation"] = self.sabotaged_station
 
                 if self.sabotage_timer.check():  # ends game if timer runs out
+                    print ("========= TIMER END ===============")
                     self.state = IMPOSTER_WIN
 
             elif self.voting == True: #starts vote
@@ -133,6 +134,7 @@ class Model:
 
                 self.state = CREWMATE_WIN
             elif self.crewmateCount == self.imposterCount:
+                print ("------------ COUNT EQUAL -----------------")
                 self.state = IMPOSTER_WIN
 
         if self.state == IMPOSTER_WIN:
