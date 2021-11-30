@@ -56,7 +56,7 @@ def startVote():
 def registerUser():
     args = request.args
     if model.registerUser(args["badgeUID"]) == "":
-        return False
+        return "False"
     else:
         return model.registerUser(args["badgeUID"])
 

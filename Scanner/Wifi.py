@@ -87,7 +87,11 @@ class Wifi:
         return self._sendRequest("sabotageCompleted?badgeUID=" + badgeUID)
 
     def registerUser(self, tagID):
-        return self._sendRequest("registerUser?badgeUID=" + tagID)
+        returns = self._sendRequest("registerUser?badgeUID=" + tagID)
+        if returns == "True":
+            return True
+        else:
+            return False
 
     def startGame(self):
         return self._sendRequest('StartGame')
