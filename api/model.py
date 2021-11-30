@@ -183,13 +183,14 @@ class Model:
 
 
     def joinVote(self,badgeUID): #Ensure everyone is ready to vote. Further verification needs to be added.
-        self.players[badgeUID].joinedVote = True
+        if not self.players[badgeUID].joinedVote:
+            self.players[badgeUID].joinedVote = True
 
-        self.initiateVoteCounter += 1
-        if self.initiateVoteCounter == (self.imposterCount + self.crewmateCount):
-            if self.votingRunning == False:
-                self.votingTimer.set(60000)
-                self.votingRunning = True
+            self.initiateVoteCounter += 1
+            if self.initiateVoteCounter == (self.imposterCount + self.crewmateCount):
+                if self.votingRunning == False:
+                    self.votingTimer.set(60000)
+                    self.votingRunning = True
         return "ok"
      
     def registerUser(self,badgeUID):#this is where players are assigned 
