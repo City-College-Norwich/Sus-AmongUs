@@ -15,6 +15,7 @@ class GoodGuyGame(Minigame):
         self.parent = parent
 
         self.skipCooldown = TimeHelper()
+        self.skipCooldown.set(1)
 
         self.__target_station = self.parent.wifi.requestStation(self.parent.badgeUID)
 
@@ -65,8 +66,6 @@ class GoodGuyGame(Minigame):
 
         if self.timer.check():
             buttons = self.parent.buttons.getPressedButtons()
-            if buttons[0] == 1:
-                pass
-            elif buttons[1] == 1 and self.skipCooldown.check():
+            if buttons[1] == 1 and self.skipCooldown.check():
                 self.__target_station = self.parent.wifi.skipStation(self.__target_station)
                 self.skipCooldown.set(60000)
