@@ -61,14 +61,14 @@ class Minigame:
                 self.parent.state = self.parent.IMPOSTOR_WIN  # Impostor win
 
 
-        if 'Sabotaged' in alerts:
+        if 'Sabotaged' in alerts and self.sabotageOccured == False:
             self.sabotageOccured = True
             sabotage_type = alerts['Sabotaged']
             if sabotage_type == 1 or sabotage_type == 3:
                 sabotagedStation = alerts['SabotagedStation']
                 self.parent.gotoSabotageStationGame(sabotage_type,sabotagedStation)
                 
-        elif self.sabotageOccured == True:
+        elif 'Sabotaged' not in alerts and self.sabotageOccured == True:
             self.sabotageOccured = False
             self.parent.gotoIdleGame()
 
