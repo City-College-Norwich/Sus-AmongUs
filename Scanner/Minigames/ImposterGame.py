@@ -15,12 +15,12 @@ class ImposterGame(Minigame):
         self.sabotaging = False
         self.sabotageDrawn = False
         self.sabotageData = ""
-        self.drawGUI()
 
         self.canMurder = False
-
         self.murderTimer = TimerHelper() 
         self.murderTimer.set(30000)
+
+        self.drawGUI()
 
     
     def update(self):
