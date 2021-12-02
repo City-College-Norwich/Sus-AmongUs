@@ -46,7 +46,7 @@ class Minigame:
 
         :param dict alerts:
         """
-        if 'GameRunning' in alerts and self.parent.state == self.parent.STARTING:
+        if 'GameRunning' in alerts and self.parent.state == self.parent.STARTING and self.parent.badgeUID:
             self.parent.gotoIdleGame()
             self.parent.state = self.parent.RUNNING
 

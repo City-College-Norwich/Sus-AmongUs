@@ -1,12 +1,7 @@
 import random
 
+from TimerHelper import TimerHelper
 from Minigames.Minigame import Minigame
-from Minigames.IdBadge import IdBadge
-from Minigames.ReactionGame import ReactionGame
-from Minigames.DownloadGame import DownloadGame
-from Minigames.UploadGame import UploadGame
-from Minigames.RecordTemperatureGame import RecordTemperatureGame
-
 
 class GoodGuyGame(Minigame):
 
@@ -14,7 +9,8 @@ class GoodGuyGame(Minigame):
         Minigame.__init__(self, parent)
         self.parent = parent
 
-        self.skipCooldown = TimeHelper()
+        self.skipCooldown = TimerHelper()
+        self.skipCooldown.set(1)
 
         self.__target_station = self.parent.wifi.requestStation(self.parent.badgeUID)
 
@@ -63,10 +59,8 @@ class GoodGuyGame(Minigame):
             self.parent.screen.drawText("Game Over!", 0, 0)
             self.parent.screen.drawText("{} wins".format(team), 0, 20)
 
-        if self.timer.check():
+        if self.skipCooldown.check():
             buttons = self.parent.buttons.getPressedButtons()
-            if buttons[0] == 1:
-                pass
-            elif buttons[1] == 1 and self.skipCooldown.check():
+            if buttons[1] == 1 and self.skipCooldown.check():
                 self.__target_station = self.parent.wifi.skipStation(self.__target_station)
                 self.skipCooldown.set(60000)

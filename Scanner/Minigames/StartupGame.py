@@ -31,7 +31,5 @@ class StartupGame(Minigame):
                 self.parent.screen.drawText('Use different ID', 0, 30)  
 
         if self.StartGameState == True:
-            
-            
             self.parent.screen.drawText("Scan start game tag", 0, 0)
 

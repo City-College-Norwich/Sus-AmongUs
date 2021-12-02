@@ -103,7 +103,7 @@ class Wifi:
         return self._sendRequest("voteTally?badgeUID="+badgeUID+"&myUID="+myUID)
 
     def skipStation(self,lastStation):
-        return self._.sendRequest("skipStaion?lastStation=" + lastStation)
+        return self._sendRequest("skipStation?lastStation=" + lastStation)
 
     def joinVote(self,badgeUID: hex) -> str:
         return self._sendRequest("joinVote?badgeUID=" + badgeUID)
