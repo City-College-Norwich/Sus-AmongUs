@@ -20,6 +20,8 @@ class ImposterGame(Minigame):
         self.murderTimer = TimerHelper() 
         self.murderTimer.set(30000)
 
+        self.murderDisplayed = False
+
         self.drawGUI()
 
     
@@ -27,6 +29,10 @@ class ImposterGame(Minigame):
         if self.canMurder == False and self.murderTimer.check():
              self.canMurder = True
        
+        if self.murderDisplayed and self.scanCooldown.check():
+            self.murderDisplayed = False
+            self.drawGUI()
+
         if self.parent.state == self.parent.RUNNING or self.parent.state == self.parent.SABOTAGED:
             if self.sabotaging and not self.sabotageDrawn:
                 self.sabotageDrawn = True
@@ -53,9 +59,17 @@ class ImposterGame(Minigame):
                     if uid != self.parent.badgeUID and uidIsAlive:
                         if self.canMurder == True:
                             self.parent.wifi.killPlayer(self.parent.badgeUID, uid)
+                            self.parent.screen.clear()
+                            self.parent.screen.drawText("MURDERZ!", 30, 10)
+                            self.parent.screen.drawText("LoloLOLol", 26, 20)
+                            self.murderDisplayed = True
                             self.scanCooldown.set(2000)
+
                     elif uid == self.parent.badgeUID:
                         self.parent.screen.drawText("are you ok?") #lol?
+                        self.murderDisplayed = True
+                        self.scanCooldown.set(2000)
+
                     elif not uidIsAlive and self.scanCooldown.check():
                         self.parent.wifi.startReportBody()                     
                 elif tag == ".votingHub":
