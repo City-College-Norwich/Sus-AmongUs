@@ -1,7 +1,7 @@
 import random
 
 from Minigames.Minigame import Minigame
-from Scanner.TimerHelper import TimerHelper
+from TimerHelper import TimerHelper
 
 
 class Sabotage2(Minigame):

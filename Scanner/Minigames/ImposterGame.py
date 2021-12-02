@@ -9,9 +9,11 @@ class ImposterGame(Minigame):
         self.timer = TimerHelper()
         self.timer.set(60000)
         self.parent.screen.clear()
-        self.drawGUI()
         self.sabotaging = False
+        self.sabotageDrawn = False
         self.sabotageData = ""
+        self.drawGUI()
+
         
 
     
