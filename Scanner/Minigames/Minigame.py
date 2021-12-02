@@ -64,8 +64,12 @@ class Minigame:
             self.parent.state = self.parent.SABOTAGED
             sabotageType = alerts['Sabotaged']
             sabotageData = alerts['SabotageData']
+            print ("Going to gotoSabotageGame")
+            print (sabotageType)
+            print (sabotageData)
 
             self.parent.gotoSabotageGame(sabotageType, sabotageData)
+            print ("back again")
 
 
         elif 'Sabotaged' not in alerts and self.parent.state == self.parent.SABOTAGED:

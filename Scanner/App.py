@@ -92,8 +92,10 @@ class App:
             self.currentMiniGame = ImposterGame(self)
 
     def gotoSabotageGame(self, sabotageType, sabotageData):
+        print ("dddddddd")
         if bool(self.wifi.isImposter(self.badgeUID)) == True:
             return
+        print ("xxxxxxxxx")
         print (sabotageType)
         print (type(sabotageType))
         if sabotageType == 1:
