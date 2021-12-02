@@ -97,6 +97,13 @@ class Model:
     def requestStation(self):  # chooses a random staton
         return "station" + str(random.choice(range(1, 6)))
 
+    def skipStation(self, lastStation):
+        stations = []
+        for i in range(1,6): stations.append("station" + i)
+        return random.choice(stations.remove(lastStation))
+
+
+
     def minigameComplete(self, scannerId):  # adds to completed minigame for crewmate
         self.completedMinigames += 1
         return "Okay"
