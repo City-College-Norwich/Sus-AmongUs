@@ -5,7 +5,7 @@ machine.freq(240000000)
 from Buttons import *
 
 buttonManager = Buttons()
-if buttonManager.getPressedButtons(0):
+if buttonManager.getPressedButtons()[0]:
     from AD import *
     from Screen import *
     screen = Screen()
