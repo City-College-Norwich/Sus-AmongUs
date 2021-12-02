@@ -50,7 +50,6 @@ class VotingGame(Minigame):
                     self.parent.screen.drawText(" You have voted. ", 0, 20)
                     self.voted = True
 
-
     def alertsFromServer(self, alerts):
         Minigame.alertsFromServer(self, alerts)
         if "Start_Voting" not in alerts:

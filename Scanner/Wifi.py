@@ -1,5 +1,6 @@
 import json
 import time
+import typing
 
 import network
 import urequests as requests
@@ -41,29 +42,30 @@ class Wifi:
             print (repr(e))
 
     # Interal usage ONLY!
-    def _sendRequest(self, message):
+    def _sendRequest(self, message: str) -> str:
         response = requests.get(self.URL+ message)
         print(self.URL+ message)
         text = response.text
         print(text)
         response.close()
         return(text)
-        
-    def isAlive(self, tagID):
+
+    def isAlive(self, tagID: hex) -> bool:
         if self._sendRequest("isAlive?badgeUID=" + tagID) == "yes":
             return True
         else:
             return False
 
-    def completeMinigame(self, tagID):
+    def completeMinigame(self, tagID: hex) -> None:
         return self._sendRequest("minigameComplete?badgeUID=" + tagID)
 
 
-    def startVoting(self):
+    def startVoting(self) -> str:
         self._sendRequest("startVote")
         return "ok"
     
-    def startEmergency(self):
+
+    def startEmergency(self) -> str:
         if bool(self._sendRequest("checkMeeting")):
             voteType='meeting'
             self._sendRequest("setVoteType?type=" + voteType)#so the server knows a vote has started from emergency meeting
@@ -71,58 +73,58 @@ class Wifi:
         return "ok"
 
     
-    def startReportBody(self):
+    def startReportBody(self) -> str:
         voteType='report'
         self._sendRequest("setVoteType?type=" + voteType)#so the server knows a vote has started from dead body reported
         self._sendRequest("startVote")
         return "ok"
 
-    def requestStation(self, tagID):
+    def requestStation(self, tagID: hex) -> str:
         return self._sendRequest("requestStation?badgeUID=" + tagID)
 
-    def createSabotage(self, type):
+    def createSabotage(self, type: str) -> str:
         return self._sendRequest("sabotage?sabotageType=" + type)
 
-    def completeSabotage(self,badgeUID):
+    def completeSabotage(self,badgeUID: hex) -> str:
         return self._sendRequest("sabotageCompleted?badgeUID=" + badgeUID)
 
-    def registerUser(self, tagID):
+    def registerUser(self, tagID) -> bool:
         returns = self._sendRequest("registerUser?badgeUID=" + tagID)
         if returns == "True":
             return True
         else:
             return False
 
-    def startGame(self):
+    def startGame(self) -> str:
         return self._sendRequest('StartGame')
 
-    def voteTally(self, badgeUID, myUID):
+    def voteTally(self, badgeUID: hex, myUID: hex) -> str:
         return self._sendRequest("voteTally?badgeUID="+badgeUID+"&myUID="+myUID)
 
-    def joinVote(self,badgeUID):
+    def joinVote(self,badgeUID: hex) -> str:
         return self._sendRequest("joinVote?badgeUID=" + badgeUID)
 
-    def keepAlive(self):
+    def keepAlive(self) -> str:
         return self._sendRequest("keepAlive")
 
-    def AutoDownloader(self):
+    def AutoDownloader(self) -> str:
         return self._sendRequest("AutoDownloader/GetFileList")
 
-    def getTagName(self, uid):
+    def getTagName(self, uid: hex) -> typing.Union[str, hex]:
         return self._sendRequest("getTagName?uid=" + uid)
 
-    def killPlayer(self, myUID, victimUID):
+    def killPlayer(self, myUID: hex, victimUID: hex) -> str:
         return self._sendRequest("killPlayer?myUID={}&victimUID={}".format(myUID, victimUID))
 
-    def isImposter(self, uid):
+    def isImposter(self, uid: hex) -> str:
         return self._sendRequest("isImposter?uid="+uid)
 
-    def getFileList(self):
+    def getFileList(self) -> str:
         return self._sendRequest("AutoDownloader/GetFileList")
 
-    def getFile(self, filename):
+    def getFile(self, filename: str) -> str:
         return self._sendRequest("AutoDownloader/GetFile?fileName="+filename)
 
-    def getPlayers(self):
+    def getPlayers(self) -> typing.Dict[hex, object]:
         return json.loads(self._sendRequest("getPlayers"))
     
