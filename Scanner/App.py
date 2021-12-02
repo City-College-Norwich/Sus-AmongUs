@@ -93,7 +93,9 @@ class App:
 
     def gotoSabotageGame(self, sabotageType, sabotageData):
         print ("dddddddd")
-        if bool(self.wifi.isImposter(self.badgeUID)) == True:
+        print (self.wifi.isImposter(self.badgeUID))
+    
+        if self.wifi.isImposter(self.badgeUID) != "False":
             return
         print ("xxxxxxxxx")
         print (sabotageType)
