@@ -20,7 +20,7 @@ class ImposterGame(Minigame):
         self.canMurder = False
 
         self.murderTimer = TimerHelper() 
-        self.murderTimer = self.timer.set(30000)
+        self.murderTimer.set(30000)
 
     
     def update(self):
