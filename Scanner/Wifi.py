@@ -64,8 +64,9 @@ class Wifi:
         self._sendRequest("startVote")
         return "ok"
     
+
     def startEmergency(self) -> str:
-        if self._sendRequest("checkMeeting"):
+        if bool(self._sendRequest("checkMeeting")):
             voteType='meeting'
             self._sendRequest("setVoteType?type=" + voteType)#so the server knows a vote has started from emergency meeting
             self._sendRequest("startVote")
@@ -87,8 +88,12 @@ class Wifi:
     def completeSabotage(self,badgeUID: hex) -> str:
         return self._sendRequest("sabotageCompleted?badgeUID=" + badgeUID)
 
-    def registerUser(self, tagID: hex) -> str:
-        return self._sendRequest("registerUser?badgeUID=" + tagID)
+    def registerUser(self, tagID) -> bool:
+        returns = self._sendRequest("registerUser?badgeUID=" + tagID)
+        if returns == "True":
+            return True
+        else:
+            return False
 
     def startGame(self) -> str:
         return self._sendRequest('StartGame')

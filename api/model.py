@@ -11,13 +11,14 @@ GAME_ENDED = 3
 CREWMATE_WIN = 4
 IMPOSTER_WIN = 5
 class Player:
-    def __init__(self,username):
+    def __init__(self,username, badgeUID):
         self.alive = True
         self.team = ""
         self.joinedVote = False
         self.hasVoted = False
         self.votesAgainst = 0
         self.username = username
+        self.badgeUID = badgeUID
 
 
 class Model:
@@ -107,8 +108,9 @@ class Model:
                 if self.sabotage_type == 1 or self.sabotage_type == 3:
                     alerts["SabotagedStation"] = self.sabotaged_station
 
-                if self.sabotage_timer.check():  # ends game if timer runs out
-                    self.state = IMPOSTER_WIN
+                    if self.sabotage_timer.check():  # ends game if timer runs out
+                        print ("========= TIMER END ===============")
+                        self.state = IMPOSTER_WIN
 
             elif self.voting == True: #starts vote
 
@@ -118,8 +120,8 @@ class Model:
                         for key in self.players.keys():
                             if not self.players[key].joinedVote:
                                 self.executePlayer(key)
-
-                        self.voting = False
+                        self.votingRunning = True
+                        #self.voting = False
                     else:
                         alerts["Start_Voting"] = self.voteType
                 else:
@@ -133,6 +135,7 @@ class Model:
 
                 self.state = CREWMATE_WIN
             elif self.crewmateCount == self.imposterCount:
+                print ("------------ COUNT EQUAL -----------------")
                 self.state = IMPOSTER_WIN
 
         if self.state == IMPOSTER_WIN:
@@ -180,36 +183,36 @@ class Model:
 
 
     def joinVote(self,badgeUID): #Ensure everyone is ready to vote. Further verification needs to be added.
-        self.players[badgeUID].joinedVote = True
+        if not self.players[badgeUID].joinedVote:
+            self.players[badgeUID].joinedVote = True
 
-        self.initiateVoteCounter += 1
-        if self.initiateVoteCounter == (self.imposterCount + self.crewmateCount):
-            if self.votingRunning == False:
-                self.votingTimer.set(60000)
-                self.votingRunning = True
+            self.initiateVoteCounter += 1
+            if self.initiateVoteCounter == (self.imposterCount + self.crewmateCount):
+                if self.votingRunning == False:
+                    self.votingTimer.set(60000)
+                    self.votingRunning = True
         return "ok"
      
     def registerUser(self,badgeUID):#this is where players are assigned 
         if badgeUID in self.players.keys(): 
             return "User is already Registered!"
 
-        self.players[badgeUID] = Player(len(self.players.keys())+1)
+        self.players[badgeUID] = Player(len(self.players.keys())+1, badgeUID)
         self.uids[badgeUID] = "playerId"
-        return "Okay"
+        return "True" # User registered
 
-    def sabotage(self,
-                 sabotageType):  # defines basic sabotage value (second one needs to be made for player reset as the limit is a static number not a timer)
+    def sabotage(self, sabotageType):  # defines basic sabotage value (second one needs to be made for player reset as the limit is a static number not a timer)
         if self.sabotaged == True:
             pass
         else:
-            self.sabotaged = True
-            self.sabotage_type = sabotageType
+            self.sabotage_type = int(sabotageType)
             if self.sabotage_type == 1:
                 self.sabotaged_station = self.requestStation()
                 self.sabotage_timer.set(60000)
             elif self.sabotage_type == 3:
                 self.sabotaged_station = self.requestStation()
                 self.sabotage_timer.set(90000)
+            self.sabotaged = True
         return "ok"
 
     def sabotageCompleted(self, badgeUID):  # makes it so one person cant act as two people in the sbotage game
@@ -224,6 +227,7 @@ class Model:
                     self.sabotage_participants = set()
         elif self.sabotage_type == 3:
             self.sabotaged = False
+        return "ok"
 
     def voteTally(self, badgeUID, myUID):
         self.players[badgeUID].votesAgainst = self.players[badgeUID].votesAgainst + 1
@@ -236,21 +240,22 @@ class Model:
     def endVote(self):
         if self.voting == True:
             self.voting = False
-            voteArray = []
-            for key in self.players:
-                addPlayer = []
-                if self.players[key].alive == True:
-                    addPlayer.append(key)
-                    addPlayer.append(self.players[key].votesAgainst)
-                    voteArray.append(addPlayer)
-            sorted(voteArray, key=lambda x: x[1], reverse=True)
-            playerID = voteArray[0][0]
-            
-            if self.voteType=='meeting':
-                self.meetingCooldown.set(self.MEETINGCOOLDOWN_AMOUNT)
+            self.votingRunning = False
 
-            if voteArray[0][1] != voteArray[1][1]:
-                return self.executePlayer(playerID)
+            voteArray ={}
+            for player in self.players.values():
+                if player.votesAgainst in voteArray.keys():
+                    voteArray[player.votesAgainst].append(player)
+                else:
+                    voteArray[player.votesAgainst] = [player]
+
+            highestVote = sorted(voteArray.keys(), reverse=True)[0]
+            if len(voteArray[highestVote]) > 1:
+                return "Tie"
+
+            player = voteArray[highestVote][0]
+            return self.executePlayer(player.badgeUID)
+
 
         #TODO: The player ejected will need to be returned and consequently printed to the screen of every scanner.
         
@@ -260,7 +265,7 @@ class Model:
         return "no"
 
     def isImposter(self, uid):  # checks if player is imposter
-        if self.players[uid][0] == "Imposter":
+        if self.players[uid].team == "Imposter":
             return "True"
         return "False"
 
@@ -287,6 +292,7 @@ class Model:
         "Minigames/ReactionGame.py",
         "Minigames/RecordTemperatureGame.py",
         "Minigames/Sabotage1.py",
+        "Minigames/Sabotage2.py",
         "Minigames/Sabotage3.py",
         "Minigames/StartupGame.py",
         "Minigames/UploadGame.py",
@@ -309,8 +315,8 @@ class Model:
     def checkMeeting(self):
         if self.meetingCooldown.check() and self.meetingsLeft != 0:
             self.meetingsLeft-=1
-            return True
+            return "True"
         else:
-            return False
+            return "False"
             
 

@@ -21,9 +21,14 @@ class StartupGame(Minigame):
             self.parent.wifi.startGame()
 
         elif self.parent.badgeUID is None and tag is not None:
-            self.parent.wifi.registerUser(self.parent.badgeUID)
-            self.parent.badgeUID = uid
-            self.StartGameState = True
+            register = self.parent.wifi.registerUser(uid)
+            if register:
+                self.parent.badgeUID = uid
+                self.StartGameState = True
+            else:
+                self.parent.screen.drawText('User already', 0, 0)
+                self.parent.screen.drawText('registered', 0, 10)
+                self.parent.screen.drawText('Use different ID', 0, 30)  
 
         if self.StartGameState == True:
             
