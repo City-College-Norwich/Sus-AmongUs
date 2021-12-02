@@ -31,11 +31,11 @@ class ImposterGame(Minigame):
                     if uid != self.parent.badgeUID and uidIsAlive:
                         self.parent.wifi.killPlayer(self.parent.badgeUID, uid)
                     elif uid == self.parent.badgeUID:
-                        self.parent.screen.drawText("are you ok?")
+                        self.parent.screen.drawText("are you ok?") #lol?
                     elif not uidIsAlive:
-                        self.parent.wifi.startVoting()                     
+                        self.parent.wifi.startReportBody()                     
                 elif tag == ".votingHub":
-                    self.parent.wifi.startVoting()
+                    self.parent.wifi.startEmergency()
             else:#if player is dead
                 self.parent.screen.clear()
                 self.parent.screen.drawText("You are dead!", 0, 0)
