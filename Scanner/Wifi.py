@@ -1,6 +1,5 @@
 import json
 import time
-import typing
 
 import network
 import urequests as requests
@@ -23,7 +22,7 @@ class Wifi:
         while True:
             if self.wlan.isconnected():
                 print("Connected to: " + self.SSID)
-                
+                self.parent.screen.clear()
                 self.parent.screen.drawText("Connected", 0, 0)
                 self.parent.screen.draw()
                 return
@@ -32,6 +31,7 @@ class Wifi:
                 print("Connecting...")
                 
                 self.parent.screen.drawText("Connecting", 0, 0)
+                self.parent.screen.draw()
     
     def sendRequest(self, message):
         class DepricatedException(Exception):
@@ -82,8 +82,9 @@ class Wifi:
     def requestStation(self, tagID: hex) -> str:
         return self._sendRequest("requestStation?badgeUID=" + tagID)
 
-    def createSabotage(self, type: str) -> str:
-        return self._sendRequest("sabotage?sabotageType=" + type)
+    def createSabotage(self, sabotageType: str) -> str:
+        print ("Creating sabotage {}".format(sabotageType))
+        return self._sendRequest("sabotage?sabotageType=" + sabotageType)
 
     def completeSabotage(self,badgeUID: hex) -> str:
         return self._sendRequest("sabotageCompleted?badgeUID=" + badgeUID)
@@ -113,7 +114,7 @@ class Wifi:
     def AutoDownloader(self) -> str:
         return self._sendRequest("AutoDownloader/GetFileList")
 
-    def getTagName(self, uid: hex) -> typing.Union[str, hex]:
+    def getTagName(self, uid: hex) -> str:
         return self._sendRequest("getTagName?uid=" + uid)
 
     def killPlayer(self, myUID: hex, victimUID: hex) -> str:
@@ -128,6 +129,6 @@ class Wifi:
     def getFile(self, filename: str) -> str:
         return self._sendRequest("AutoDownloader/GetFile?fileName="+filename)
 
-    def getPlayers(self) -> typing.Dict[hex, object]:
+    def getPlayers(self) -> dict:
         return json.loads(self._sendRequest("getPlayers"))
 

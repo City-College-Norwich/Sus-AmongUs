@@ -32,7 +32,6 @@ class Minigame:
         :param App parent:
         """
         self.parent = parent
-        self.sabotageOccured = False
     def update(self):
         """
         Cause an update to the Minigame objects state
@@ -61,15 +60,16 @@ class Minigame:
                 self.parent.state = self.parent.IMPOSTOR_WIN  # Impostor win
 
 
-        if 'Sabotaged' in alerts:
-            self.sabotageOccured = True
-            sabotage_type = alerts['Sabotaged']
-            if sabotage_type == 1 or sabotage_type == 3:
-                sabotagedStation = alerts['SabotagedStation']
-                self.parent.gotoSabotageStationGame(sabotage_type,sabotagedStation)
-                
-        elif self.sabotageOccured == True:
-            self.sabotageOccured = False
+        if 'Sabotaged' in alerts and self.parent.state == self.parent.RUNNING:
+            self.parent.state = self.parent.SABOTAGED
+            sabotageType = alerts['Sabotaged']
+            sabotageData = alerts['SabotageData']
+
+            self.parent.gotoSabotageGame(sabotageType, sabotageData)
+
+
+        elif 'Sabotaged' not in alerts and self.parent.state == self.parent.SABOTAGED:
+            self.parent.state = self.parent.RUNNING
             self.parent.gotoIdleGame()
 
         if 'Start_Voting' in alerts and self.parent.state == self.parent.RUNNING:

@@ -16,6 +16,7 @@ from TimerHelper import TimerHelper
 from Minigames.StartupGame import StartupGame
 from Minigames.GoodGuyGame import GoodGuyGame
 from Minigames.Sabotage1 import Sabotage1
+from Minigames.Sabotage2 import Sabotage2
 from Minigames.Sabotage3 import Sabotage3
 from Minigames.ImposterGame import ImposterGame
 
@@ -36,6 +37,7 @@ class App:
     VOTING = 2
     CREWMATE_WIN = 3
     IMPOSTOR_WIN = 4
+    SABOTAGED = 5
 
     def __init__(self):
         self.rfid = Rfid.Rfid(self)
@@ -89,11 +91,16 @@ class App:
         else:
             self.currentMiniGame = ImposterGame(self)
 
-    def gotoSabotageStationGame(self, sabotageType, station):
+    def gotoSabotageGame(self, sabotageType, sabotageData):
+        if self.wifi.isImposter(self.badgeUID) != "False":
+            return
         if sabotageType == 1:
-            self.currentMiniGame = Sabotage1(self, station)
+            self.currentMiniGame = Sabotage1(self, sabotageData)
+        elif sabotageType == 2:
+            self.currentMiniGame = Sabotage2(self, sabotageData)
         elif sabotageType == 3:
-            self.currentMiniGame = Sabotage3(self,station)
+            self.currentMiniGame = Sabotage3(self, sabotageData)
+        
     
     def gotoVotingGame(self,type):
         self.state = self.VOTING

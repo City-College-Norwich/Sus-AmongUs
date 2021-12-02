@@ -39,8 +39,13 @@ class GoodGuyGame(Minigame):
                     self.parent.wifi.startEmergency()
 
                 elif tag == self.__target_station:
-
-                    self.parent.currentMiniGame = random.choice([game for game in self.parent.user_minigames_dict if not self.parent.user_minigames_dict[game]])(self.parent)
+                    gameList = [game for game in self.parent.user_minigames_dict if not self.parent.user_minigames_dict[game]]
+                    if not len(gameList):
+                        for game in self.parent.user_minigames_dict:
+                            self.parent.user_minigames_dict[game] = False
+                            gameList = [game for game in self.parent.user_minigames_dict if not self.parent.user_minigames_dict[game]]
+                    
+                    self.parent.currentMiniGame = random.choice(gameList)(self.parent)
                     # sets current minigame to a random incomplete minigame
 
                 else:

@@ -1,28 +1,30 @@
 import random
 
-from Minigame import Minigame
-from Scanner.TimerHelper import TimerHelper
+from Minigames.Minigame import Minigame
+from TimerHelper import TimerHelper
 
 
 class Sabotage2(Minigame):
-
-    def __init__(self, parent):
+    def __init__(self, parent, sabotagedPlayerUID):
         Minigame.__init__(self, parent)
         self.parent = parent
-        self.__target_player = random.choice(self.parent.wifi.getPlayers())
-        self.__delay_timer = TimerHelper()
-        self.__delay_timer.set(75000)
-        # chooses a random player tag to be used for sabotage.
-        if self.parent.badgeUID == self.__target_player:
+
+        self.parent.screen.clear()
+        self.parent.screen.drawText("SABOTAGE!", 0, 0)
+
+        if self.parent.badgeUID == sabotagedPlayerUID:
             for x in self.parent.user_minigames_dict:
                 self.parent.user_minigames_dict[x] = False
                 # Sets their tasks back to false, can only be used once.
+            self.parent.screen.drawText("Your tasks have", 0, 20)
+            self.parent.screen.drawText("been reset", 0, 30)
+            self.parent.screen.drawText("(＾ｖ＾) LOL", 0, 40)
+        else:
+            self.parent.screen.drawText("The Imposters", 0, 20)
+            self.parent.screen.drawText("have sabotaged", 0, 30)
+            self.parent.screen.drawText("someones tasks!!", 0, 40)
 
     def update(self):
-        if self.__delay_timer.check():
-            self.parent.gotoIdleGame()
-        else:
-            if self.parent.badgeUID == self.__target_player:
-                self.parent.screen.drawText("Your tasks Have been reset (＾ｖ＾) LOL")
-            else:
-                self.parent.screen.drawText("The Imposters have sabotaged someones tasks!!")
+        pass
+        
+

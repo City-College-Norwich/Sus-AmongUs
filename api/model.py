@@ -76,12 +76,14 @@ class Model:
 
     def startGame(self):  # takes game into active and starts up (this needs to be affected for lobby)
         players = list(range(len(self.players.keys())))
+        
         for i in range(self.maxImposters):
             imposter = players.pop(random.randint(0, len(players) - 1))
             self.players[list(self.players.keys())[imposter]].team = "Imposter"
     
             self.imposterCount += 1
 
+        self.totalMinigames = len(players) * 5
         for crewmate in players:
             self.players[list(self.players.keys())[crewmate]].team = "Crewmate"
         self.crewmateCount = len(players)
@@ -113,11 +115,15 @@ class Model:
             if self.sabotaged:
                 alerts["Sabotaged"] = self.sabotage_type #where it checks for sabotage
                 if self.sabotage_type == 1 or self.sabotage_type == 3:
-                    alerts["SabotagedStation"] = self.sabotaged_station
+                    alerts["SabotageData"] = self.sabotaged_station
 
                     if self.sabotage_timer.check():  # ends game if timer runs out
                         print ("========= TIMER END ===============")
                         self.state = IMPOSTER_WIN
+                elif self.sabotage_type == 2:
+                    alerts["SabotageData"] = self.sabotaged_player
+                    if self.sabotage_timer.check():
+                        self.sabotaged = False
 
             elif self.voting == True: #starts vote
 
@@ -216,6 +222,16 @@ class Model:
             if self.sabotage_type == 1:
                 self.sabotaged_station = self.requestStation()
                 self.sabotage_timer.set(60000)
+
+            elif self.sabotage_type == 2:
+                self.sabotaged_player = random.choice(list(self.players.values())).badgeUID
+                if self.totalMinigames > 0:
+                    if self.totalMinigames <= 4:
+                        self.totalMinigames -= self.totalMinigames
+                    else:
+                        self.totalMinigames -= 4
+                self.sabotage_timer.set(10000)
+
             elif self.sabotage_type == 3:
                 self.sabotaged_station = self.requestStation()
                 self.sabotage_timer.set(90000)
@@ -229,9 +245,10 @@ class Model:
                 pass
             else:
                 self.sabotage_participants.add(badgeUID)
-                if len(self.sabotage_participants) == 2:
-                    self.sabotaged = False
-                    self.sabotage_participants = set()
+            if len(self.sabotage_participants) >= 2:
+                print ("xxxxxxxxxxxxxxxxxxxx Sabotage over xxxxxxxxxxxxxxxxxx")
+                self.sabotaged = False
+                self.sabotage_participants = set()
         elif self.sabotage_type == 3:
             self.sabotaged = False
         return "ok"
