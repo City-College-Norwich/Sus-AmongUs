@@ -5,7 +5,6 @@ from TimerHelper import TimerHelper
 
 
 class Sabotage2(Minigame):
-
     def __init__(self, parent, sabotagedPlayerUID):
         Minigame.__init__(self, parent)
         self.parent = parent
