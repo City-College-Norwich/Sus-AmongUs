@@ -38,8 +38,8 @@ class GoodGuyGame(Minigame):
                 elif tag == self.__target_station:
                     gameList = [game for game in self.parent.user_minigames_dict if not self.parent.user_minigames_dict[game]]
                     if not len(gameList):
-                        for game in self.parent.users_minigames_dict:
-                            self.parent.users_minigames_dict[game] = False
+                        for game in self.parent.user_minigames_dict:
+                            self.parent.user_minigames_dict[game] = False
                             gameList = [game for game in self.parent.user_minigames_dict if not self.parent.user_minigames_dict[game]]
                     
                     self.parent.currentMiniGame = random.choice(gameList)(self.parent)
