@@ -108,11 +108,13 @@ class Model:
             if self.sabotaged:
                 alerts["Sabotaged"] = self.sabotage_type #where it checks for sabotage
                 if self.sabotage_type == 1 or self.sabotage_type == 3:
-                    alerts["SabotagedStation"] = self.sabotaged_station
+                    alerts["SabotageData"] = self.sabotaged_station
 
                     if self.sabotage_timer.check():  # ends game if timer runs out
                         print ("========= TIMER END ===============")
                         self.state = IMPOSTER_WIN
+                elif self.sabotage_type == 2:
+                    alerts["SabotageData"] = self.sabotaged_player
 
             elif self.voting == True: #starts vote
 
@@ -211,6 +213,13 @@ class Model:
             if self.sabotage_type == 1:
                 self.sabotaged_station = self.requestStation()
                 self.sabotage_timer.set(60000)
+            elif self.sabotage_type == 2:
+                self.sabotaged_player = random.choice(self.players).badgeUID
+                if self.totalMinigames > 0:
+                    if self.totalMinigames <= 4:
+                        self.totalMinigames -= self.totalMinigames
+                    else:
+                        self.totalMinigames -= 4
             elif self.sabotage_type == 3:
                 self.sabotaged_station = self.requestStation()
                 self.sabotage_timer.set(90000)
