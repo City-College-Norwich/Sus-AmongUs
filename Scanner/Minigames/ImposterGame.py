@@ -72,7 +72,7 @@ class ImposterGame(Minigame):
             self.parent.screen.drawText("Sabotage Ready", 0, 50)
 
         if self.sabotageData:
-            self.parent.screen.drawText(str(self.sabotageData), 0, 60)
+            self.parent.screen.drawText(str(self.sabotageData), 0, 50)
 
     def alertsFromServer(self, alerts):
         Minigame.alertsFromServer(self, alerts)

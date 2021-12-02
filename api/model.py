@@ -115,6 +115,8 @@ class Model:
                         self.state = IMPOSTER_WIN
                 elif self.sabotage_type == 2:
                     alerts["SabotageData"] = self.sabotaged_player
+                    if self.sabotage_timer.check():
+                        self.sabotaged = False
 
             elif self.voting == True: #starts vote
 
@@ -213,6 +215,7 @@ class Model:
             if self.sabotage_type == 1:
                 self.sabotaged_station = self.requestStation()
                 self.sabotage_timer.set(60000)
+
             elif self.sabotage_type == 2:
                 self.sabotaged_player = random.choice(list(self.players.values())).badgeUID
                 if self.totalMinigames > 0:
@@ -220,6 +223,8 @@ class Model:
                         self.totalMinigames -= self.totalMinigames
                     else:
                         self.totalMinigames -= 4
+                self.sabotage_timer.set(10000)
+
             elif self.sabotage_type == 3:
                 self.sabotaged_station = self.requestStation()
                 self.sabotage_timer.set(90000)

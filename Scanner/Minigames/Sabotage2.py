@@ -8,9 +8,8 @@ class Sabotage2(Minigame):
     def __init__(self, parent, sabotagedPlayerUID):
         Minigame.__init__(self, parent)
         self.parent = parent
-        self.__delay_timer = TimerHelper()
-        self.__delay_timer.set(10000)
 
+        self.parent.screen.clear()
         self.parent.screen.drawText("SABOTAGE!", 0, 0)
 
         if self.parent.badgeUID == sabotagedPlayerUID:
@@ -26,7 +25,6 @@ class Sabotage2(Minigame):
             self.parent.screen.drawText("someones tasks!!", 0, 40)
 
     def update(self):
-        if self.__delay_timer.check():
-            self.parent.gotoIdleGame()
+        pass
         
 
