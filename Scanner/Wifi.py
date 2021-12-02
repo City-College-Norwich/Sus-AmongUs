@@ -1,6 +1,5 @@
 import json
 import time
-import typing
 
 import network
 import urequests as requests
@@ -110,7 +109,7 @@ class Wifi:
     def AutoDownloader(self) -> str:
         return self._sendRequest("AutoDownloader/GetFileList")
 
-    def getTagName(self, uid: hex) -> typing.Union[str, hex]:
+    def getTagName(self, uid: hex) -> str:
         return self._sendRequest("getTagName?uid=" + uid)
 
     def killPlayer(self, myUID: hex, victimUID: hex) -> str:
@@ -125,6 +124,6 @@ class Wifi:
     def getFile(self, filename: str) -> str:
         return self._sendRequest("AutoDownloader/GetFile?fileName="+filename)
 
-    def getPlayers(self) -> typing.Dict[hex, object]:
+    def getPlayers(self) -> dict:
         return json.loads(self._sendRequest("getPlayers"))
     
