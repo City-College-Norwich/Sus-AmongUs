@@ -99,7 +99,7 @@ class Model:
 
     def skipStation(self, lastStation):
         stations = []
-        for i in range(1,6): stations.append("station" + i)
+        for i in range(1,6): stations.append("station" + str(i))
         return random.choice(stations.remove(lastStation))
 
 
