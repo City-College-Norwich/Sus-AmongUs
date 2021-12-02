@@ -7,6 +7,7 @@ class ImposterGame(Minigame):
     def __init__(self, parent):
         Minigame.__init__(self, parent)
         self.timer = TimerHelper()
+        self.scanCooldown = TimerHelper()
         self.timer.set(60000)
         self.parent.screen.clear()
         self.drawGUI()
@@ -33,12 +34,13 @@ class ImposterGame(Minigame):
                     uidIsAlive = self.parent.wifi.isAlive(uid)
                     if uid != self.parent.badgeUID and uidIsAlive:
                         self.parent.wifi.killPlayer(self.parent.badgeUID, uid)
+                        self.scanCooldown.set(2000)
                     elif uid == self.parent.badgeUID:
-                        self.parent.screen.drawText("are you ok?")
-                    elif not uidIsAlive:
-                        self.parent.wifi.startVoting()                     
+                        self.parent.screen.drawText("are you ok?") #lol?
+                    elif not uidIsAlive and self.scanCooldown.check():
+                        self.parent.wifi.startReportBody()                     
                 elif tag == ".votingHub":
-                    self.parent.wifi.startVoting()
+                    self.parent.wifi.startEmergency()
             else:#if player is dead
                 self.parent.screen.clear()
                 self.parent.screen.drawText("You are dead!", 0, 0)
