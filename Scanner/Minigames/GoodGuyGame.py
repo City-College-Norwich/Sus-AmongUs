@@ -1,12 +1,7 @@
 import random
 
+from TimerHelper import TimerHelper
 from Minigames.Minigame import Minigame
-from Minigames.IdBadge import IdBadge
-from Minigames.ReactionGame import ReactionGame
-from Minigames.DownloadGame import DownloadGame
-from Minigames.UploadGame import UploadGame
-from Minigames.RecordTemperatureGame import RecordTemperatureGame
-
 
 class GoodGuyGame(Minigame):
 
@@ -14,7 +9,7 @@ class GoodGuyGame(Minigame):
         Minigame.__init__(self, parent)
         self.parent = parent
 
-        self.skipCooldown = TimeHelper()
+        self.skipCooldown = TimerHelper()
         self.skipCooldown.set(1)
 
         self.__target_station = self.parent.wifi.requestStation(self.parent.badgeUID)
