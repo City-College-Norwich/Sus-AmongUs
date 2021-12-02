@@ -63,4 +63,5 @@ class GoodGuyGame(Minigame):
             if buttons[0] == 1:
                 pass
             elif buttons[1] == 1 and self.skipCooldown.check():
-                self.__target_station = self.parent.wifi.skipStation(self.__target_station,self.skipCooldown)
+                self.__target_station = self.parent.wifi.skipStation(self.__target_station)
+                self.skipCooldown.set(60000)
