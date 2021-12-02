@@ -45,8 +45,8 @@ class GoodGuyGame(Minigame):
                     # sets current minigame to a random incomplete minigame
 
                 else:
-
-                    self.parent.screen.drawText("GOTO: " + str(self.__target_station), 0, 0)
+                    self.parent.screen.drawText("Crewmate", 0, 0)
+                    self.parent.screen.drawText("GOTO: " + str(self.__target_station), 0, 10)
             else:#if player is dead
                 self.parent.screen.clear()
                 self.parent.screen.drawText("You are dead!", 0, 0)
