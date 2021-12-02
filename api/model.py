@@ -76,12 +76,14 @@ class Model:
 
     def startGame(self):  # takes game into active and starts up (this needs to be affected for lobby)
         players = list(range(len(self.players.keys())))
+        
         for i in range(self.maxImposters):
             imposter = players.pop(random.randint(0, len(players) - 1))
             self.players[list(self.players.keys())[imposter]].team = "Imposter"
     
             self.imposterCount += 1
 
+        self.totalMinigames = len(players) * 5
         for crewmate in players:
             self.players[list(self.players.keys())[crewmate]].team = "Crewmate"
         self.crewmateCount = len(players)
