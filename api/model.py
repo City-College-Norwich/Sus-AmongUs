@@ -99,10 +99,9 @@ class Model:
 
     def skipStation(self, lastStation):
         stations = []
-        for i in range(1,6): stations.append("station" + str(i))
-        return random.choice(stations.remove(lastStation))
-
-
+        for i in range(1,7): stations.append("station" + str(i))
+        stations.remove(lastStation)
+        return random.choice(stations)
 
     def minigameComplete(self, scannerId):  # adds to completed minigame for crewmate
         self.completedMinigames += 1
