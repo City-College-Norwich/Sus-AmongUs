@@ -82,8 +82,9 @@ class Wifi:
     def requestStation(self, tagID: hex) -> str:
         return self._sendRequest("requestStation?badgeUID=" + tagID)
 
-    def createSabotage(self, type: str) -> str:
-        return self._sendRequest("sabotage?sabotageType=" + type)
+    def createSabotage(self, sabotageType: str) -> str:
+        print ("Creating sabotage {}".format(sabotageType))
+        return self._sendRequest("sabotage?sabotageType=" + sabotageType)
 
     def completeSabotage(self,badgeUID: hex) -> str:
         return self._sendRequest("sabotageCompleted?badgeUID=" + badgeUID)

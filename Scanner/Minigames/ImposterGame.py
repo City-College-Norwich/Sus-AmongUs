@@ -7,7 +7,7 @@ class ImposterGame(Minigame):
     def __init__(self, parent):
         Minigame.__init__(self, parent)
         self.timer = TimerHelper()
-        self.timer.set(60000)
+        self.timer.set(6000)
         self.parent.screen.clear()
         self.sabotaging = False
         self.sabotageDrawn = False

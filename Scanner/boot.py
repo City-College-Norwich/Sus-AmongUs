@@ -1,12 +1,13 @@
 import os
 import machine
-machine.freq(240000000)
+if machine.freq() != 240000000:
+    machine.freq(240000000)
 
 from Buttons import *
+from AD import *
 
 buttonManager = Buttons()
 if buttonManager.getPressedButtons()[0]:
-    from AD import *
     from Screen import *
     screen = Screen()
     screen.drawText("At Command", 0, 0)
