@@ -214,7 +214,7 @@ class Model:
                 self.sabotaged_station = self.requestStation()
                 self.sabotage_timer.set(60000)
             elif self.sabotage_type == 2:
-                self.sabotaged_player = random.choice(list(self.players.keys())).badgeUID
+                self.sabotaged_player = random.choice(list(self.players.values())).badgeUID
                 if self.totalMinigames > 0:
                     if self.totalMinigames <= 4:
                         self.totalMinigames -= self.totalMinigames
