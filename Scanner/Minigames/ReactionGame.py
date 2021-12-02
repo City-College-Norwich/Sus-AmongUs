@@ -20,19 +20,16 @@ class ReactionGame(Minigame):
         self.parent.screen.drawText("Reaction Game", 0, 0)
 
         if self.timer.check():
-            print(1)
             self.state = not self.state
             
             self.can_press_button = self.state
 
             if self.state:
-                print(2)
                 time_to_change = 2
                 self.timer.set(time_to_change*1000)
                 
                 self.parent.screen.drawRectangle(0, 0, 128, 64)
             else:
-                print(3)
                 time_to_change = random.randint(5, 16)
                 self.timer.set(time_to_change*1000)
                 

@@ -7,14 +7,17 @@ class ImposterGame(Minigame):
     def __init__(self, parent):
         Minigame.__init__(self, parent)
         self.timer = TimerHelper()
-        self.timer.set(120000)
+        self.timer.set(60000)
         self.parent.screen.clear()
-        self.parent.screen.drawText("Imposter", 0, 0)
+        self.drawGUI()
+        
+
     
     def update(self):
         if self.parent.state == self.parent.RUNNING:
             
             if self.timer.check():
+                self.drawGUI()
                 buttons = self.parent.buttons.getPressedButtons()
                 if buttons[0] == 1:
                     self.parent.wifi.createSabotage("1")
@@ -41,18 +44,20 @@ class ImposterGame(Minigame):
                 self.parent.screen.drawText("You are dead!", 0, 0)
 
         elif self.parent.state == self.parent.CREWMATE_WIN:
-            while not any(self.parent.buttons.getPressedButtons()):
-                self.parent.screen.drawText("Game Over! Crewmates Has won!",0,0)
+            self.parent.screen.drawText("Game Over!",0,0)
+            self.parent.screen.drawText(" Crewmates win!", 0, 20)
         elif self.parent.state == self.parent.IMPOSTOR_WIN:
-            while not any(self.parent.buttons.getPressedButtons()):
-                self.parent.screen.drawText("Game Over! Impostors Has won!",0,0)
+            self.parent.screen.drawText("Game Over!",0,0)
+            self.parent.screen.drawText("Impostors win!", 0, 20)
 
 
+    def drawGUI(self):
+        self.parent.screen.drawText("Imposter", 0, 0)
+        self.parent.screen.drawText("Sabotage:", 0, 30)
+        self.parent.screen.drawText("Buttons 1-3", 0, 40)
+        self.parent.screen.drawText("o", 100, 10)
+        self.parent.screen.drawText("o", 90, 18)
+        self.parent.screen.drawText("o", 110, 18)
+        if self.timer.check():
+            self.parent.screen.drawText("Sabotage Ready", 0, 50)
 
-    def alertsFromServer(self, alerts):
-        Minigame.alertsFromServer(self, alerts)
-        if 'Sabotaged' in alerts:
-            #Having the cooldown set here to 120 seconds will allow for the
-            #60 seconds to complete the sabotage task (Crewmates) and also
-            #the default 60 second cooldown for sabotages
-            self.cooldown(120000)
