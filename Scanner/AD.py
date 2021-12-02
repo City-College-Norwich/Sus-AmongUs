@@ -11,6 +11,7 @@ class DummyScreen:
     
     def draw(self):
         pass
+    
     def clear(self):
         pass
     
