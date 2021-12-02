@@ -17,10 +17,16 @@ class ImposterGame(Minigame):
         self.sabotageData = ""
         self.drawGUI()
 
-        
+        self.canMurder = False
+
+        self.murderTimer = TimerHelper() 
+        self.murderTimer = self.timer.set(30000)
 
     
     def update(self):
+        if self.canMurder == False and self.murderTimer.check():
+             self.canMurder = True
+       
         if self.parent.state == self.parent.RUNNING or self.parent.state == self.parent.SABOTAGED:
             if self.sabotaging and not self.sabotageDrawn:
                 self.sabotageDrawn = True
@@ -45,8 +51,9 @@ class ImposterGame(Minigame):
                 if tag == 'playerId':
                     uidIsAlive = self.parent.wifi.isAlive(uid)
                     if uid != self.parent.badgeUID and uidIsAlive:
-                        self.parent.wifi.killPlayer(self.parent.badgeUID, uid)
-                        self.scanCooldown.set(2000)
+                        if self.canMurder == True:
+                            self.parent.wifi.killPlayer(self.parent.badgeUID, uid)
+                            self.scanCooldown.set(2000)
                     elif uid == self.parent.badgeUID:
                         self.parent.screen.drawText("are you ok?") #lol?
                     elif not uidIsAlive and self.scanCooldown.check():
