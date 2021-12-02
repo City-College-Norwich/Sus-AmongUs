@@ -74,6 +74,8 @@ class ImposterGame(Minigame):
 
     def drawGUI(self):
         self.parent.screen.drawText("Imposter", 0, 0)
+        if self.canMurder:
+            self.parent.screen.drawText("Kill Ready", 0, 20)
         self.parent.screen.drawText("Sabotage:", 0, 30)
         self.parent.screen.drawText("Buttons 1-3", 0, 40)
         self.parent.screen.drawText("o", 100, 10)
