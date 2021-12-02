@@ -10,21 +10,29 @@ class ImposterGame(Minigame):
         self.timer.set(60000)
         self.parent.screen.clear()
         self.drawGUI()
+        self.sabotaging = False
+        self.sabotageData = ""
         
 
     
     def update(self):
-        if self.parent.state == self.parent.RUNNING:
-            
+        if self.parent.state == self.parent.RUNNING or self.parent.state == self.parent.SABOTAGED:
+            if self.sabotaging and not self.sabotageDrawn:
+                self.sabotageDrawn = True
+                self.drawGUI()
+
             if self.timer.check():
                 self.drawGUI()
                 buttons = self.parent.buttons.getPressedButtons()
                 if buttons[0] == 1:
                     self.parent.wifi.createSabotage("1")
+                    self.timer.set(120000)
                 elif buttons[1] == 1:
                     self.parent.wifi.createSabotage("2")
+                    self.timer.set(130000)
                 elif buttons[2] == 1:
                     self.parent.wifi.createSabotage("3")
+                    self.timer.set(150000)
 
             uid, tag = self.parent.rfid.doRead(True)
             isAlive = self.parent.wifi.isAlive(self.parent.badgeUID)
@@ -61,3 +69,15 @@ class ImposterGame(Minigame):
         if self.timer.check():
             self.parent.screen.drawText("Sabotage Ready", 0, 50)
 
+        if self.sabotageData:
+            self.parent.screen.drawText(self.sabotageData, 0, 60)
+
+    def alertsFromServer(self, alerts):
+        Minigame.alertsFromServer(self, alerts)
+
+        if 'Sabotaged' in alerts and not self.sabotaging:
+            self.sabotaging = True
+            self.sabotageDrawn = False
+            self.sabotageData = alerts['SabotageData']
+        if 'Sabotaged' not in alerts:
+            self.sabotaging = False

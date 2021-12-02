@@ -62,11 +62,12 @@ class Minigame:
 
         if 'Sabotaged' in alerts and self.parent.state == self.parent.RUNNING:
             self.parent.state = self.parent.SABOTAGED
-            sabotage_type = alerts['Sabotaged']
-            if sabotage_type == 1 or sabotage_type == 3:
-                sabotagedStation = alerts['SabotagedStation']
-                self.parent.gotoSabotageStationGame(sabotage_type,sabotagedStation)
-                
+            sabotageType = alerts['Sabotaged']
+            sabotageData = alerts['SabotageData']
+
+            self.parent.gotoSabotageGame(sabotageType, sabotageData)
+
+
         elif 'Sabotaged' not in alerts and self.parent.state == self.parent.SABOTAGED:
             self.parent.state = self.parent.RUNNING
             self.parent.gotoIdleGame()
