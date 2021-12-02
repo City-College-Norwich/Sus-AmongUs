@@ -28,6 +28,7 @@ class ImposterGame(Minigame):
     def update(self):
         if self.canMurder == False and self.murderTimer.check():
              self.canMurder = True
+             self.drawGUI()
        
         if self.murderDisplayed and self.scanCooldown.check():
             self.murderDisplayed = False
@@ -63,12 +64,14 @@ class ImposterGame(Minigame):
                             self.parent.screen.drawText("MURDERZ!", 30, 10)
                             self.parent.screen.drawText("LoloLOLol", 26, 20)
                             self.murderDisplayed = True
-                            self.scanCooldown.set(2000)
+                            self.scanCooldown.set(4000)
+                            self.canMurder = False
+                            self.murderTimer.set(30000)
 
                     elif uid == self.parent.badgeUID:
                         self.parent.screen.drawText("are you ok?") #lol?
                         self.murderDisplayed = True
-                        self.scanCooldown.set(2000)
+                        self.scanCooldown.set(4000)
 
                     elif not uidIsAlive and self.scanCooldown.check():
                         self.parent.wifi.startReportBody()                     
