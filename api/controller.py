@@ -55,7 +55,7 @@ def startVote():
 @app.route("/registerUser")
 def registerUser():
     args = request.args
-    if model.registerUser(args["badgeUID"]) == "":
+    if args["badgeUID"] == "":
         return "False"
     else:
         return model.registerUser(args["badgeUID"])
@@ -82,7 +82,10 @@ def isAlive():
     args = request.args
     return model.isAlive(args["badgeUID"])
 
-
+@app.route("/setVoteType")
+def setVoteType():
+    args = request.args
+    return model.setVoteType(args["type"])
 
 @app.route("/isImposter")
 def isImposter():
@@ -108,4 +111,8 @@ def joinVote():
 def getPlayers():
     return model.getPlayers()
 
+@app.route("/checkMeeting")
+def checkMeeting():
+    return model.checkMeeting()
+    
 if __name__ == '__main__': app.run(host='0.0.0.0')
