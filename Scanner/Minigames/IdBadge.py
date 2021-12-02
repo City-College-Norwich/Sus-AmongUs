@@ -7,13 +7,13 @@ class IdBadge(Minigame):
         self.parent = parent
 
     def update(self):
-        tag = self.parent.rfid.doRead()
+        uid, tag = self.parent.rfid.doRead(True)
         self.parent.screen.drawText("Id Badge Game", 0, 0)
         self.parent.screen.drawText('Scan Card', 0, 20)
-        self.check_card(tag)
+        self.check_card(uid)
 
-    def check_card(self, tag):
-        if tag == self.parent.badgeUID:
+    def check_card(self, uid):
+        if uid == self.parent.badgeUID:
             self.parent.screen.drawText('Card Scanned', 0, 0)
             self.parent.wifi.completeMinigame(self.parent.badgeUID)
             self.parent.isMinigameCompleted = True #So GoodGuyGame knows a minigame was completed

@@ -55,7 +55,10 @@ def startVote():
 @app.route("/registerUser")
 def registerUser():
     args = request.args
-    return model.registerUser(args["badgeUID"])
+    if args["badgeUID"] == "":
+        return "False"
+    else:
+        return model.registerUser(args["badgeUID"])
 
   
 @app.route("/sabotage")
@@ -79,7 +82,10 @@ def isAlive():
     args = request.args
     return model.isAlive(args["badgeUID"])
 
-
+@app.route("/setVoteType")
+def setVoteType():
+    args = request.args
+    return model.setVoteType(args["type"])
 
 @app.route("/isImposter")
 def isImposter():
@@ -96,16 +102,17 @@ def getFile():
     args = request.args
     return model.getFile(args['fileName'])
 
-@app.route("/initiateVote")
-def initiateVote():
-    return model.initiateVote()
-
-@app.route("/voteTimeEnd")
-def voteTimeEnd():
-    return model.voteTimeEnd()
+@app.route("/joinVote")
+def joinVote():
+    args = request.args
+    return model.joinVote(args["badgeUID"])
 
 @app.route("/getPlayers")
 def getPlayers():
     return model.getPlayers()
 
+@app.route("/checkMeeting")
+def checkMeeting():
+    return model.checkMeeting()
+    
 if __name__ == '__main__': app.run(host='0.0.0.0')
