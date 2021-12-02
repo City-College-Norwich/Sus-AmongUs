@@ -69,6 +69,7 @@ class ImposterGame(Minigame):
                             self.murderTimer.set(30000)
 
                     elif uid == self.parent.badgeUID:
+                        self.parent.screen.clear()
                         self.parent.screen.drawText("are you ok?") #lol?
                         self.murderDisplayed = True
                         self.scanCooldown.set(4000)
