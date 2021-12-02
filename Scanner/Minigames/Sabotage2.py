@@ -1,6 +1,6 @@
 import random
 
-from Minigame import Minigame
+from Minigames.Minigame import Minigame
 from Scanner.TimerHelper import TimerHelper
 
 
