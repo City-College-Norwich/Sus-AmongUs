@@ -59,7 +59,7 @@ class GoodGuyGame(Minigame):
             self.parent.screen.drawText("Game Over!", 0, 0)
             self.parent.screen.drawText("{} wins".format(team), 0, 20)
 
-        if self.timer.check():
+        if self.skipCooldown.check():
             buttons = self.parent.buttons.getPressedButtons()
             if buttons[1] == 1 and self.skipCooldown.check():
                 self.__target_station = self.parent.wifi.skipStation(self.__target_station)
