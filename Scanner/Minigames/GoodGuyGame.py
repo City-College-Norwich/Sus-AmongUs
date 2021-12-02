@@ -14,6 +14,8 @@ class GoodGuyGame(Minigame):
         Minigame.__init__(self, parent)
         self.parent = parent
 
+        self.skipCooldown = TimeHelper()
+
         self.__target_station = self.parent.wifi.requestStation(self.parent.badgeUID)
 
         if self.parent.isMinigameCompleted:
@@ -24,6 +26,7 @@ class GoodGuyGame(Minigame):
     def update(self):
         if self.parent.state == self.parent.RUNNING:
             uid, tag = self.parent.rfid.doRead(True)
+
 
             isAlive = self.parent.wifi.isAlive(self.parent.badgeUID)
 
@@ -47,9 +50,18 @@ class GoodGuyGame(Minigame):
                 self.parent.screen.clear()
                 self.parent.screen.drawText("You are dead!", 0, 0)
         else:
+
             if self.parent.state == self.parent.CREWMATE_WIN:
                 team = "Crewmates"
             elif self.parent.state == self.parent.IMPOSTOR_WIN:
                 team = "Imposters"
             self.parent.screen.drawText("Game Over!", 0, 0)
             self.parent.screen.drawText("{} wins".format(team), 0, 20)
+
+        if self.timer.check():
+            buttons = self.parent.buttons.getPressedButtons()
+            if buttons[0] == 1:
+                pass
+            elif buttons[1] == 1 and self.skipCooldown.check():
+                self.__target_station = self.parent.wifi.skipStation(self.__target_station)
+                self.skipCooldown.set(60000)

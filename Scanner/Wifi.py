@@ -101,6 +101,9 @@ class Wifi:
     def voteTally(self, badgeUID: hex, myUID: hex) -> str:
         return self._sendRequest("voteTally?badgeUID="+badgeUID+"&myUID="+myUID)
 
+    def skipStation(self,lastStation):
+        return self._.sendRequest("skipStaion?lastStation=" + lastStation)
+
     def joinVote(self,badgeUID: hex) -> str:
         return self._sendRequest("joinVote?badgeUID=" + badgeUID)
 
@@ -127,4 +130,4 @@ class Wifi:
 
     def getPlayers(self) -> typing.Dict[hex, object]:
         return json.loads(self._sendRequest("getPlayers"))
-    
+
