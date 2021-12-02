@@ -22,7 +22,7 @@ class Wifi:
         while True:
             if self.wlan.isconnected():
                 print("Connected to: " + self.SSID)
-                
+                self.parent.screen.clear()
                 self.parent.screen.drawText("Connected", 0, 0)
                 self.parent.screen.draw()
                 return
@@ -31,6 +31,7 @@ class Wifi:
                 print("Connecting...")
                 
                 self.parent.screen.drawText("Connecting", 0, 0)
+                self.parent.screen.draw()
     
     def sendRequest(self, message):
         class DepricatedException(Exception):

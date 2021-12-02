@@ -36,6 +36,7 @@ class App:
     VOTING = 2
     CREWMATE_WIN = 3
     IMPOSTOR_WIN = 4
+    SABOTAGED = 5
 
     def __init__(self):
         self.rfid = Rfid.Rfid(self)
