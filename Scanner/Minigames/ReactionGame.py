@@ -26,12 +26,12 @@ class ReactionGame(Minigame):
 
             if self.state:
                 time_to_change = 2
-                self.timer.set(time_to_change*1000)
+                self.timer.set(time_to_change*2500)
                 
                 self.parent.screen.drawRectangle(0, 0, 128, 64)
             else:
                 time_to_change = random.randint(5, 16)
-                self.timer.set(time_to_change*1000)
+                self.timer.set(time_to_change*2500)
                 
 
 
