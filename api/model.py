@@ -224,9 +224,10 @@ class Model:
                 pass
             else:
                 self.sabotage_participants.add(badgeUID)
-                if len(self.sabotage_participants) == 2:
-                    self.sabotaged = False
-                    self.sabotage_participants = set()
+            if len(self.sabotage_participants) >= 2:
+                print ("xxxxxxxxxxxxxxxxxxxx Sabotage over xxxxxxxxxxxxxxxxxx")
+                self.sabotaged = False
+                self.sabotage_participants = set()
         elif self.sabotage_type == 3:
             self.sabotaged = False
         return "ok"
