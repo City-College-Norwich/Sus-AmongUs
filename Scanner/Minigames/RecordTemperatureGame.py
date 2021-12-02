@@ -29,8 +29,9 @@ class RecordTemperatureGame(Minigame):
         else:
             if self.time.check():
                 buttons = self.parent.buttons.getPressedButtons()
-                if buttons[0] == 1:
+                if buttons[1] == 1:
                     self.logged_temperature += 1
-                elif buttons[2] == 1:
+                    self.time.set(400)
+                elif buttons[3] == 1:
                     self.logged_temperature -= 1
-                self.time.set(500)
+                    self.time.set(400)
