@@ -99,9 +99,12 @@ class App:
         if sabotageType == 1:
             self.currentMiniGame = Sabotage1(self, sabotageData)
         elif sabotageType == 2:
+            print ("sabotage type 2")
             self.currentMiniGame = Sabotage2(self, sabotageData)
+            print (self.currentMiniGame)
         elif sabotageType == 3:
             self.currentMiniGame = Sabotage3(self, sabotageData)
+        print (self.currentMiniGame)
         
     
     def gotoVotingGame(self,type):
