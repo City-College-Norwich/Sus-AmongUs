@@ -27,6 +27,7 @@ class ImposterGame(Minigame):
     
     def update(self):
         if self.canMurder == False and self.murderTimer.check():
+             self.parent.screen.drawText("Kill Ready", 0, 20)
              self.canMurder = True
              self.drawGUI()
        
