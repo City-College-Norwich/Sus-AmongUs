@@ -67,7 +67,7 @@ class ImposterGame(Minigame):
                             self.murderDisplayed = True
                             self.scanCooldown.set(4000)
                             self.canMurder = False
-                            self.murderTimer.set(30000)
+                            self.murderTimer.set(60000)
 
                     elif uid == self.parent.badgeUID:
                         self.parent.screen.clear()
