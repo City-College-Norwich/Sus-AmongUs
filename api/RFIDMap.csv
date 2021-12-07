@@ -5,6 +5,10 @@
 0x88047eaa,station4
 0x88047eb4,station5
 0x88047ebe,station6
+0x03499080,station7
+0x33449480,station8
+0xa3f19b80,station9
+0x93228c80,station10
 0x266b6ef6,playerId:1
 0x36f82ef0,playerId:2
 0x6cc8190e,.votingHub
