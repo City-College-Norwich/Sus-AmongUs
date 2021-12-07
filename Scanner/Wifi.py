@@ -9,7 +9,7 @@ class Wifi:
     wlan = None
     SSID = "AmongstUsNet"
     PASSWORD = "AmongstUs"
-    URL = "http://192.168.8.100/"
+    URL = "http://192.168.8.100:5000/"
 
     def __init__(self, parent):
         self.parent = parent
